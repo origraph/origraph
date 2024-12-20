@@ -13,6 +13,8 @@ export default defineConfig({
       exclude: [
         ...(configDefaults.coverage.exclude as string[]),
         '*.config.js',
+        'src/main.tsx',
+        'src/utils/testing/generateStoryTests.js',
       ],
       all: true,
     },

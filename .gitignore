@@ -7,10 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Generated stuff
 node_modules
 dist
 dist-ssr
 *.local
+*storybook.log
+coverage
+*.auto.story.test.ts*
 
 # Editor directories and files
 .vscode/*
