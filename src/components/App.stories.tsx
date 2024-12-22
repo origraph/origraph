@@ -1,7 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { expect } from '@storybook/test';
-import { fireEvent, within } from '@testing-library/react';
+import { expect, fireEvent, within } from '@storybook/test';
 import App from './App';
 
 const meta = {

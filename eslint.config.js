@@ -14,6 +14,7 @@ export default [
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
+  ...compat.extends('plugin:storybook/recommended'),
   ...compat.extends('plugin:prettier/recommended'),
   ...compat.extends('plugin:react-hooks/recommended'),
   {
