@@ -4,17 +4,18 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build-preview": "vite preview",
-    "build-storybook": "storybook build",
+    "build-extension": "tsc -b && vite build --config vite.chrome-extension.config.ts && node ./src/scripts/generateChromeManifest.js",
+    "build-storybook": "storybook build -o builds/storybook",
     "build": "tsc -b && vite build",
-    "clean": "rimraf dist && npm run test-post",
+    "clean": "rimraf builds && rimraf coverage && npm run test-post",
     "dev": "vite",
     "lint": "eslint .",
-    "storybook": "storybook dev -p 6006",
-    "test-pre": "node ./src/utils/testing/generateStoryTests.js",
+    "preview": "npm run build && vite preview --outDir builds/website",
+    "storybook": "storybook dev -p 6006 --no-open",
     "test-post": "rimraf --glob src/\\**/*.auto.story.test.ts*",
-    "test": "npm run test-pre && vitest && npm run test-post",
-    "test-report": "npm run test-pre && vitest --coverage --ui && npm run test-post"
+    "test-pre": "node ./src/scripts/generateStoryTests.js",
+    "test-report": "npm run test-pre && vitest --coverage --ui --no-open && npm run test-post",
+    "test": "npm run test-pre && vitest && npm run test-post"
   },
   "dependencies": {
     "react": "^19.0.0",
@@ -53,6 +54,7 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.18.1",
     "vite": "^5.4.11",
+    "vite-plugin-html": "^3.2.2",
     "vitest": "^2.1.8"
   },
   "eslintConfig": {

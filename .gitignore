@@ -9,8 +9,7 @@ lerna-debug.log*
 
 # Generated stuff
 node_modules
-dist
-dist-ssr
+builds
 *.local
 *storybook.log
 coverage
