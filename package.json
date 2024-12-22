@@ -4,7 +4,8 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "build-extension": "tsc -b && vite build --config vite.chrome-extension.config.ts && node ./src/scripts/generateChromeManifest.js",
+    "build-library": "tsc -b && vite build --config vite.library.config.ts && node ./src/scripts/generateLibraryPackageJson.js",
+    "build-extension": "tsc -b && vite build --config vite.extension.config.ts && node ./src/scripts/generateChromeManifest.js",
     "build-storybook": "storybook build -o builds/storybook",
     "build": "tsc -b && vite build",
     "clean": "rimraf builds && rimraf coverage && npm run test-post",
@@ -54,6 +55,7 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.18.1",
     "vite": "^5.4.11",
+    "vite-plugin-dts": "^4.4.0",
     "vite-plugin-html": "^3.2.2",
     "vitest": "^2.1.8"
   },

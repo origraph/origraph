@@ -3,7 +3,7 @@ import packageJson from '../../package.json' with { type: 'json' };
 import fs from 'fs';
 
 fs.writeFileSync(
-  'chrome-extension/manifest.json',
+  'builds/chrome-extension/manifest.json',
   JSON.stringify(
     {
       manifest_version: 3,
