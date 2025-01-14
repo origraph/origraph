@@ -1,0 +1,315 @@
+:root {
+  --tiny-view-threshold: 320px;
+  --small-view-threshold: 640px;
+  --large-view-threshold: 1280px;
+  --huge-view-threshold: 1600px;
+
+  /* Colorbrewer 8 extended colors: */
+  --cb-extra-dark-1-teal: #0e4c32;
+  --cb-extra-dark-2-orange: #6f200e;
+  --cb-extra-dark-3-purple: #302d59;
+  --cb-extra-dark-4-pink: #780e3f;
+  --cb-extra-dark-5-green: #25500e;
+  --cb-extra-dark-6-yellow: #77530e;
+  --cb-extra-dark-7-brown: #50310e;
+  --cb-extra-dark-8-grey: #252525;
+
+  --cb-dark-1-teal: #00744c;
+  --cb-dark-2-orange: #aa2d00;
+  --cb-dark-3-purple: #494389;
+  --cb-dark-4-pink: #b70060;
+  --cb-dark-5-green: #377b00;
+  --cb-dark-6-yellow: #b68000;
+  --cb-dark-7-brown: #7b4a00;
+  --cb-dark-8-grey: #373737;
+
+  --cb-1-teal: #1b9e77;
+  --cb-2-orange: #d95f02;
+  --cb-3-purple: #7570b3;
+  --cb-4-pink: #e7298a;
+  --cb-5-green: #66a61e;
+  --cb-6-yellow: #e6ab02;
+  --cb-7-brown: #a6761d;
+  --cb-8-grey: #666666;
+
+  --cb-light-1-teal: #66c2a5;
+  --cb-light-2-orange: #fc8d62;
+  --cb-light-3-purple: #8da0cb;
+  --cb-light-4-pink: #e78ac3;
+  --cb-light-5-green: #a6d854;
+  --cb-light-6-yellow: #ffd92f;
+  --cb-light-7-brown: #e5c494;
+  --cb-light-8-grey: #b3b3b3;
+
+  --cb-extra-light-1-teal: #b3e2cd;
+  --cb-extra-light-2-orange: #fdcdac;
+  --cb-extra-light-3-purple: #cbd5e8;
+  --cb-extra-light-4-pink: #f4cae4;
+  --cb-extra-light-5-green: #e6f5c9;
+  --cb-extra-light-6-yellow: #fff2ae;
+  --cb-extra-light-7-brown: #f1e2cc;
+  --cb-extra-light-8-grey: #cccccc;
+
+  --my-extra-black: #050505;
+  --my-black: #0e0e0e;
+  --my-mid-soft-black: #333333;
+  --my-soft-black: #4f4f4f;
+  --my-middle-grey: #666666;
+  --my-soft-white: #afafaf;
+  --my-mid-soft-white: #b3b3b3;
+  --my-white: #e9e9e9;
+  --my-extra-white: #ffffff;
+
+  --hard-background-color: light-dark(
+    var(--my-extra-white),
+    var(--my-extra-black)
+  );
+  --background-color: light-dark(var(--my-white), var(--my-black));
+  --mid-soft-background-color: light-dark(
+    var(--my-mid-soft-white),
+    var(--my-mid-soft-black)
+  );
+  --soft-background-color: light-dark(
+    var(--my-soft-white),
+    var(--my-soft-black)
+  );
+  --separator-color: var(--my-middle-grey);
+  --soft-foreground-color: light-dark(
+    var(--my-soft-black),
+    var(--my-soft-white)
+  );
+  --mid-soft-foreground-color: light-dark(
+    var(--my-mid-soft-black),
+    var(--my-mid-soft-white)
+  );
+  --foreground-color: light-dark(var(--my-black), var(--my-white));
+  --hard-foreground-color: light-dark(
+    var(--my-extra-black),
+    var(--my-extra-white)
+  );
+
+  --accent-color-extra-dark: var(--cb-extra-dark-8-grey);
+  --accent-color-dark: var(--cb-dark-8-grey);
+  --accent-color: var(--cb-8-grey);
+  --accent-color-light: var(--cb-light-8-grey);
+  --accent-color-extra-light: var(--cb-extra-light-8-grey);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}
+
+.teal {
+  --accent-color-extra-dark: var(--cb-extra-dark-1-teal);
+  --accent-color-dark: var(--cb-dark-1-teal);
+  --accent-color: var(--cb-1-teal);
+  --accent-color-light: var(--cb-light-1-teal);
+  --accent-color-extra-light: var(--cb-extra-light-1-teal);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}
+.orange {
+  --accent-color-extra-dark: var(--cb-extra-dark-2-orange);
+  --accent-color-dark: var(--cb-dark-2-orange);
+  --accent-color: var(--cb-2-orange);
+  --accent-color-light: var(--cb-light-2-orange);
+  --accent-color-extra-light: var(--cb-extra-light-2-orange);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}
+.purple {
+  --accent-color-extra-dark: var(--cb-extra-dark-3-purple);
+  --accent-color-dark: var(--cb-dark-3-purple);
+  --accent-color: var(--cb-3-purple);
+  --accent-color-light: var(--cb-light-3-purple);
+  --accent-color-extra-light: var(--cb-extra-light-3-purple);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}
+.pink {
+  --accent-color-extra-dark: var(--cb-extra-dark-4-pink);
+  --accent-color-dark: var(--cb-dark-4-pink);
+  --accent-color: var(--cb-4-pink);
+  --accent-color-light: var(--cb-light-4-pink);
+  --accent-color-extra-light: var(--cb-extra-light-4-pink);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}
+.green {
+  --accent-color-extra-dark: var(--cb-extra-dark-5-green);
+  --accent-color-dark: var(--cb-dark-5-green);
+  --accent-color: var(--cb-5-green);
+  --accent-color-light: var(--cb-light-5-green);
+  --accent-color-extra-light: var(--cb-extra-light-5-green);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}
+.yellow {
+  --accent-color-extra-dark: var(--cb-extra-dark-6-yellow);
+  --accent-color-dark: var(--cb-dark-6-yellow);
+  --accent-color: var(--cb-6-yellow);
+  --accent-color-light: var(--cb-light-6-yellow);
+  --accent-color-extra-light: var(--cb-extra-light-6-yellow);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}
+.brown {
+  --accent-color-extra-dark: var(--cb-extra-dark-7-brown);
+  --accent-color-dark: var(--cb-dark-7-brown);
+  --accent-color: var(--cb-7-brown);
+  --accent-color-light: var(--cb-light-7-brown);
+  --accent-color-extra-light: var(--cb-extra-light-7-brown);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}
+.grey {
+  --accent-color-extra-dark: var(--cb-extra-dark-8-grey);
+  --accent-color-dark: var(--cb-dark-8-grey);
+  --accent-color: var(--cb-8-grey);
+  --accent-color-light: var(--cb-light-8-grey);
+  --accent-color-extra-light: var(--cb-extra-light-8-grey);
+
+  /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
+  --accent-color-extra-fg: light-dark(
+    var(--accent-color-extra-dark),
+    var(--accent-color-extra-light)
+  );
+  --accent-color-fg: light-dark(
+    var(--accent-color-dark),
+    var(--accent-color-light)
+  );
+  --accent-color-bg: light-dark(
+    var(--accent-color-light),
+    var(--accent-color-dark)
+  );
+  --accent-color-extra-bg: light-dark(
+    var(--accent-color-extra-light),
+    var(--accent-color-extra-dark)
+  );
+}

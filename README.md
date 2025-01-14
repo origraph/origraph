@@ -1,10 +1,11 @@
-# Boilerplate project
+# OriGraph
 
-Includes:
+UX experiences for NoSQL thinking
 
-- React
-- TypeScript
-- Vite
-- Vitest
-- ESLint
-- Prettier
+## Setup
+
+```
+git clone https://github.com/origraph/origraph.git
+cd origraph
+npm install
+```

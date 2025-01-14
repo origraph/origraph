@@ -1,0 +1,120 @@
+import classNames from 'classnames';
+import omit from 'lodash.omit';
+import React, { forwardRef, ReactElement, useMemo, useRef } from 'react';
+import './Button.css';
+import { Icon, IconProps } from './Icon';
+
+export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  leftIcons?: IconProps[];
+  collapse?: boolean;
+  rightIcons?: IconProps[];
+  shortcutHint?: string;
+  // TODO: tooltip?: ...
+} & (
+    | {
+        renderLeftMenu?: (props: ButtonProps) => ReactElement;
+        splitLeft?: never;
+      }
+    | {
+        renderLeftMenu?: never;
+        splitLeft?: boolean;
+      }
+  ) &
+  (
+    | {
+        renderRightMenu?: (props: ButtonProps) => ReactElement;
+        splitRight?: never;
+      }
+    | {
+        renderRightMenu?: never;
+        splitRight?: boolean;
+      }
+  );
+
+export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  (props = {}, ref) => {
+    const localRef = useRef(null);
+    const title = props.title || props['aria-label'] || undefined;
+    const ariaLabel = props['aria-label'] || props.title || undefined;
+
+    const buttonChunks = useMemo(() => {
+      let content = props.children;
+      if (props.collapse) {
+        content = null;
+      }
+
+      const leftIconCount = props.leftIcons?.length || 0;
+      const rightIconCount = props.rightIcons?.length || 0;
+      const splitLeft =
+        Boolean(props.splitLeft) || Boolean(props.renderLeftMenu);
+      const splitRight =
+        Boolean(props.splitRight) || Boolean(props.renderRightMenu);
+      // Buttons can shrink a little when they only contain a single icon
+      const singleIconButton =
+        !content &&
+        !splitLeft &&
+        !splitRight &&
+        !props.shortcutHint &&
+        ((leftIconCount === 1 && rightIconCount === 0) ||
+          (leftIconCount === 0 && rightIconCount === 1));
+      const chunks = [
+        <button
+          key="main"
+          {...omit(props, [
+            'class',
+            'leftIcons',
+            'preventCollapse',
+            'forceCollapse',
+            'rightIcons',
+            'splitLeft',
+            'splitRight',
+            'renderLeftMenu',
+            'renderRightMenu',
+          ])}
+          className={classNames(
+            'Button',
+            { splitLeft, splitRight, singleIconButton },
+            props.className
+          )}
+          ref={ref || localRef}
+          aria-label={ariaLabel}
+          title={title}
+        >
+          {(props.leftIcons || []).map((iconProps, index) => (
+            <Icon
+              key={index}
+              {...iconProps}
+              className={classNames(iconProps.className)}
+            />
+          ))}
+          {content}
+          {/* <div className="gap" /> */}
+          {props.shortcutHint ? (
+            <div className="shortcutHint">{props.shortcutHint}</div>
+          ) : null}
+          {(props.rightIcons || []).map((iconProps, index) => (
+            <Icon
+              key={index}
+              {...iconProps}
+              className={classNames(iconProps.className)}
+            />
+          ))}
+        </button>,
+      ];
+      if (props.renderLeftMenu) {
+        chunks.unshift(props.renderLeftMenu({ splitRight: true }));
+      }
+      if (props.renderRightMenu) {
+        chunks.push(props.renderRightMenu({ splitLeft: true }));
+      }
+      return chunks;
+    }, [ariaLabel, props, ref, title]);
+
+    return buttonChunks.length > 1 ? (
+      <div className="buttonWrapper">{...buttonChunks}</div>
+    ) : (
+      buttonChunks[0]
+    );
+  }
+);
+Button.displayName = 'Button';

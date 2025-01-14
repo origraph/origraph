@@ -1,0 +1,20 @@
+@import url("../../core-styles/variables.css");
+
+.Icon {
+  &.useMask {
+    width: 1em;
+    min-width: 1em;
+    height: 1em;
+    min-height: 1em;
+    mask-size: cover;
+    mask-position: center;
+    background-color: var(--foreground-color);
+  }
+  &.characterAsIcon {
+    width: 1em;
+    text-align: center;
+  }
+}
+svg .IconMask {
+  fill: var(--background-color);
+}

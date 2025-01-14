@@ -1,0 +1,109 @@
+@import url('../../core-styles/variables.css');
+
+.buttonWrapper {
+  display: flex;
+  gap: 0.125em;
+}
+
+.button,
+button {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 0.25em;
+  text-decoration: none;
+  padding: 0.45em 0.5em 0.35em 0.5em;
+  border-radius: 2em;
+  line-height: 1em;
+  border: none;
+  outline: none;
+  outline-offset: -1px;
+  cursor: pointer;
+  font-family: var(--header-font);
+  white-space: nowrap;
+  font-size: 1.25em;
+  user-select: none;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: 0 0 10px 2px var(--soft-background-color);
+  }
+
+  &.splitLeft {
+    padding-left: 0.25em;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    justify-content: flex-end;
+  }
+  &.splitRight {
+    padding-right: 0.25em;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    justify-content: flex-start;
+  }
+  &.singleIconButton {
+    padding: 0.5em 0.5em;
+  }
+
+  .shortcutHint {
+    text-transform: uppercase;
+    letter-spacing: 0.35ex;
+    font-size: 0.5em;
+  }
+  .gap {
+    flex-grow: 1;
+  }
+
+  .Icon {
+    color: var(--background-color);
+    &.useMask {
+      background-color: var(--background-color);
+    }
+  }
+
+  /* Unless otherwise-classed, buttons will default to the grey accent */
+  color: var(--background-color);
+  background-color: var(--accent-color);
+  transition: all 0.2s ease-in-out;
+  &.active {
+    color: var(--background-color);
+    background-color: var(--accent-color-fg);
+  }
+  &:focus,
+  &:hover {
+    color: var(--background-color);
+    background-color: var(--accent-color-extra-fg);
+    box-shadow: 0px 0px 70px 3px var(--accent-color-extra-bg);
+  }
+  &.minimal {
+    color: var(--accent-color);
+    .Icon {
+      color: var(--accent-color);
+      &.useMask {
+        background-color: var(--accent-color);
+      }
+    }
+    background-color: transparent;
+    outline: 1px solid var(--accent-color);
+    &.active {
+      color: var(--accent-color-fg);
+      .Icon {
+        color: var(--accent-color-fg);
+        &.useMask {
+          background-color: var(--accent-color-fg);
+        }
+      }
+    }
+    &:focus,
+    &:hover {
+      color: var(--accent-color-extra-fg);
+      .Icon {
+        color: var(--accent-color-extra-fg);
+        &.useMask {
+          background-color: var(--accent-color-extra-fg);
+        }
+      }
+      outline: 1px solid var(--accent-color-extra-fg);
+    }
+  }
+}

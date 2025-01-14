@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Slab:ital,wght@0,100..700;1,100..700&family=Voltaire&display=swap');
+@import '../../node_modules/normalize.css/normalize.css';
+@import './variables.css';
+
+:root {
+  --header-font: 'Voltaire', 'Trebuchet MS', sans-serif;
+  --body-font: 'Josefin Slab', 'Times New Roman', Times, serif;
+
+  color-scheme: light dark;
+  font-family: var(--body-font);
+  background-color: var(--background-color);
+  color: var(--foreground-color);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: var(--cb-dark-teal);
+  &:focus,
+  &:hover {
+    color: var(--cb-teal);
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--header-font);
+}
+
+.accent {
+  color: var(--accent-color-fg);
+}
+
+.Menu {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: stretch;
+  border-radius: 1.5em;
+  box-shadow:
+    0 0 25px 5px var(--background-color),
+    0 0 100vh var(--background-color) inset;
+  /* background-color: var(--background-color);
+  border: 1px solid var(--separator-color);
+  padding: 4px;
+  border-radius: 1em; */
+  &:focus-visible {
+    outline: none;
+    box-shadow:
+      0 0 50px 10px var(--background-color),
+      0 0 100vh var(--background-color) inset;
+  }
+}
