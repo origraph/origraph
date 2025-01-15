@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { Button } from '../../components/basic-ui/Button';
-import { Menu, MenuItem } from '../../components/basic-ui/Menu';
 import { getAppIcon } from '../../utils/ui/getAppIcon';
 import './WebsiteHome.css';
 
@@ -14,7 +13,7 @@ export const WebsiteHome = () => {
   return (
     <div className="WebsiteHome">
       <div className="left column">
-        <div className="titleRow">
+        <div className="titleRow fullRow">
           <div>
             <h1>origraph</h1>
             <p>get creative with data</p>
@@ -39,21 +38,11 @@ export const WebsiteHome = () => {
       <nav className="right column">
         <div className="logo"></div>
         <div className="main chunk">
-          <Button
-            className="teal"
-            renderRightMenu={(menuProps) => (
-              <Menu {...menuProps} className="teal">
-                <MenuItem label="Recipes" />
-              </Menu>
-            )}
-          >
-            New Graph
-          </Button>
-          <Button className="purple">Manage Graphs</Button>
-          <Button className="minimal pink">Train AI</Button>
-          <Button className="minimal green">Visualize</Button>
+          <Button className="teal">Edit</Button>
+          <Button className="minimal purple">Train AI</Button>
+          <Button className="minimal pink">Visualize</Button>
         </div>
-        <div>
+        <div className="fullRow">
           <p className="left crossColumn">
             Keep this project free for everyone!
           </p>

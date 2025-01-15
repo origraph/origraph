@@ -20,10 +20,10 @@
 
 a {
   text-decoration: none;
-  color: var(--cb-dark-teal);
+  color: var(--accent-color-fg);
   &:focus,
   &:hover {
-    color: var(--cb-teal);
+    color: var(--accent-color-extra-fg);
   }
 }
 

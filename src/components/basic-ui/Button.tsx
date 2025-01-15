@@ -6,6 +6,7 @@ import { Icon, IconProps } from './Icon';
 import { MenuProps } from './Menu';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
+  href?: string;
   leftIcons?: IconProps[];
   collapse?: boolean;
   rightIcons?: IconProps[];
@@ -44,6 +45,14 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         content = null;
       }
 
+      const fakeLinkProps = props.href
+        ? {
+            onClick: () => {
+              window.open(props.href, '_blank', 'noreferrer');
+            },
+            role: 'link',
+          }
+        : {};
       const leftIconCount = props.leftIcons?.length || 0;
       const rightIconCount = props.rightIcons?.length || 0;
       const splitLeft =
@@ -63,6 +72,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           key="main"
           {...omit(props, [
             'className',
+            'href',
             'collapse',
             'leftIcons',
             'rightIcons',
@@ -71,6 +81,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'renderLeftMenu',
             'renderRightMenu',
           ])}
+          {...fakeLinkProps}
           className={classNames(
             'Button',
             { splitLeft, splitRight, singleIconButton },

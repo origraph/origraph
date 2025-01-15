@@ -22,7 +22,14 @@ export default [
       'no-debugger': 'warn',
       'no-fallthrough': ['error', { commentPattern: 'break[\\s\\w]*omitted' }],
       'react/react-in-jsx-scope': 'off',
-      '@typescript-eslint/no-unused-vars': ['warn'],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
 ];

@@ -53,15 +53,16 @@
     }
   }
 
-  .titleRow {
+  .fullRow {
     display: flex;
     flex-direction: row;
     align-items: center;
-    h1 {
-      margin: 0 0 -0.5em 0;
-    }
+  }
+  .titleRow h1 {
+    margin: 0 0 -0.5em 0;
   }
   .logo {
+    margin-left: -1.5em;
     height: 6em;
   }
 }

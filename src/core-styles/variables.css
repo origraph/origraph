@@ -88,11 +88,12 @@
     var(--my-extra-white)
   );
 
-  --accent-color-extra-dark: var(--cb-extra-dark-8-grey);
-  --accent-color-dark: var(--cb-dark-8-grey);
-  --accent-color: var(--cb-8-grey);
-  --accent-color-light: var(--cb-light-8-grey);
-  --accent-color-extra-light: var(--cb-extra-light-8-grey);
+  /* default accent color is teal */
+  --accent-color-extra-dark: var(--cb-extra-dark-1-teal);
+  --accent-color-dark: var(--cb-dark-1-teal);
+  --accent-color: var(--cb-1-teal);
+  --accent-color-light: var(--cb-light-1-teal);
+  --accent-color-extra-light: var(--cb-extra-light-1-teal);
 
   /* todo: not sure why, but these don't seem to work with the accent override if they're only in :root */
   --accent-color-extra-fg: light-dark(
