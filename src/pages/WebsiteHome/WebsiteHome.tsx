@@ -38,7 +38,9 @@ export const WebsiteHome = () => {
       <nav className="right column">
         <div className="logo"></div>
         <div className="main chunk">
-          <Button className="teal">Edit</Button>
+          <a href="edit" className="button teal">
+            Edit
+          </a>
           <Button className="minimal purple">Train AI</Button>
           <Button className="minimal pink">Visualize</Button>
         </div>

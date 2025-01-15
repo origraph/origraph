@@ -16,7 +16,7 @@ createRoot(document.getElementById('root')!).render(
       <Route path="/funding">
         <Funding />
       </Route>
-      <Route path="/graph/:?projectIri">
+      <Route path="/edit/:?projectIri">
         <Editor />
       </Route>
       <Route>

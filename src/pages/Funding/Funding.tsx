@@ -1,5 +1,5 @@
 import patreonLogo from '../../assets/patreon.svg';
-import { Button } from '../../components/basic-ui/Button';
+import { Icon } from '../../components/basic-ui/Icon';
 import '../../core-styles/simple-page.css';
 
 export const Funding = () => {
@@ -15,13 +15,10 @@ export const Funding = () => {
       </p>
       <h3>
         more details on our{' '}
-        <Button
-          className="yellow"
-          href="patreon.com/Origraph"
-          leftIcons={[{ src: patreonLogo }]}
-        >
+        <a className="yellow button" href="https://patreon.com/Origraph">
+          <Icon src={patreonLogo} />
           patreon
-        </Button>
+        </a>
       </h3>
       {/*
       TODO: enable Stripe for this, so people don't have to create a patreon account
@@ -36,9 +33,9 @@ export const Funding = () => {
       </p>
       <h3>
         inquire about our{' '}
-        <Button className="yellow" href="mailto:info@origraph.net">
+        <a className="yellow button" href="mailto:info@origraph.net">
           professional services
-        </Button>
+        </a>
       </h3>
       {/*
       TODO: make an About Us example dataset!
