@@ -21,7 +21,7 @@ button {
   cursor: pointer;
   font-family: var(--header-font);
   white-space: nowrap;
-  font-size: 1.25em;
+  font-weight: 500;
   user-select: none;
 
   &:focus-visible {

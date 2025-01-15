@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { Button } from '../../components/basic-ui/Button';
+import { Menu, MenuItem } from '../../components/basic-ui/Menu';
 import { getAppIcon } from '../../utils/ui/getAppIcon';
 import './WebsiteHome.css';
 
@@ -38,7 +39,16 @@ export const WebsiteHome = () => {
       <nav className="right column">
         <div className="logo"></div>
         <div className="main chunk">
-          <Button className="teal">New Graph</Button>
+          <Button
+            className="teal"
+            renderRightMenu={(menuProps) => (
+              <Menu {...menuProps} className="teal">
+                <MenuItem label="Recipes" />
+              </Menu>
+            )}
+          >
+            New Graph
+          </Button>
           <Button className="purple">Manage Graphs</Button>
           <Button className="minimal pink">Train AI</Button>
           <Button className="minimal green">Visualize</Button>

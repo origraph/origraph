@@ -3,6 +3,7 @@ import omit from 'lodash.omit';
 import React, { forwardRef, ReactElement, useMemo, useRef } from 'react';
 import './Button.css';
 import { Icon, IconProps } from './Icon';
+import { MenuProps } from './Menu';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   leftIcons?: IconProps[];
@@ -12,7 +13,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   // TODO: tooltip?: ...
 } & (
     | {
-        renderLeftMenu?: (props: ButtonProps) => ReactElement;
+        renderLeftMenu?: (props: MenuProps) => ReactElement;
         splitLeft?: never;
       }
     | {
@@ -22,7 +23,7 @@ export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   ) &
   (
     | {
-        renderRightMenu?: (props: ButtonProps) => ReactElement;
+        renderRightMenu?: (props: MenuProps) => ReactElement;
         splitRight?: never;
       }
     | {
@@ -61,10 +62,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         <button
           key="main"
           {...omit(props, [
-            'class',
+            'className',
+            'collapse',
             'leftIcons',
-            'preventCollapse',
-            'forceCollapse',
             'rightIcons',
             'splitLeft',
             'splitRight',
@@ -102,10 +102,24 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         </button>,
       ];
       if (props.renderLeftMenu) {
-        chunks.unshift(props.renderLeftMenu({ splitRight: true }));
+        chunks.unshift(
+          props.renderLeftMenu({
+            splitRight: true,
+            label: 'Left dropdown',
+            leftIcons: [{ character: '❮' }],
+            collapse: true,
+          })
+        );
       }
       if (props.renderRightMenu) {
-        chunks.push(props.renderRightMenu({ splitLeft: true }));
+        chunks.push(
+          props.renderRightMenu({
+            splitLeft: true,
+            label: 'Right dropdown',
+            rightIcons: [{ character: '❯' }],
+            collapse: true,
+          })
+        );
       }
       return chunks;
     }, [ariaLabel, props, ref, title]);
