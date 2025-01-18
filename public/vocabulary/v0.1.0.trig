@@ -1,0 +1,47 @@
+@prefix origraph: <https://origraph.net/vocabulary/v0.1.0> .
+@prefix : <https://origraph.net/vocabulary/v0.1.0/> .
+@prefix ui: <https://origraph.net/vocabulary/v0.1.0/ui/> .
+@prefix ts: <https://origraph.net/vocabulary/v0.1.0/typescript/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+origraph: {
+  origraph: a rdfs:Vocabulary .
+
+  :Node :inheritsFrom :Item .
+  :Link :inheritsFrom :Item .
+  :Group :inheritsFrom :Item .
+  :Attribute :inheritsFrom :Item .
+  
+  :Hyperedge :inheritsFrom :Group .
+
+  # Introspection stuff, i.e. how Origraph should render its own concepts
+  # by default
+  :inheritsFrom :inheritsFrom :Link .
+  :memberOfGroup :inheritsFrom :Link .
+
+  # UI
+  ui:ViewType :inheritsFrom :Group ;
+    ts:translateAs ts:Enum .
+  ui:TrigView :memberOfGroup ui:ViewType .
+  # TODO: add more views here...
+  # ui:NeldView :memberOfGroup ui:ViewType .
+
+  ui:QueryAspect :inheritsFrom :Group ;
+    ts:translateAs ts:Enum .
+  ui:ResultPage :memberOfGroup ui:QueryAspect .
+  ui:Select :memberOfGroup ui:QueryAspect .
+  ui:Construct :memberOfGroup ui:QueryAspect .
+
+  :Constants
+    ui:overviewQueryIri :OverviewQuery ;
+    ui:selectionQueryIri :SelectionQuery .
+
+  # Some basic adapters to do the "right" thing when using RDF data from
+  # elsewhere; Origraph uses a vocabulary that's at the extreme informal end of
+  # the spectrum. For our purposes, deliberately vague notions of inheritance
+  # are a feature, not a bug, to support rapid re-interpretation
+  rdf:type :inheritsFrom :inheritsFrom .
+  rdfs:subClassOf :inheritsFrom :inheritsFrom .
+  rdfs:subPropertyOf :inheritsFrom :inheritsFrom .
+}

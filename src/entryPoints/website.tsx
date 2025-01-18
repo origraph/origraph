@@ -5,6 +5,7 @@ import '../core-styles/ui.css';
 import { Editor } from '../pages/Editor/Editor.tsx';
 import { Funding } from '../pages/Funding/Funding.tsx';
 import { Missing } from '../pages/Missing/Missing.tsx';
+import { Vocabulary } from '../pages/Vocabulary/Vocabulary.tsx';
 import { WebsiteHome } from '../pages/WebsiteHome/WebsiteHome.tsx';
 
 createRoot(document.getElementById('root')!).render(
@@ -16,8 +17,11 @@ createRoot(document.getElementById('root')!).render(
       <Route path="/funding">
         <Funding />
       </Route>
-      <Route path="/edit/:?projectIri">
+      <Route path="/edit">
         <Editor />
+      </Route>
+      <Route path="/vocabulary/*">
+        <Vocabulary />
       </Route>
       <Route>
         <Missing />

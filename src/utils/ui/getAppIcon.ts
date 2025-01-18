@@ -1,4 +1,4 @@
 import { isDarkMode } from './isDarkMode';
 
 export const getAppIcon = () =>
-  isDarkMode() ? '/icon.svg' : '/icon_borderless.svg';
+  isDarkMode() ? '/Logo Dark Background.svg' : '/Logo Dark Background.svg';
