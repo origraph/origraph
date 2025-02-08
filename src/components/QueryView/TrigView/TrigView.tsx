@@ -1,9 +1,10 @@
 import { Editor } from '@monaco-editor/react';
-import { FC, useEffect, useMemo, useState } from 'react';
+import { FC, useContext, useEffect, useState } from 'react';
 import { PerspectiveAspect, ViewType } from '../../../constants/vocabulary';
 import {
   BaseViewState,
-  useJobManager,
+  PerspectiveContext,
+  useJob,
   usePerspective,
 } from '../../../state/Perspectives';
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
@@ -26,7 +27,7 @@ export const TrigView: FC<TrigViewState> = ({
   perspectiveAspect,
 }) => {
   const perspective = usePerspective(perspectiveIri);
-  const jobManager = useJobManager();
+  const { jobManager } = useContext(PerspectiveContext);
 
   console.log('Rendering TrigView', perspective);
 
@@ -40,12 +41,8 @@ export const TrigView: FC<TrigViewState> = ({
   );
   const [isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
 
-  // Extra hook to silence exhaustive-deps about an extra dependency that won't
-  // otherwise update correctly if jobIri changes
-  const resultsQueryJobIri = useMemo(
-    () => perspective.resultsQuery?.jobIri,
-    [perspective.resultsQuery?.jobIri]
-  );
+  const metadataJob = useJob(perspective.metadataQuery?.jobIri);
+  const resultsJob = useJob(perspective.resultsQuery?.jobIri);
   useEffect(() => {
     (async () => {
       switch (perspectiveAspect) {
@@ -55,10 +52,7 @@ export const TrigView: FC<TrigViewState> = ({
 ${await perspective.resultsQuery.getSparql()}`);
             setLanguage(MONACO_LANGUAGE.SPARQL);
             setIsEditingEnabled(true);
-          } else if (
-            perspective.metadataQuery?.jobIri &&
-            jobManager.getJob(perspective.metadataQuery.jobIri)?.isRunning
-          ) {
+          } else if (metadataJob?.isRunning) {
             setSavedDisplayText('Querying...');
             setLanguage(MONACO_LANGUAGE.Text);
             setIsEditingEnabled(false);
@@ -75,12 +69,7 @@ ${await perspective.resultsQuery.getSparql()}`);
               await quadsToTrig(perspective.resultsQuery.currentQuads)
             );
             setLanguage(MONACO_LANGUAGE.TriG);
-            setIsEditingEnabled(
-              !(
-                resultsQueryJobIri &&
-                jobManager.getJob(resultsQueryJobIri)?.isRunning
-              )
-            );
+            setIsEditingEnabled(resultsJob ? !resultsJob.isRunning : false);
           } else {
             setSavedDisplayText('Loading metadata...');
             setLanguage(MONACO_LANGUAGE.Text);
@@ -90,17 +79,18 @@ ${await perspective.resultsQuery.getSparql()}`);
     })();
   }, [
     jobManager,
-    perspective.metadataQuery?.jobIri,
     perspective.resultsQuery,
-    resultsQueryJobIri,
     perspectiveAspect,
+    metadataJob?.isRunning,
+    resultsJob?.isRunning,
+    resultsJob,
   ]);
 
   // TODO: continue here; need to adapt TrigView for the new PerspectiveManager
 
   const [handleUpdate, setHandleUpdate] = useState<(update: string) => void>(
-    (update: string) => {
-      console.log(`uninitialized update: ${update}`);
+    () => (update: string) => {
+      console.log(`monaco update: ${update}`);
     }
   );
 

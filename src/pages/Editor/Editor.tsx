@@ -5,8 +5,10 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react';
+import { useImmer } from 'use-immer';
 import { TrigView } from '../../components/QueryView/TrigView/TrigView';
 import { ViewComponent } from '../../components/QueryView/types';
 import {
@@ -15,6 +17,7 @@ import {
   VOCABULARY,
 } from '../../constants/vocabulary';
 import {
+  Perspective,
   PerspectiveContext,
   PerspectiveManager,
   ViewState,
@@ -57,8 +60,18 @@ export const Editor: FC = () => {
   const { searchParams } = useSearchParams();
   const [isOverviewActive, setIsOverviewActive] = useState<boolean>(false);
   const [selectedIris, setSelectedIris] = useState<Set<string>>(new Set());
+  const [perspectivesByIri, setPerspectivesByIri] = useImmer<
+    Record<string, Perspective>
+  >({});
+  const perspectivesByIriRef =
+    useRef<Record<string, Perspective>>(perspectivesByIri);
+  perspectivesByIriRef.current = perspectivesByIri;
   const [perspectiveManager] = useState<PerspectiveManager>(
-    () => new PerspectiveManager()
+    () =>
+      new PerspectiveManager(
+        () => perspectivesByIriRef.current,
+        setPerspectivesByIri
+      )
   );
 
   const { justMounted } = useIsMounted();
@@ -126,7 +139,7 @@ export const Editor: FC = () => {
 
   const viewStates: ViewState[] = useMemo(
     () =>
-      Object.entries(perspectiveManager.perspectivesByIri).flatMap(
+      Object.entries(perspectivesByIri).flatMap(
         ([perspectiveIri, perspective]) =>
           Object.entries(perspective.visibleAspects).flatMap(
             ([aspect, aspectMetadata]) =>
@@ -140,7 +153,7 @@ export const Editor: FC = () => {
               )
           )
       ),
-    [perspectiveManager.perspectivesByIri]
+    [perspectivesByIri]
   );
 
   return (

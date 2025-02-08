@@ -1,7 +1,9 @@
 import { Quad } from 'n3';
-import { createContext } from 'react';
+import { createContext, useContext, useMemo } from 'react';
+import { Updater } from 'use-immer';
 import { v4 as uuid } from 'uuid';
 import { TrigViewState } from '../components/QueryView/TrigView/TrigView';
+import { noop } from '../constants/empty';
 import {
   defaultGraph,
   literal,
@@ -11,6 +13,7 @@ import {
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
 import { getPerspectiveMetadataQuery } from '../queries/perspectiveMetadata/perspectiveMetadata';
 import { partitionSets } from '../utils/core/partitionSets';
+import { useMutable } from '../utils/core/useMutable';
 import { ComunicaInterface } from './Comunica';
 import {
   BaseIncrementalInput,
@@ -75,26 +78,31 @@ export const getDefaultAspectsForNewlyOpenedPerspective = (): Partial<
   },
 });
 
-// TODO: About to attempt MobX, because ugh, fuck React's anti-mutability dogma
-// (no way in hell am I going back to Redux 😑🔫)
 export class PerspectiveManager {
   jobManager: JobManager;
   comunicaInterface: ComunicaInterface;
-  perspectivesByIri: Record<string, Perspective> = {};
+  getPerspectivesByIri: () => Record<string, Perspective>;
+  setPerspectivesByIri: Updater<Record<string, Perspective>>;
 
-  constructor() {
+  constructor(
+    getPerspectivesByIri: () => Record<string, Perspective>,
+    setPerspectivesByIri: Updater<Record<string, Perspective>>
+  ) {
     this.jobManager = new JobManager();
     this.comunicaInterface = new ComunicaInterface();
+    this.getPerspectivesByIri = getPerspectivesByIri;
+    this.setPerspectivesByIri = setPerspectivesByIri;
   }
 
   async startMetadataQuery(perspectiveIri: string) {
     if (!this.comunicaInterface.ready) {
       await this.comunicaInterface.init();
     }
-    if (!this.perspectivesByIri[perspectiveIri].metadataQuery) {
+    const perspectivesByIri = this.getPerspectivesByIri();
+    if (!perspectivesByIri[perspectiveIri].metadataQuery) {
       throw new Error(`Called startMetadataQuery before it exists`);
     }
-    if (this.perspectivesByIri[perspectiveIri].metadataQuery.jobIri) {
+    if (perspectivesByIri[perspectiveIri].metadataQuery.jobIri) {
       throw new Error(`startMetadataQuery called when jobId already exists`);
     }
     async function* generatorFn(initialInput: QueryState) {
@@ -120,60 +128,93 @@ export class PerspectiveManager {
       QueryFinalOutput
     >({
       onUpdate: (update) => {
-        if (!this.perspectivesByIri[perspectiveIri].metadataQuery) {
-          throw new Error(
-            `metadataQuery was unexpectedly set to null while it was running`
-          );
-        }
-        this.perspectivesByIri[perspectiveIri].metadataQuery.currentQuads =
-          update.quads;
+        this.setPerspectivesByIri((draft) => {
+          if (!draft[perspectiveIri].metadataQuery) {
+            throw new Error(
+              `metadataQuery was unexpectedly set to null while it was running`
+            );
+          }
+          draft[perspectiveIri].metadataQuery.currentQuads = update.quads;
+        });
         console.log('onUpdate', update);
       },
       onFinish: (update) => {
+        this.initResultsQuery(perspectiveIri);
         console.log('onFinish', update);
       },
       onError: (error) => {
         console.warn('onError', error);
       },
-      initialInput: this.perspectivesByIri[perspectiveIri].metadataQuery,
+      initialInput: perspectivesByIri[perspectiveIri].metadataQuery,
       generatorFn,
     });
-    this.perspectivesByIri[perspectiveIri].metadataQuery.jobIri =
-      metadataJob.iri;
+    this.setPerspectivesByIri((draft) => {
+      (draft[perspectiveIri].metadataQuery as QueryState).jobIri =
+        metadataJob.iri;
+    });
+  }
+
+  initResultsQuery(perspectiveIri: string) {
+    const perspectivesByIri = this.getPerspectivesByIri();
+    if (!perspectivesByIri[perspectiveIri].metadataQuery) {
+      throw new Error(`Called initResultsQuery with metadataQuery missing`);
+    }
+    this.setPerspectivesByIri((draft) => {
+      draft[perspectiveIri].resultsQuery = {
+        currentQuads: [],
+        // TODO: construct SPARQL from meta-sparql, fetched via metadataQuery!
+        getSparql: async () => `SELECT * WHERE { ?s ?p ?o }`,
+      };
+    });
   }
 
   updateOpenPerspectives(perspectiveIris: Set<string>) {
+    const perspectivesByIri = this.getPerspectivesByIri();
     const { onlyA: perspectiveIrisToOpen, onlyB: perspectiveIrisToClose } =
-      partitionSets(
-        perspectiveIris,
-        new Set(Object.keys(this.perspectivesByIri))
-      );
-    perspectiveIrisToClose.forEach((iri) => {
-      const closingPerspective = this.perspectivesByIri[iri];
-      [
-        closingPerspective.metadataQuery?.jobIri,
-        closingPerspective.resultsQuery?.jobIri,
-      ]
-        .map((jobIri) => (jobIri ? this.jobManager.getJob(jobIri) : null))
-        .forEach((job) => {
-          job?.forceStop();
+      partitionSets(perspectiveIris, new Set(Object.keys(perspectivesByIri)));
+    if (perspectiveIrisToOpen.size > 0 || perspectiveIrisToClose.size > 0) {
+      this.setPerspectivesByIri((draft) => {
+        perspectiveIrisToClose.forEach((iri) => {
+          const closingPerspective = draft[iri];
+          [
+            closingPerspective.metadataQuery?.jobIri,
+            closingPerspective.resultsQuery?.jobIri,
+          ]
+            .map((jobIri) => (jobIri ? this.jobManager.getJob(jobIri) : null))
+            .forEach((job) => {
+              job?.forceStop();
+            });
+          delete draft[iri];
         });
-      delete this.perspectivesByIri[iri];
-    });
-    perspectiveIrisToOpen.forEach((iri) => {
-      this.perspectivesByIri[iri] = {
-        perspectiveIri: iri,
-        metadataQuery: {
-          getSparql: async () =>
-            getPerspectiveMetadataQuery({ perspectiveIri: iri }),
-          currentQuads: [],
-        },
-        resultsQuery: null,
-        visibleAspects: getDefaultAspectsForNewlyOpenedPerspective(),
-      };
-      this.startMetadataQuery(iri);
-    });
+        perspectiveIrisToOpen.forEach((iri) => {
+          draft[iri] = {
+            perspectiveIri: iri,
+            metadataQuery: {
+              getSparql: async () =>
+                getPerspectiveMetadataQuery({ perspectiveIri: iri }),
+              currentQuads: [],
+            },
+            resultsQuery: null,
+            visibleAspects: getDefaultAspectsForNewlyOpenedPerspective(),
+          };
+          this.startMetadataQuery(iri);
+        });
+      });
+    }
   }
 }
 
-export const PerspectiveContext = createContext(new PerspectiveManager());
+export const PerspectiveContext = createContext(
+  new PerspectiveManager(() => ({}), noop)
+);
+
+export const usePerspective = (perspectiveIri: string) =>
+  useContext(PerspectiveContext).getPerspectivesByIri()[perspectiveIri] || null;
+
+export const useJob = (jobIri?: string) => {
+  const perspectiveManager = useContext(PerspectiveContext);
+  const getJob = useMutable(
+    jobIri ? perspectiveManager.jobManager.getJob(jobIri) : null
+  );
+  return useMemo(getJob, [getJob]);
+};
