@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import App from './App';
+import { App } from './App';
 
 describe('App pure vitest', async () => {
   it('increment button starts at zero, and adds one when clicked', async () => {

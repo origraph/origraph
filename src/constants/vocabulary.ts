@@ -67,14 +67,18 @@ export const ALL_VOCABULARIES = {
         ui: {
           ViewType: 'https://origraph.net/vocabulary/v0.1.0/ui/ViewType',
           TrigView: 'https://origraph.net/vocabulary/v0.1.0/ui/TrigView',
-          QueryAspect: 'https://origraph.net/vocabulary/v0.1.0/ui/QueryAspect',
+          PerspectiveAspect:
+            'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveAspect',
           ResultPage: 'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage',
-          Select: 'https://origraph.net/vocabulary/v0.1.0/ui/Select',
-          Construct: 'https://origraph.net/vocabulary/v0.1.0/ui/Construct',
+          PerspectiveQuery:
+            'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery',
           overviewQueryIri:
             'https://origraph.net/vocabulary/v0.1.0/ui/overviewQueryIri',
           selectionQueryIri:
             'https://origraph.net/vocabulary/v0.1.0/ui/selectionQueryIri',
+          basePerspectiveIri:
+            'https://origraph.net/vocabulary/v0.1.0/ui/basePerspectiveIri',
+          baseJobIri: 'https://origraph.net/vocabulary/v0.1.0/ui/baseJobIri',
         },
         Node: 'https://origraph.net/vocabulary/v0.1.0/Node',
         inheritsFrom: 'https://origraph.net/vocabulary/v0.1.0/inheritsFrom',
@@ -87,6 +91,8 @@ export const ALL_VOCABULARIES = {
         Constants: 'https://origraph.net/vocabulary/v0.1.0/Constants',
         OverviewQuery: 'https://origraph.net/vocabulary/v0.1.0/OverviewQuery',
         SelectionQuery: 'https://origraph.net/vocabulary/v0.1.0/SelectionQuery',
+        Perspective: 'https://origraph.net/vocabulary/v0.1.0/Perspective',
+        Job: 'https://origraph.net/vocabulary/v0.1.0/Job',
       },
       rdf: {
         type: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
@@ -152,25 +158,20 @@ export const ALL_VOCABULARIES = {
         'ui',
         'TrigView',
       ],
-      'https://origraph.net/vocabulary/v0.1.0/ui/QueryAspect': [
+      'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveAspect': [
         'origraph',
         'ui',
-        'QueryAspect',
+        'PerspectiveAspect',
       ],
       'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage': [
         'origraph',
         'ui',
         'ResultPage',
       ],
-      'https://origraph.net/vocabulary/v0.1.0/ui/Select': [
+      'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery': [
         'origraph',
         'ui',
-        'Select',
-      ],
-      'https://origraph.net/vocabulary/v0.1.0/ui/Construct': [
-        'origraph',
-        'ui',
-        'Construct',
+        'PerspectiveQuery',
       ],
       'https://origraph.net/vocabulary/v0.1.0/Constants': [
         'origraph',
@@ -194,6 +195,21 @@ export const ALL_VOCABULARIES = {
         'origraph',
         'SelectionQuery',
       ],
+      'https://origraph.net/vocabulary/v0.1.0/ui/basePerspectiveIri': [
+        'origraph',
+        'ui',
+        'basePerspectiveIri',
+      ],
+      'https://origraph.net/vocabulary/v0.1.0/Perspective': [
+        'origraph',
+        'Perspective',
+      ],
+      'https://origraph.net/vocabulary/v0.1.0/ui/baseJobIri': [
+        'origraph',
+        'ui',
+        'baseJobIri',
+      ],
+      'https://origraph.net/vocabulary/v0.1.0/Job': ['origraph', 'Job'],
       'http://www.w3.org/2000/01/rdf-schema#subClassOf': ['rdfs', 'subClassOf'],
       'http://www.w3.org/2000/01/rdf-schema#subPropertyOf': [
         'rdfs',
@@ -204,6 +220,8 @@ export const ALL_VOCABULARIES = {
       overviewQueryIri: 'https://origraph.net/vocabulary/v0.1.0/OverviewQuery',
       selectionQueryIri:
         'https://origraph.net/vocabulary/v0.1.0/SelectionQuery',
+      basePerspectiveIri: 'https://origraph.net/vocabulary/v0.1.0/Perspective',
+      baseJobIri: 'https://origraph.net/vocabulary/v0.1.0/Job',
     },
   },
 };
@@ -215,8 +233,7 @@ export enum ViewType {
   TrigView = 'https://origraph.net/vocabulary/v0.1.0/ui/TrigView',
 }
 
-export enum QueryAspect {
+export enum PerspectiveAspect {
   ResultPage = 'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage',
-  Select = 'https://origraph.net/vocabulary/v0.1.0/ui/Select',
-  Construct = 'https://origraph.net/vocabulary/v0.1.0/ui/Construct',
+  PerspectiveQuery = 'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery',
 }

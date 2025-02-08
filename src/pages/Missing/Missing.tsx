@@ -1,6 +1,7 @@
+import { FC } from 'react';
 import '../../core-styles/simple-page.css';
 
-export const Missing = () => {
+export const Missing: FC = () => {
   return (
     <div className="simplePage">
       <h1>404</h1>

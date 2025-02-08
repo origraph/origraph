@@ -1,140 +1,158 @@
-import { useEffect, useMemo, useState } from 'react';
-import TrigView from '../../components/QueryView/TrigView/TrigView';
-import { QueryView } from '../../components/QueryView/types';
-import { QueryAspect, ViewType, VOCABULARY } from '../../constants/vocabulary';
 import {
-  ComunicaInterfaceContext,
-  getEmptyComunicaInterfaceContext,
-} from '../../state/ComunicaInterface';
+  createContext,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import { TrigView } from '../../components/QueryView/TrigView/TrigView';
+import { ViewComponent } from '../../components/QueryView/types';
+import {
+  PerspectiveAspect,
+  ViewType,
+  VOCABULARY,
+} from '../../constants/vocabulary';
+import {
+  PerspectiveContext,
+  PerspectiveManager,
+  ViewState,
+} from '../../state/Perspectives';
+import { useDidValueChange } from '../../utils/core/useDidValueChange';
+import { useIsMounted } from '../../utils/core/useIsMounted';
 import { useSearchParams } from '../../utils/core/useSearchParams';
+import './Editor.css';
 
-const viewComponentByType: Record<ViewType, QueryView> = {
+const viewComponentByType: Record<ViewType, ViewComponent> = {
   [ViewType.TrigView]: TrigView,
 };
 
-export type ViewState = {
-  queryIri: string;
-  queryAspect: QueryAspect; // TODO: might need to make this a whole immerable class, using QueryAspect as the lookup in order to instantiate?
-  viewType: ViewType;
+export const getEmptyEditorContext = () => ({
+  togglePerspectiveIri: (_perspectiveIri: string, _add: boolean) => {},
+  viewStates: [],
+});
+
+export const EditorContext = createContext<{
+  togglePerspectiveIri: (perspectiveIri: string, add: boolean) => void;
+  viewStates: ViewState[];
+  // TODO: functions for manipulating the current selection
+}>(getEmptyEditorContext());
+
+const EditorViews = () => {
+  const { viewStates } = useContext(EditorContext);
+
+  const views = useMemo(() => {
+    return viewStates.map((viewState) => {
+      const ViewComponent = viewComponentByType[viewState.viewType];
+      return <ViewComponent key={viewState.viewIri} {...viewState} />;
+    });
+  }, [viewStates]);
+
+  // TODO: use GoldenLayout here...
+  return <div className="EditorViews">{views}</div>;
 };
 
-const getNewQueryViewStates = (queryIri: string) => [
-  {
-    queryIri,
-    queryAspect: QueryAspect.ResultPage,
-    viewType: ViewType.TrigView,
-  },
-];
-
-export const Editor = () => {
+export const Editor: FC = () => {
   const { searchParams } = useSearchParams();
   const [isOverviewActive, setIsOverviewActive] = useState<boolean>(false);
-  const [selectedIris, _setSelectedIris] = useState<Set<string>>(new Set());
-  const [viewStatesByQueryIri, setViewStatesByQueryIri] = useState<
-    Record<string, ViewState[]>
-  >({});
-
-  const comunicaInterface = useMemo(
-    () => getEmptyComunicaInterfaceContext(), // TODO: do this correctly once I figure out where it goes (currently getting created twice)
-    []
+  const [selectedIris, setSelectedIris] = useState<Set<string>>(new Set());
+  const [perspectiveManager] = useState<PerspectiveManager>(
+    () => new PerspectiveManager()
   );
+
+  const { justMounted } = useIsMounted();
 
   // Determine which queries are active
   const {
     // _projectIri,
-    queryIris,
-    activeViewsByQueryIri,
-    openedQueryIris,
-    closedQueryIris,
+    perspectiveIris,
   } = useMemo(() => {
     // queries from the URL
     const searchQueryIris =
-      searchParams.queryIri?.split(',')?.filter(Boolean) || [];
+      searchParams.perspeciveIris?.split(',')?.filter(Boolean) || [];
 
-    const queryIris = [...searchQueryIris];
+    const perspectiveIris = new Set([...searchQueryIris]);
     if (selectedIris.size > 0) {
-      queryIris.unshift(VOCABULARY.constants.selectionQueryIri);
+      perspectiveIris.add(VOCABULARY.constants.selectionQueryIri);
     }
 
     if (isOverviewActive || searchQueryIris.length === 0) {
-      queryIris.unshift(VOCABULARY.constants.overviewQueryIri);
+      perspectiveIris.add(VOCABULARY.constants.overviewQueryIri);
     }
-
-    const openedQueryIris: string[] = [];
-    const closedQueryIris: string[] = [];
-    const activeViewsByQueryIri: Record<string, ViewState[]> =
-      Object.fromEntries(
-        queryIris.map((queryIri) => [
-          queryIri,
-          viewStatesByQueryIri[queryIri] || getNewQueryViewStates(queryIri),
-        ])
-      );
-    Object.keys(viewStatesByQueryIri).forEach((queryIri) => {
-      if (!activeViewsByQueryIri[queryIri]) {
-        closedQueryIris.push(queryIri);
-      }
-    });
 
     return {
       projectIri: searchParams.projectIri || null,
-      queryIris,
-      activeViewsByQueryIri,
-      openedQueryIris,
-      closedQueryIris,
+      perspectiveIris,
     };
   }, [
-    isOverviewActive,
+    searchParams.perspeciveIris,
     searchParams.projectIri,
-    searchParams.queryIri,
     selectedIris.size,
-    viewStatesByQueryIri,
+    isOverviewActive,
   ]);
 
-  // Update our state to reflect the above automatic query (in/)activation logic
-  useEffect(() => {
-    if (openedQueryIris.length > 0 || closedQueryIris.length > 0) {
-      setViewStatesByQueryIri(activeViewsByQueryIri);
-      if (
-        !isOverviewActive &&
-        openedQueryIris.includes(VOCABULARY.constants.overviewQueryIri)
-      ) {
-        setIsOverviewActive(true);
-      } else if (
-        isOverviewActive &&
-        closedQueryIris.includes(VOCABULARY.constants.overviewQueryIri)
-      ) {
-        setIsOverviewActive(false);
+  const togglePerspectiveIri = useCallback(
+    (perspectiveIri: string, add: boolean) => {
+      if (add && perspectiveIris.has(perspectiveIri)) {
+        return;
+      } else if (!add && !perspectiveIris.has(perspectiveIri)) {
+        return;
+      } else if (perspectiveIri === VOCABULARY.constants.selectionQueryIri) {
+        if (add) {
+          return;
+        }
+        setSelectedIris(new Set());
+      } else if (perspectiveIri === VOCABULARY.constants.overviewQueryIri) {
+        setIsOverviewActive(add);
       }
+    },
+    [perspectiveIris]
+  );
+
+  const didPerspectiveIrisChange = useDidValueChange({
+    value: perspectiveIris,
+  });
+  useEffect(() => {
+    if (justMounted || didPerspectiveIrisChange) {
+      perspectiveManager.updateOpenPerspectives(perspectiveIris);
     }
   }, [
-    activeViewsByQueryIri,
-    closedQueryIris,
-    closedQueryIris.length,
-    isOverviewActive,
-    openedQueryIris,
-    openedQueryIris.length,
+    didPerspectiveIrisChange,
+    justMounted,
+    perspectiveIris,
+    perspectiveManager,
   ]);
 
-  // Render all the necessary views
-  const allViews = useMemo(() => {
-    return queryIris.flatMap((queryIri) =>
-      activeViewsByQueryIri[queryIri].map((viewState, viewIndex) => {
-        const ViewComponent = viewComponentByType[viewState.viewType];
-        // TODO: maybe need to wrap in some kind of query context object?
-        return (
-          <ViewComponent
-            key={`${viewState.queryIri}-${viewIndex}`}
-            {...viewState}
-          />
-        );
-      })
-    );
-  }, [activeViewsByQueryIri, queryIris]);
+  const viewStates: ViewState[] = useMemo(
+    () =>
+      Object.entries(perspectiveManager.perspectivesByIri).flatMap(
+        ([perspectiveIri, perspective]) =>
+          Object.entries(perspective.visibleAspects).flatMap(
+            ([aspect, aspectMetadata]) =>
+              Object.entries(aspectMetadata.views).flatMap(
+                ([viewIri, viewMetadata]) => ({
+                  perspectiveIri,
+                  viewIri,
+                  viewType: viewMetadata.type,
+                  perspectiveAspect: aspect as PerspectiveAspect,
+                })
+              )
+          )
+      ),
+    [perspectiveManager.perspectivesByIri]
+  );
 
-  // TODO: use GoldenLayout instead of this arbitrary flexbox thing
   return (
-    <ComunicaInterfaceContext value={comunicaInterface}>
-      {allViews}
-    </ComunicaInterfaceContext>
+    <PerspectiveContext.Provider value={perspectiveManager}>
+      <EditorContext.Provider
+        value={{
+          togglePerspectiveIri,
+          viewStates,
+        }}
+      >
+        <EditorViews />
+      </EditorContext.Provider>
+    </PerspectiveContext.Provider>
   );
 };

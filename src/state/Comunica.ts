@@ -3,7 +3,6 @@ import { BrowserLevel } from 'browser-level';
 import { DataFactory } from 'n3';
 import { Quadstore } from 'quadstore';
 import { Engine } from 'quadstore-comunica';
-import { createContext } from 'react';
 import { AsyncLock } from '../utils/core/asyncLock';
 
 export class ComunicaInterface {
@@ -12,6 +11,7 @@ export class ComunicaInterface {
   store: Quadstore;
   engine: Engine;
   bindingsFactory: BindingsFactory;
+  ready: boolean = false;
 
   constructor() {
     this.store = new Quadstore({
@@ -20,11 +20,13 @@ export class ComunicaInterface {
     });
     this.engine = new Engine(this.store);
     this.bindingsFactory = new BindingsFactory();
+  }
 
-    this.store.open().then(async () => {
-      await this.syncOrigraphVocabulary();
-      console.log('Comunica ready');
-    });
+  async init() {
+    await this.store.open();
+    await this.syncOrigraphVocabulary();
+    this.ready = true;
+    console.log('Comunica ready');
   }
 
   async syncOrigraphVocabulary() {
@@ -59,11 +61,3 @@ export class ComunicaInterface {
     });
   }
 }
-
-export const getEmptyComunicaInterfaceContext = () => {
-  return { comunicaInterface: new ComunicaInterface() };
-};
-
-export const ComunicaInterfaceContext = createContext(
-  getEmptyComunicaInterfaceContext()
-);

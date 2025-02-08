@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import reactLogo from '../assets/react.svg';
 import './App.css';
 import viteLogo from '/vite.svg';
 
-function App() {
+export const App: FC = () => {
   const [count, setCount] = useState(0);
 
   return (
@@ -33,6 +33,4 @@ function App() {
       </p>
     </>
   );
-}
-
-export default App;
+};

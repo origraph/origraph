@@ -1,8 +1,9 @@
+import { FC } from 'react';
 import patreonLogo from '../../assets/patreon.svg';
 import { Icon } from '../../components/basic-ui/Icon';
 import '../../core-styles/simple-page.css';
 
-export const Funding = () => {
+export const Funding: FC = () => {
   return (
     <div className="simplePage">
       <p>If you find this utility useful,</p>

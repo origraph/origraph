@@ -32,4 +32,5 @@ export default defineConfig({
     outDir: 'builds/website',
     emptyOutDir: true,
   },
+  assetsInclude: ['**/*.sparql'],
 });

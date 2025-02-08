@@ -1,11 +1,11 @@
-import { useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { Button } from '../../components/basic-ui/Button';
 import { getAppIcon } from '../../utils/ui/getAppIcon';
 import './WebsiteHome.css';
 
 // const comunicaInterface = new ComunicaInterface();
 
-export const WebsiteHome = () => {
+export const WebsiteHome: FC = () => {
   // const params = useParams();
 
   const appIcon = useMemo(getAppIcon, []);

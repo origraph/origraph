@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactElement } from 'react';
+import { FC, ReactElement } from 'react';
 import './Icon.css';
 
 export type IconProps = {
@@ -21,13 +21,13 @@ export type IconProps = {
     }
 );
 
-export const Icon = ({
+export const Icon: FC<IconProps> = ({
   src,
   character,
   component,
   embedInSvg,
   className,
-}: IconProps) => {
+}) => {
   if (embedInSvg) {
     // TODO: for now, doing a 2px workaround for some oddities in how mask-image happens to render...
     const buffer = 2;

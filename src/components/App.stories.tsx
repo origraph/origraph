@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
 import { expect, fireEvent, within } from '@storybook/test';
-import App from './App';
+import { App } from './App';
 
 const meta = {
   component: App,
