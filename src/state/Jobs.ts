@@ -124,6 +124,16 @@ class Job<
     return await this.run();
   }
 
+  async getResults(autoStartWith?: InitialInput) {
+    if (this.isRunning) {
+      return this.runningPromise;
+    }
+    if (autoStartWith) {
+      return this.restart(autoStartWith);
+    }
+    return null;
+  }
+
   private async run() {
     if (this.runningPromise) {
       return this.runningPromise;

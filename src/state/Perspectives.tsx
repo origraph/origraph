@@ -13,6 +13,7 @@ import {
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
 import { getPerspectiveMetadataQuery } from '../queries/perspectiveMetadata/perspectiveMetadata';
 import { partitionSets } from '../utils/core/partitionSets';
+import { queryQuadsToSparql } from '../utils/core/queryQuadsToSparql';
 import { useMutable } from '../utils/core/useMutable';
 import { ComunicaInterface } from './Comunica';
 import {
@@ -106,11 +107,14 @@ export class PerspectiveManager {
       throw new Error(`startMetadataQuery called when jobId already exists`);
     }
     async function* generatorFn(initialInput: QueryState) {
-      console.log('generatorFn', JSON.stringify(initialInput, null, 2));
+      console.log(
+        'metadataQuery generatorFn',
+        JSON.stringify(initialInput, null, 2)
+      );
       const testQuad = quad(
-        namedNode('test:subject:result'),
-        namedNode('test:predicate:result'),
-        literal('test literal'),
+        namedNode('test:metadata:subject:result'),
+        namedNode('test:metadata:predicate:result'),
+        literal('test metadata literal'),
         defaultGraph()
       );
       yield {
@@ -136,14 +140,14 @@ export class PerspectiveManager {
           }
           draft[perspectiveIri].metadataQuery.currentQuads = update.quads;
         });
-        console.log('onUpdate', update);
+        console.log('metadataQuery onUpdate', update);
       },
       onFinish: (update) => {
         this.initResultsQuery(perspectiveIri);
-        console.log('onFinish', update);
+        console.log('metadataQuery onFinish', update);
       },
       onError: (error) => {
-        console.warn('onError', error);
+        console.warn('metadataQuery onError', error);
       },
       initialInput: perspectivesByIri[perspectiveIri].metadataQuery,
       generatorFn,
@@ -154,17 +158,86 @@ export class PerspectiveManager {
     });
   }
 
-  initResultsQuery(perspectiveIri: string) {
+  async initResultsQuery(perspectiveIri: string) {
     const perspectivesByIri = this.getPerspectivesByIri();
     if (!perspectivesByIri[perspectiveIri].metadataQuery) {
       throw new Error(`Called initResultsQuery with metadataQuery missing`);
     }
-    this.setPerspectivesByIri((draft) => {
-      draft[perspectiveIri].resultsQuery = {
-        currentQuads: [],
-        // TODO: construct SPARQL from meta-sparql, fetched via metadataQuery!
-        getSparql: async () => `SELECT * WHERE { ?s ?p ?o }`,
+    if (perspectivesByIri[perspectiveIri].resultsQuery) {
+      console.warn(
+        `Called initResultsQuery when resultsQuery already exists; TODO: need to manually clean up / replace the results job`
+      );
+    }
+    const metadataJobIri =
+      perspectivesByIri[perspectiveIri].metadataQuery.jobIri;
+    const metadataJob = metadataJobIri
+      ? this.jobManager.getJob<
+          QueryState,
+          BaseIncrementalInput,
+          QueryIncrementalOutput,
+          QueryFinalOutput
+        >(metadataJobIri)
+      : null;
+    // If the metadata job has already been cleaned up, we can safely default to
+    // metadataQuery.currentQuads
+    const metaQuads =
+      (await metadataJob?.getResults())?.quads ||
+      perspectivesByIri[perspectiveIri].metadataQuery.currentQuads;
+    const sparql = queryQuadsToSparql(metaQuads);
+    const resultsQuery: QueryState = {
+      currentQuads: [],
+      getSparql: async () => sparql,
+    };
+
+    async function* generatorFn(initialInput: QueryState) {
+      console.log(
+        'resultsQuery generatorFn',
+        JSON.stringify(initialInput, null, 2)
+      );
+      const testQuad = quad(
+        namedNode('test:results:subject:result'),
+        namedNode('test:results:predicate:result'),
+        literal('test results literal'),
+        defaultGraph()
+      );
+      yield {
+        progress: 0.25,
+        quads: [testQuad],
       };
+      return {
+        quads: [testQuad],
+      };
+    }
+    const resultsJob = this.jobManager.createJob<
+      QueryState,
+      BaseIncrementalInput,
+      QueryIncrementalOutput,
+      QueryFinalOutput
+    >({
+      onUpdate: (update) => {
+        this.setPerspectivesByIri((draft) => {
+          if (!draft[perspectiveIri].resultsQuery) {
+            throw new Error(
+              `resultsQuery was unexpectedly set to null while it was running`
+            );
+          }
+          draft[perspectiveIri].resultsQuery.currentQuads = update.quads;
+        });
+        console.log('resultsQuery onUpdate', update);
+      },
+      onFinish: (update) => {
+        console.log('resultsQuery onFinish', update);
+      },
+      onError: (error) => {
+        console.warn('resultsQuery onError', error);
+      },
+      initialInput: resultsQuery,
+      generatorFn,
+      cleanupDelay: -1, // Don't auto-cleanup results jobs, so it's easy to restart the perspective query
+    });
+    resultsQuery.jobIri = resultsJob.iri;
+    this.setPerspectivesByIri((draft) => {
+      draft[perspectiveIri].resultsQuery = resultsQuery;
     });
   }
 

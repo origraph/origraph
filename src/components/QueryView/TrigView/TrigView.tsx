@@ -86,8 +86,6 @@ ${await perspective.resultsQuery.getSparql()}`);
     resultsJob,
   ]);
 
-  // TODO: continue here; need to adapt TrigView for the new PerspectiveManager
-
   const [handleUpdate, setHandleUpdate] = useState<(update: string) => void>(
     () => (update: string) => {
       console.log(`monaco update: ${update}`);
