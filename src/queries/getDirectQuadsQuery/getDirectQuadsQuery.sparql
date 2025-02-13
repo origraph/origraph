@@ -1,0 +1,35 @@
+PREFIX temp: <temp:>
+
+# Gets all direct references to an iri
+# Javascript replaces IRI: via regex
+SELECT DISTINCT ?s ?p ?o ?g WHERE {
+  {
+    # as the subject of a quad in a named graph
+    GRAPH ?g { IRI: ?p ?o }.
+    BIND(IRI: AS ?s)
+  }
+  UNION
+  {
+    # as the predicate of a quad in a named graph
+    GRAPH ?g { ?s IRI: ?o }.
+    BIND(IRI: as ?p)
+  }
+  UNION
+  {
+    # as the object of a quad in a named graph
+    GRAPH ?g { ?s ?p IRI: }.
+    BIND(IRI: AS ?o)
+  }
+  # TODO: need to duplicate the above unions for the default graph?
+  UNION
+  {
+    # as a named graph
+    SELECT DISTINCT ?s ?p ?o ?g WHERE {
+      GRAPH IRI: { ?s1 ?p1 ?o1 }
+      BIND(IRI: AS ?g)
+      BIND(temp:NamedGraph:SomeSubject AS ?s)
+      BIND(temp:NamedGraph:SomePredicate AS ?p)
+      BIND(temp:NamedGraph:SomeObject AS ?o)
+    } LIMIT 1
+  }
+}

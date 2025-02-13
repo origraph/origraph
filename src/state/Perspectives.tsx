@@ -11,7 +11,7 @@ import {
   quad,
 } from '../constants/n3DataFactory';
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
-import { getPerspectiveMetadataQuery } from '../queries/perspectiveMetadata/perspectiveMetadata';
+import { getDirectQuads } from '../queries/getDirectQuadsQuery/getDirectQuadsQuery';
 import { partitionSets } from '../utils/core/partitionSets';
 import { queryQuadsToSparql } from '../utils/core/queryQuadsToSparql';
 import { useMutable } from '../utils/core/useMutable';
@@ -35,11 +35,11 @@ export type QueryState = {
   jobIri?: string;
 };
 
-type QueryFinalOutput = {
+export type QueryFinalOutput = {
   quads: Quad[]; // TODO: maybe want to use streams instead of finalized lists?
 };
 
-type QueryIncrementalOutput = QueryFinalOutput & BaseIncrementalOutput;
+export type QueryIncrementalOutput = QueryFinalOutput & BaseIncrementalOutput;
 
 type PerspectiveAspectMetadata = {
   views: Record<string, ViewMetadata>;
@@ -106,25 +106,6 @@ export class PerspectiveManager {
     if (perspectivesByIri[perspectiveIri].metadataQuery.jobIri) {
       throw new Error(`startMetadataQuery called when jobId already exists`);
     }
-    async function* generatorFn(initialInput: QueryState) {
-      console.log(
-        'metadataQuery generatorFn',
-        JSON.stringify(initialInput, null, 2)
-      );
-      const testQuad = quad(
-        namedNode('test:metadata:subject:result'),
-        namedNode('test:metadata:predicate:result'),
-        literal('test metadata literal'),
-        defaultGraph()
-      );
-      yield {
-        progress: 0.25,
-        quads: [testQuad],
-      };
-      return {
-        quads: [testQuad],
-      };
-    }
     const metadataJob = this.jobManager.createJob<
       QueryState,
       BaseIncrementalInput,
@@ -150,7 +131,7 @@ export class PerspectiveManager {
         console.warn('metadataQuery onError', error);
       },
       initialInput: perspectivesByIri[perspectiveIri].metadataQuery,
-      generatorFn,
+      generatorFn: this.comunicaInterface.getSelectQueryGeneratorFunction(),
     });
     this.setPerspectivesByIri((draft) => {
       (draft[perspectiveIri].metadataQuery as QueryState).jobIri =
@@ -260,11 +241,11 @@ export class PerspectiveManager {
           delete draft[iri];
         });
         perspectiveIrisToOpen.forEach((iri) => {
+          console.log('opening perspective:', iri, getDirectQuads({ iri }));
           draft[iri] = {
             perspectiveIri: iri,
             metadataQuery: {
-              getSparql: async () =>
-                getPerspectiveMetadataQuery({ perspectiveIri: iri }),
+              getSparql: async () => getDirectQuads({ iri }),
               currentQuads: [],
             },
             resultsQuery: null,

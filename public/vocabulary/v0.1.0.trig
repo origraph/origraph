@@ -37,6 +37,9 @@ origraph: {
     ui:selectionQueryIri :SelectionQuery ;
     ui:basePerspectiveIri :Perspective ;
     ui:baseJobIri :Job .
+  
+  :OverviewQuery :inheritsFrom :Perspective .
+  :SelectionQuery :inheritsFrom :Perspective .
 
   # Some basic adapters to do the "right" thing when using RDF data from
   # elsewhere; Origraph uses a vocabulary that's at the extreme informal end of

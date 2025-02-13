@@ -1,4 +1,0 @@
-# TODO: query all metadata about a perspective
-CONSTRUCT {
-  IRI: a PERSPECTIVE: .
-} WHERE {}

@@ -1,6 +1,6 @@
 import { Quad } from 'n3';
 
-export const queryQuadsToSparql = (_quads: Quad[]) => {
+export const queryQuadsToSparql = (quads: Quad[]) => {
   // TODO: filter quads to just the ones that are relevant to a query, and then
   // generate a SPARQL query string
 
@@ -27,6 +27,8 @@ export const queryQuadsToSparql = (_quads: Quad[]) => {
   // are unlikely to have translated their shit into words that normal people
   // use. We'll probably need to research this, to create a query builder
   // vocabulary that people actually understand intuitively)
+
+  console.log('queryQuadsToSparql', JSON.stringify(quads, null, 2));
 
   return 'SELECT * WHERE { ?s ?p ?o }';
 };
