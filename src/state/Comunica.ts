@@ -48,7 +48,7 @@ export class ComunicaInterface {
 
     // TODO: need to check which ontology versions are already in use;
     // just hard-coding v0.1.0 for now:
-    const ontologyVersions = ['v0.1.0'];
+    // const ontologyVersions = ['v0.1.0'];
 
     /*
     await Promise.all(

@@ -31,7 +31,7 @@ export const TrigView: FC<TrigViewState> = ({
 
   console.log('Rendering TrigView', perspective);
 
-  const [localDisplayText, setLocalDisplayText] =
+  const [localDisplayText, _setLocalDisplayText] =
     useState<string>('Loading...');
 
   const [savedDisplayText, setSavedDisplayText] =
@@ -39,7 +39,7 @@ export const TrigView: FC<TrigViewState> = ({
   const [language, setLanguage] = useState<MONACO_LANGUAGE>(
     MONACO_LANGUAGE.Text
   );
-  const [isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
+  const [_isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
 
   const metadataJob = useJob(perspective.metadataQuery?.jobIri);
   const resultsJob = useJob(perspective.resultsQuery?.jobIri);
@@ -86,7 +86,7 @@ ${await perspective.resultsQuery.getSparql()}`);
     resultsJob,
   ]);
 
-  const [handleUpdate, setHandleUpdate] = useState<(update: string) => void>(
+  const [handleUpdate, _setHandleUpdate] = useState<(update: string) => void>(
     () => (update: string) => {
       console.log(`monaco update: ${update}`);
     }

@@ -1,0 +1,41 @@
+---
+toc: false
+---
+
+<style>
+  #quarto-content:before {
+    content: ' ';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.35;
+    background-image: url("./lightBackground.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: -1000;
+  }
+  section.level1 {
+    min-height: 80vh;
+    background-color: rgba(255,255,255,0.85);
+    padding: 6em;
+  }
+</style>
+
+::: {.column-margin}
+
+![](./logos/origraph/Logo Light Background.svg){fig-alt="Origraph Logo"}
+
+:::
+
+# Origraph
+
+## UX Innovations for NoSQL Thinking
+
+"Data scientist" is an incredibly broad term.
+
+At Origraph, we believe that data literacy is a universal skill, and that **everyone is already qualified** to explore the space of possible ways to organize information—whether or not language or software are expressive or usable enough to keep up with human superpowers for reasoning about information.
+
+Origraph is a work-in-progress data editor, that we hope to release under an open source license in the coming months. [More info](about.qmd)

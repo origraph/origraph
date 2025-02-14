@@ -1,0 +1,10 @@
+logo:
+  light: 'logos/Logo Light Background.png'
+  dark: 'logos/Logo Dark Background.png'
+
+typography:
+  fonts:
+    - family: Raleway
+      source: google
+  base: Raleway
+  headings: Raleway

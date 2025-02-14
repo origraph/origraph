@@ -1,0 +1,162 @@
+---
+title: About
+author:
+  - name: Alex Bigelow
+    url: https://alex-r-bigelow.github.io
+date: 4 Feb 2025
+url: about
+---
+
+Origraph is a work-in-progress data editor, that we hope to release under an open source license in the coming months.
+
+[![Patreon Logo](./logos/social/patreonBlack.png){height=1em} Support us on Patreon](https://patreon.com/Origraph)!
+
+# There are more ways to organize data than rows and columns
+
+The short 50ish years of modern personal computing are a tiny blip in history, and computing still has a long way to go, when it comes to augmenting human thinking abilities.
+
+So far, the only universal ways that computers allow non-developers to organize information are:
+
+1. text documents,
+2. images, or
+3. spreadsheets.
+
+But people rarely color strictly within those rigid constraints.
+
+## Hierarchies are everywhere
+
+
+
+From organization charts, to recipies, to the last bulleted outline that you made, hierarchical structures are older than writing itself—most social animals use them, and understand them intimately.
+
+- todo: When it gets big / messy: manufacturing, recipies, what kinds of questions we'd LIKE to ask
+
+- todo: ... but we're doing data analysis in Word??? or folders?
+
+
+## Networks aren't just for conspiracy theories
+
+Even if you've never heard the word "graph" as a synonym for "network," Hollywood is already comfortable showing you boards of pins and red string with zero explanation.
+
+- todo: hierarchies are arguably just a type of network; so those questions plus more (genealogy, kevin bacon)
+
+- todo: ... but pins and red string are the state of the art
+
+## You're already a set theorist / ontologist
+
+Are hot dogs a type of sandwich?
+
+Is a waffle just a dessert pizza?
+
+[Is butt legs](https://youtu.be/RHKGWLml_mg?feature=shared)?
+
+What makes a **true** Scotsman?
+
+- todo: Fallacious appeals to authority aside, categorizing things into groups matter a lot for how science / society work
+
+- todo: ... but our best tools for organizing, communicating, and debating that kind of information are... hand-drawn Venns, or argumentative walls of text
+
+<!--
+## High school algebra wasn't for nothing
+
+If you vageuly remember what $y=mx+c$ means, you're already most of the way there when it comes to understanding vectors, regression, and Machine Learning / AI.
+
+There are some extra words you may not know for things that you're already seen:
+
+A **vector** is just a fancy word for a point that you'd see in a scatterplot:
+
+todo
+
+They can have as many **dimensions** as you'd like:
+
+todo
+
+... but for our brains that are used to thinking in 2, 3 (or *maybe* 4) dimensions, it helps to **project** those points into just a few at a time, like looking at the different shadows that a 3D object casts on a 2D wall:
+
+todo: scatterplot matrix
+
+**Cluster** todo
+
+**Regression** todo
+
+- ... but vectors, clusters, regressions, projections—but actually using your intuition and your high school skills aren't things that software lets you do.
+ -->
+
+# Artificial complexity: non-tabular concepts hiding in tables
+todo
+
+::: {.panel-tabset}
+
+## Hierarchies
+todo
+
+## Networks
+todo
+
+## Sets
+todo
+
+<!-- ## Vectors
+todo -->
+
+:::
+
+# An editor with a richer set of data shapes
+todo
+
+::: {.panel-tabset}
+
+## Hierarchies
+todo
+
+## Networks
+todo
+
+## Sets
+todo
+
+<!-- ## Vectors
+todo -->
+
+:::
+
+# Who we are
+todo
+
+## Who we're not
+todo: similar tools, not-exactly competitors
+
+::: {.panel-tabset}
+
+### Hierarchies
+todo
+
+### Networks {id="network-related-tools"}
+todo
+
+### Sets
+todo
+
+<!-- ### Vectors
+todo -->
+
+:::
+
+# Roadmap, How to help
+todo
+
+## The slow way there, because capitalism
+todo
+
+## The faster way
+todo
+
+[![Patreon Logo](social/patreonBlack.png){height=1em} Support us on Patreon](https://patreon.com/Origraph)!
+
+## Delusions of grandeur: after launch
+todo
+
+# References
+:::{#refs}
+:::
+

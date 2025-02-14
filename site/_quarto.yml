@@ -1,0 +1,30 @@
+project:
+  type: website
+  output-dir: ../public/site
+  preview:
+    port: 7777
+
+website:
+  title: 'origraph'
+  site-url: https://www.origraph.net/site
+  open-graph: true
+  navbar:
+    logo: 'logos/origraph/Logo Light Background.png'
+    left:
+      - href: app.qmd
+        text: App
+      - href: about.qmd
+        text: About
+      - href: funding.qmd
+        text: Funding
+    right:
+      - href: https://patreon.com/Origraph
+        text: '![Support us on Patreon](logos/social/patreonWhite.png)'
+
+format:
+  html:
+    theme:
+      - minty
+      - brand
+      - tweaks.css
+    toc: true

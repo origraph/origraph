@@ -1,0 +1,45 @@
+/*-- scss:rules --*/
+
+h6,
+.h6,
+h5,
+.h5,
+h4,
+.h4,
+h3,
+.h3,
+h2,
+.h2,
+h1,
+.h1 {
+  font-family: "Raleway";
+}
+
+h1,
+.h1,
+h5,
+.h5,
+h6,
+.h6 {
+  font-weight: 700;
+}
+
+h2,
+.h2 {
+  font-weight: 300;
+}
+
+h3,
+.h3 {
+  font-weight: 900;
+}
+
+h4,
+.h4 {
+  font-weight: 300;
+}
+
+.social-logo img,
+.nav-link .menu-text img {
+  height: 1em;
+}
