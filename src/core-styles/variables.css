@@ -1,9 +1,4 @@
 :root {
-  --tiny-view-threshold: 320px;
-  --small-view-threshold: 640px;
-  --large-view-threshold: 1280px;
-  --huge-view-threshold: 1600px;
-
   /* Colorbrewer 8 extended colors: */
   --cb-extra-dark-1-teal: #0e4c32;
   --cb-extra-dark-2-orange: #6f200e;
@@ -52,11 +47,13 @@
 
   --my-extra-black: #050505;
   --my-black: #0e0e0e;
+  --my-off-black: #212121;
   --my-mid-soft-black: #333333;
   --my-soft-black: #4f4f4f;
   --my-middle-grey: #666666;
   --my-soft-white: #afafaf;
   --my-mid-soft-white: #b3b3b3;
+  --my-off-white: #dddddd;
   --my-white: #e9e9e9;
   --my-extra-white: #ffffff;
 

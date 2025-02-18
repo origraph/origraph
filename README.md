@@ -24,4 +24,14 @@ To work on the app, `npm dev-app`
 
 To work on the site, `npm dev-site`
 
-(TODO: document other `package.json` scripts, esp. browser extension, javascript library, storybook, and vitest)
+The site itself imports the built library; if you change something like a component in the app, and want it reflected in the site, you'll need to run `npm run build-library`
+
+## Library
+
+For now, the library just exports some basic components, utilities, and styles that are used in the app, for use in the site.
+
+In the future, especially when we have standalone views, etc., it might be worth breaking this apart into an npm-publishable library / libraries.
+
+## TODO
+
+(document other `package.json` scripts, esp. browser extension, storybook, and vitest)

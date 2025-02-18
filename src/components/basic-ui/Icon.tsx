@@ -35,7 +35,7 @@ export const Icon: FC<IconProps> = ({
     return (
       <g className={classNames([embedInSvg.wrapperClass])}>
         <rect
-          className="IconMask"
+          className="origraph-icon-mask"
           x={-radius}
           y={-radius}
           width={radius * 2}
@@ -45,7 +45,7 @@ export const Icon: FC<IconProps> = ({
           }}
         />
         <rect
-          className={classNames(['Icon', className])}
+          className={classNames(['origraph-icon', className])}
           x={-radius}
           y={-radius}
           width={radius * 2}
@@ -61,7 +61,7 @@ export const Icon: FC<IconProps> = ({
   return (
     <div
       className={classNames([
-        'Icon',
+        'origraph-icon',
         className,
         { useMask: Boolean(src), characterAsIcon: Boolean(character) },
       ])}

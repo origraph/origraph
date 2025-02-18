@@ -72,7 +72,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             'renderRightMenu',
           ])}
           className={classNames(
-            'Button',
+            'origraph-button',
             { splitLeft, splitRight, singleIconButton },
             props.className
           )}
@@ -125,7 +125,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }, [ariaLabel, props, ref, title]);
 
     return buttonChunks.length > 1 ? (
-      <div className="buttonWrapper">{...buttonChunks}</div>
+      <div className="origraph-button-wrapper">{...buttonChunks}</div>
     ) : (
       buttonChunks[0]
     );

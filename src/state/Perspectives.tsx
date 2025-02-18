@@ -1,15 +1,9 @@
-import { Quad } from 'n3';
+import { DataFactory, Quad } from 'n3';
 import { createContext, useContext, useMemo } from 'react';
 import { Updater } from 'use-immer';
 import { v4 as uuid } from 'uuid';
 import { TrigViewState } from '../components/QueryView/TrigView/TrigView';
 import { noop } from '../constants/empty';
-import {
-  defaultGraph,
-  literal,
-  namedNode,
-  quad,
-} from '../constants/n3DataFactory';
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
 import { getDirectQuads } from '../queries/getDirectQuadsQuery/getDirectQuadsQuery';
 import { partitionSets } from '../utils/core/partitionSets';
@@ -19,8 +13,10 @@ import { ComunicaInterface } from './Comunica';
 import {
   BaseIncrementalInput,
   BaseIncrementalOutput,
+  Job,
   JobManager,
 } from './Jobs';
+const { namedNode, quad, literal, defaultGraph } = DataFactory;
 
 export type ViewMetadata = {
   type: ViewType;
@@ -265,10 +261,25 @@ export const PerspectiveContext = createContext(
 export const usePerspective = (perspectiveIri: string) =>
   useContext(PerspectiveContext).getPerspectivesByIri()[perspectiveIri] || null;
 
-export const useJob = (jobIri?: string) => {
+export const useJob = <
+  QueryState,
+  IncrementalInput extends BaseIncrementalInput,
+  IncrementalOutput extends QueryIncrementalOutput,
+  QueryFinalOutput,
+>(
+  jobIri?: string
+): Job<
+  QueryState,
+  IncrementalInput,
+  IncrementalOutput,
+  QueryFinalOutput
+> | null => {
   const perspectiveManager = useContext(PerspectiveContext);
-  const getJob = useMutable(
-    jobIri ? perspectiveManager.jobManager.getJob(jobIri) : null
-  );
+  const getJob = useMutable<Job<
+    QueryState,
+    IncrementalInput,
+    IncrementalOutput,
+    QueryFinalOutput
+  > | null>(jobIri ? perspectiveManager.jobManager.getJob(jobIri) : null);
   return useMemo(getJob, [getJob]);
 };

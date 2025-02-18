@@ -1,6 +1,6 @@
-@import url("../../core-styles/variables.css");
+@import url('../../core-styles/variables.css');
 
-.Icon {
+.origraph-icon {
   &.useMask {
     width: 1em;
     min-width: 1em;
@@ -15,6 +15,6 @@
     text-align: center;
   }
 }
-svg .IconMask {
+svg .origraph-icon-mask {
   fill: var(--background-color);
 }

@@ -1,14 +1,14 @@
 @import url('../../core-styles/variables.css');
 
-.buttonWrapper {
+.origraph-button-wrapper {
   display: flex;
   gap: 0.125em;
 }
 
-.button,
-button {
+.origraph-button {
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex-wrap: nowrap;
   gap: 0.25em;
   text-decoration: none;

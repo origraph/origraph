@@ -32,7 +32,7 @@ export type JobProps<
 export const getNewJobIri = () =>
   `${VOCABULARY.constants.baseJobIri}-${uuid()}`;
 
-class Job<
+export class Job<
   InitialInput,
   IncrementalInput extends BaseIncrementalInput,
   IncrementalOutput extends BaseIncrementalOutput,

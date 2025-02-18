@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Route, Router, Switch } from 'wouter';
+import '../../node_modules/normalize.css/normalize.css';
 import '../core-styles/ui.css';
 import { Editor } from '../pages/Editor/Editor.tsx';
 import { Redirect404 } from '../pages/Redirect404/Redirect404.tsx';

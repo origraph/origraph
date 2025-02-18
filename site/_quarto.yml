@@ -11,20 +11,20 @@ website:
   navbar:
     logo: 'logos/origraph/Logo Light Background.png'
     left:
-      - href: app.qmd
-        text: App
       - href: about.qmd
         text: About
-      - href: funding.qmd
-        text: Funding
+      - href: support.qmd
+        text: Support
     right:
       - href: https://patreon.com/Origraph
-        text: '![Support us on Patreon](logos/social/patreonWhite.png)'
+        text: '[![Patreon Logo](./logos/social/patreonWhite.png){height=1em} Patreon]{.social-logo-wrapper}'
+      - href: app.qmd
+        text: '[Launch App]{.origraph-button}'
 
 format:
   html:
     theme:
       - minty
-      - brand
-      - tweaks.css
+      - quartoTweaks.scss
+    css: built-library/style.css
     toc: true

@@ -197,7 +197,7 @@ export const MenuComponent = forwardRef<typeof Button, MenuProps>(
         data-open={isOpen ? '' : undefined}
         data-nested={isNested ? '' : undefined}
         data-focus-inside={hasFocusInside ? '' : undefined}
-        className={isNested ? 'MenuItem' : 'RootMenu'}
+        className={isNested ? 'origraph-menu-item' : 'origraph-root-menu'}
         // preventCollapse={isNested}
         {...props}
         {...getReferenceProps(
@@ -239,7 +239,7 @@ export const MenuComponent = forwardRef<typeof Button, MenuProps>(
                 >
                   <div
                     ref={refs.setFloating}
-                    className="Menu"
+                    className="origraph-menu"
                     style={floatingStyles}
                     {...getFloatingProps()}
                   >
@@ -256,7 +256,7 @@ export const MenuComponent = forwardRef<typeof Button, MenuProps>(
 );
 MenuComponent.displayName = 'Menu Component';
 
-interface MenuItemProps {
+export interface MenuItemProps {
   label: string;
   disabled?: boolean;
 }
@@ -277,7 +277,7 @@ export const MenuItem = forwardRef<typeof Button, MenuItemProps & ButtonProps>(
         ])}
         type="button"
         role="menuitem"
-        className="MenuItem"
+        className="origraph-menu-item"
         tabIndex={isActive ? 0 : -1}
         disabled={disabled}
         {...menu.getItemProps({

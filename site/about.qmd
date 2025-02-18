@@ -9,7 +9,7 @@ url: about
 
 Origraph is a work-in-progress data editor, that we hope to release under an open source license in the coming months.
 
-[![Patreon Logo](./logos/social/patreonBlack.png){height=1em} Support us on Patreon](https://patreon.com/Origraph)!
+[![Patreon Logo](./logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
 
 # There are more ways to organize data than rows and columns
 
@@ -151,7 +151,7 @@ todo
 ## The faster way
 todo
 
-[![Patreon Logo](social/patreonBlack.png){height=1em} Support us on Patreon](https://patreon.com/Origraph)!
+[![Patreon Logo](./logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
 
 ## Delusions of grandeur: after launch
 todo
