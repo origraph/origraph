@@ -15,10 +15,8 @@ on, and it's a strong signal to us to keep this free for everyone
 
 ---
 
-We also offer data visualization consulting—for everyone from large, global enterprise clients, to free *ad-hoc* help for University of Arizona researchers. If you want to:
+We also offer data visualization consulting—for everyone from global manufacturing clients, to free *ad-hoc* help for university researchers. If you want to:
 
 - ensure that your organization or academic research is up to date with the latest data visualization research technologies
-
-- 
 
 ### contact us about our [consulting services](mailto:info@origraph.net){.origraph-button .yellow style="display:inline"}
