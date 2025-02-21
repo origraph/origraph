@@ -11,6 +11,7 @@ import {
 import { useImmer } from 'use-immer';
 import { TrigView } from '../../components/QueryView/TrigView/TrigView';
 import { ViewComponent } from '../../components/QueryView/types';
+import { noop } from '../../constants/empty';
 import {
   PerspectiveAspect,
   ViewType,
@@ -63,15 +64,18 @@ export const Editor: FC = () => {
   const [perspectivesByIri, setPerspectivesByIri] = useImmer<
     Record<string, Perspective>
   >({});
+  const [perspectiveUpdateSideEffect, setPerspectiveUpdateSideEffect] =
+    useState<() => void>(() => noop);
   const perspectivesByIriRef =
     useRef<Record<string, Perspective>>(perspectivesByIri);
   perspectivesByIriRef.current = perspectivesByIri;
   const [perspectiveManager] = useState<PerspectiveManager>(
     () =>
-      new PerspectiveManager(
-        () => perspectivesByIriRef.current,
-        setPerspectivesByIri
-      )
+      new PerspectiveManager({
+        getPerspectivesByIri: () => perspectivesByIriRef.current,
+        setPerspectivesByIri,
+        setPerspectiveUpdateSideEffect: setPerspectiveUpdateSideEffect,
+      })
   );
 
   const { justMounted } = useIsMounted();
@@ -129,12 +133,14 @@ export const Editor: FC = () => {
   useEffect(() => {
     if (justMounted || didPerspectiveIrisChange) {
       perspectiveManager.updateOpenPerspectives(perspectiveIris);
+      perspectiveUpdateSideEffect();
     }
   }, [
     didPerspectiveIrisChange,
     justMounted,
     perspectiveIris,
     perspectiveManager,
+    perspectiveUpdateSideEffect,
   ]);
 
   const viewStates: ViewState[] = useMemo(

@@ -1,22 +1,33 @@
-import { Bindings, BindingsFactory } from '@comunica/bindings-factory';
+import { BindingsFactory } from '@comunica/bindings-factory';
 import { BrowserLevel } from 'browser-level';
 import { DataFactory, Quad } from 'n3';
 import { Quadstore } from 'quadstore';
 import { Engine } from 'quadstore-comunica';
 import { AsyncLock } from '../utils/core/asyncLock';
+import { BaseIncrementalInput } from './Jobs';
 import {
   QueryFinalOutput,
   QueryIncrementalOutput,
   QueryState,
 } from './Perspectives';
 
+enum LockStates {
+  UNINITIALIZED = 'UNINITIALIZED',
+  INITIALIZING = 'INITIALIZING',
+  READY = 'READY',
+  READING = 'READING',
+  WRITING = 'WRITING',
+}
+type LockState = (typeof LockStates)[keyof typeof LockStates];
+
 export class ComunicaInterface {
-  protected txnLock: AsyncLock = new AsyncLock();
   protected operationPercentDone: number = 100;
   store: Quadstore;
   engine: Engine;
   bindingsFactory: BindingsFactory;
-  ready: boolean = false;
+  lock: AsyncLock<LockState> = new AsyncLock(
+    LockStates.UNINITIALIZED as LockState
+  );
 
   constructor() {
     this.store = new Quadstore({
@@ -28,10 +39,15 @@ export class ComunicaInterface {
   }
 
   async init() {
+    if (this.lock.value !== LockStates.UNINITIALIZED) {
+      return this.lock.promise;
+    }
+    this.lock.enable(LockStates.INITIALIZING);
     await this.store.open();
     await this.syncOrigraphVocabulary();
-    this.ready = true;
     console.log('Comunica ready');
+    this.lock.disable(LockStates.READY);
+    return LockStates.READY;
   }
 
   async syncOrigraphVocabulary() {
@@ -41,54 +57,96 @@ export class ComunicaInterface {
 
     // TODO: Someday, it would be really cool if we could do something like
     // https://phiresky.github.io/blog/2021/hosting-sqlite-databases-on-github-pages/
-    // to have a totally separate-but-queryable interface for flat ontology
-    // files instead of ingesting them into quadstore
+    // to have a totally separate-but-read-only-queryable interface for flat
+    // ontology files instead of ingesting them into quadstore. But these files
+    // are still tiny, so there shouldn't be noticeable overhead for now...
 
-    console.log('syncOrigraphVocabulary');
-
-    // TODO: need to check which ontology versions are already in use;
-    // just hard-coding v0.1.0 for now:
-    // const ontologyVersions = ['v0.1.0'];
-
+    // TODO: need to check which ontology versions are already in use; don't
+    // add stuff we already have in IndexedDB. Current implementation is
+    // duplicating things on page reload, so I'm disabling this function for now
+    // (re-enable once if you Clear site data)
+    return;
     /*
+    const ontologyVersions = ['v0.1.0'];
+
     await Promise.all(
       ontologyVersions.map(async (ontologyVersion) => {
         const response = await fetch(`/vocabulary/${ontologyVersion}.trig`);
-        for await (const chunk of response.body) {
-          // TODO: continue here, ugh, nothing like finally learning streams the hard way
+        if (response.ok && response.body) {
+          const parser = new StreamParser({ format: 'application/trig' });
+          return await this.store.putStream(
+            readableFromWeb(response.body).pipe(parser),
+            { batchSize: 100 }
+          );
         }
       })
     );
-
-    await this.store.multiPut();
     */
   }
 
   getSelectQueryGeneratorFunction(maxCachedQuads?: number) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
-    async function* generatorFn({ getSparql }: QueryState) {
-      const quads: Quad[] = [];
+    async function* generatorFn({
+      getSparql,
+    }: QueryState): AsyncGenerator<
+      QueryIncrementalOutput,
+      QueryFinalOutput,
+      BaseIncrementalInput
+    > {
+      let quads: Quad[] = [];
+      let done = false;
+      let resolve: (quad: Quad | null) => void;
+      let reject: (error?: Error) => void;
+      let promise = new Promise<Quad | null>((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+
       const bindingsStream = await self.engine.queryBindings(await getSparql());
-      // TODO: this type cast seems wrong... in theory it should work per the docs:
-      //
-      // but typescript doesn't like it. If it actually works, I should submit
-      // my first comunica PR to fix the type; maybe-relevant issue:
-      // https://github.com/comunica/comunica/issues/1037
-      for await (const bindings of bindingsStream as unknown as AsyncIterable<Bindings>) {
-        if (maxCachedQuads !== undefined) {
-          const extraQuads = maxCachedQuads - (quads.length + 1);
-          if (extraQuads > 0) {
-            quads.splice(0, extraQuads);
+      bindingsStream.on('data', (binding) => {
+        const quad = new Quad(
+          binding.get('s'),
+          binding.get('p'),
+          binding.get('o'),
+          binding.get('g')
+        );
+        resolve(quad);
+      });
+      bindingsStream.on('error', (err) => {
+        reject(err);
+      });
+      bindingsStream.on('end', () => {
+        done = true;
+        resolve(null);
+      });
+
+      while (!done) {
+        const quad = await promise;
+        console.log('quad', quad);
+        promise = new Promise((res, rej) => {
+          resolve = res;
+          reject = rej;
+        });
+        if (quad) {
+          quads = [
+            ...(maxCachedQuads !== undefined && quads.length >= maxCachedQuads
+              ? quads.slice(maxCachedQuads - quads.length + 1)
+              : quads),
+            quad,
+          ];
+          const input = yield {
+            progress: 0.5,
+            quads,
+          } as QueryIncrementalOutput;
+          if (input.forceStop) {
+            return { quads } as QueryFinalOutput;
           }
+        } else {
+          return { progress: 1.0, quads } as QueryFinalOutput;
         }
-        console.log('bindings:', bindings);
-        // quads.push(bindings);
-        yield { progress: 0.25, quads } as QueryIncrementalOutput;
       }
-      return {
-        quads,
-      } as QueryFinalOutput;
+      return { quads } as QueryFinalOutput;
     }
     return generatorFn;
   }
