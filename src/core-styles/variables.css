@@ -1,4 +1,12 @@
 :root {
+  /*
+  THESE COLORS ARE MANUALLY COPIED IN
+  site/_brand.yml
+
+  If you update a color here, make sure
+  to also update it there
+  */
+
   /* Colorbrewer 8 extended colors: */
   --cb-extra-dark-1-teal: #0e4c32;
   --cb-extra-dark-2-orange: #6f200e;

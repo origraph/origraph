@@ -1,78 +1,14 @@
-/*-- scss:defaults --*/
-
-/*
-Manual hacks on top of the minty theme, copied from core-styles/variables.css;
-doesn't seem to be a better way to do this with Quarto at the moment.
-
-See also: https://github.com/quarto-dev/quarto-cli/issues/5982#issuecomment-2659952980
-*/
-
-$my-extra-black: #050505;
-$my-black: #0e0e0e;
-$my-off-black: #212121;
-$my-mid-soft-black: #333333;
-$my-soft-black: #4f4f4f;
-$my-middle-grey: #666666;
-$my-soft-white: #afafaf;
-$my-mid-soft-white: #b3b3b3;
-$my-off-white: #dddddd;
-$my-white: #e9e9e9;
-$my-extra-white: #ffffff;
-
-$white: $my-extra-white !default;
-$gray-100: $my-white !default;
-$gray-200: $my-off-white !default;
-$gray-300: $my-mid-soft-white !default;
-$gray-400: $my-soft-white !default;
-$gray-500: $my-middle-grey !default;
-$gray-600: $my-soft-black !default;
-$gray-700: $my-mid-soft-black !default;
-$gray-800: $my-off-black !default;
-$gray-900: $my-black !default;
-$black: $my-extra-black !default;
-
-$cb-1-teal: #1b9e77;
-$cb-2-orange: #d95f02;
-$cb-3-purple: #7570b3;
-$cb-4-pink: #e7298a;
-$cb-5-green: #66a61e;
-$cb-6-yellow: #e6ab02;
-$cb-7-brown: #a6761d;
-$cb-8-grey: #666666;
-
-$cb-light-1-teal: #66c2a5;
-$cb-light-2-orange: #fc8d62;
-$cb-light-3-purple: #8da0cb;
-
-$cb-dark-1-teal: #00744c;
-$cb-dark-2-orange: #aa2d00;
-$cb-dark-3-purple: #494389;
-
-$blue: #007bff !default;
-$indigo: #6610f2 !default;
-$purple: $cb-3-purple !default;
-$pink: $cb-4-pink !default;
-$red: $cb-2-orange !default;
-$orange: $cb-light-2-orange !default;
-$yellow: $cb-6-yellow !default;
-$green: $cb-5-green !default;
-$teal: $cb-1-teal !default;
-$cyan: #6cc3d5 !default;
-
-$primary: $cb-dark-1-teal !default;
-$secondary: $cb-3-purple !default;
-$success: $green !default;
-$info: $pink !default;
-$warning: $yellow !default;
-$danger: $red !default;
-$light: $gray-100 !default;
-$dark: $gray-800 !default;
-
-$headings-font-family: Raleway, sans-serif !default;
-$web-font-path: 'https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap' !default;
-
 /*-- scss:rules --*/
 
-.nav-link:has(.origraph-button) {
+.navbar {
+  background-color: var(--cb-dark-1-teal);
+}
+
+.social-logo-wrapper {
   padding-top: 0.3rem;
+}
+.social-logo-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
 }

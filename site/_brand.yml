@@ -1,6 +1,6 @@
-logo:
-  light: 'logos/Logo Light Background.png'
-  dark: 'logos/Logo Dark Background.png'
+# logo:
+#   light: 'logos/Logo Light Background.png'
+#   dark: 'logos/Logo Dark Background.png'
 
 typography:
   fonts:
@@ -8,3 +8,87 @@ typography:
       source: google
   base: Raleway
   headings: Raleway
+
+color:
+  palette:
+    # THESE COLORS ARE MANUALLY COPIED
+    # FROM src/core-styles/variables.scss
+
+    # If you change them here, please also
+    # update them there
+
+    cb-extra-dark-1-teal: '#0e4c32'
+    cb-extra-dark-2-orange: '#6f200e'
+    cb-extra-dark-3-purple: '#302d59'
+    cb-extra-dark-4-pink: '#780e3f'
+    cb-extra-dark-5-green: '#25500e'
+    cb-extra-dark-6-yellow: '#77530e'
+    cb-extra-dark-7-brown: '#50310e'
+    cb-extra-dark-8-grey: '#252525'
+
+    cb-dark-1-teal: '#00744c'
+    cb-dark-2-orange: '#aa2d00'
+    cb-dark-3-purple: '#494389'
+    cb-dark-4-pink: '#b70060'
+    cb-dark-5-green: '#377b00'
+    cb-dark-6-yellow: '#b68000'
+    cb-dark-7-brown: '#7b4a00'
+    cb-dark-8-grey: '#373737'
+
+    cb-1-teal: '#1b9e77'
+    cb-2-orange: '#d95f02'
+    cb-3-purple: '#7570b3'
+    cb-4-pink: '#e7298a'
+    cb-5-green: '#66a61e'
+    cb-6-yellow: '#e6ab02'
+    cb-7-brown: '#a6761d'
+    cb-8-grey: '#666666'
+
+    cb-light-1-teal: '#66c2a5'
+    cb-light-2-orange: '#fc8d62'
+    cb-light-3-purple: '#8da0cb'
+    cb-light-4-pink: '#e78ac3'
+    cb-light-5-green: '#a6d854'
+    cb-light-6-yellow: '#ffd92f'
+    cb-light-7-brown: '#e5c494'
+    cb-light-8-grey: '#b3b3b3'
+
+    cb-extra-light-1-teal: '#b3e2cd'
+    cb-extra-light-2-orange: '#fdcdac'
+    cb-extra-light-3-purple: '#cbd5e8'
+    cb-extra-light-4-pink: '#f4cae4'
+    cb-extra-light-5-green: '#e6f5c9'
+    cb-extra-light-6-yellow: '#fff2ae'
+    cb-extra-light-7-brown: '#f1e2cc'
+    cb-extra-light-8-grey: '#cccccc'
+
+    my-extra-black: '#050505'
+    my-black: '#0e0e0e'
+    my-off-black: '#212121'
+    my-mid-soft-black: '#333333'
+    my-soft-black: '#4f4f4f'
+    my-middle-grey: '#666666'
+    my-soft-white: '#afafaf'
+    my-mid-soft-white: '#b3b3b3'
+    my-off-white: '#dddddd'
+    my-white: '#e9e9e9'
+    my-extra-white: '#ffffff'
+
+    # Stuff that actually applies our
+    # colors to the quarto site:
+
+    purple: cb-3-purple
+    pink: cb-4-pink
+    red: cb-dark-2-orange
+    orange: cb-2-orange
+    yellow: cb-6-yellow
+    green: cb-5-green
+    teal: cb-1-teal
+  primary: teal
+  secondary: purple
+  success: green
+  info: pink
+  warning: yellow
+  danger: red
+  foreground: my-black
+  background: my-white

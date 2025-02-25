@@ -19,7 +19,7 @@ toc: false
   }
   section.level1 {
     min-height: 80vh;
-    background-color: var(--quarto-body-bg);
+    background-color: var(--my-extra-white);
     padding: 6em;
   }
 </style>

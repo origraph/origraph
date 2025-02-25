@@ -25,6 +25,7 @@ format:
   html:
     theme:
       - minty
+      - brand
       - quartoTweaks.scss
     css: built-library/style.css
     toc: true
