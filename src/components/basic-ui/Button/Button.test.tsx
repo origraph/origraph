@@ -1,30 +1,33 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
-import { App } from './App';
+import {
+  IncrementalButton,
+  IncrementalButtonTestId,
+} from './ButtonTestWrappers';
 
-describe('App pure vitest', async () => {
+describe('Button pure vitest', async () => {
   it('increment button starts at zero, and adds one when clicked', async () => {
     /*
     This example test file is redundant w.r.t. what the stories cover; just an
     example of how to add additional vitests
     */
-    render(<App />);
+    render(<IncrementalButton />);
 
-    const incrementButton = screen.getByTestId('App-increment');
-    expect(incrementButton.textContent).toBe(`Current count is 0`);
-
-    act(() => {
-      incrementButton.click();
-    });
-    await waitFor(() => {
-      expect(incrementButton.textContent).toBe(`Current count is 1`);
-    });
+    const button = screen.getByTestId(IncrementalButtonTestId);
+    expect(button.textContent).toBe(`Current count is 0`);
 
     act(() => {
-      incrementButton.click();
+      button.click();
     });
     await waitFor(() => {
-      expect(incrementButton.textContent).toBe(`Current count is 2`);
+      expect(button.textContent).toBe(`Current count is 1`);
+    });
+
+    act(() => {
+      button.click();
+    });
+    await waitFor(() => {
+      expect(button.textContent).toBe(`Current count is 2`);
     });
   });
 });

@@ -1,15 +1,16 @@
 import classNames from 'classnames';
 import React, { forwardRef, ReactElement, useMemo, useRef } from 'react';
-import { omit } from '../../utils/core/omit';
+import { omit } from '../../../utils/core/omit';
+import { Icon, IconProps } from '../Icon/Icon';
+import { MenuProps } from '../Menu/Menu';
 import './Button.css';
-import { Icon, IconProps } from './Icon';
-import { MenuProps } from './Menu';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   leftIcons?: IconProps[];
   collapse?: boolean;
   rightIcons?: IconProps[];
   shortcutHint?: string;
+  'data-testid'?: string;
   // TODO: tooltip?: ...
 } & (
     | {

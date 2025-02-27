@@ -1,9 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { App } from '../components/App.tsx';
+import { ExtensionHome } from '../pages/ExtensionHome/ExtensionHome.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <App />
+    <ExtensionHome />
   </StrictMode>
 );

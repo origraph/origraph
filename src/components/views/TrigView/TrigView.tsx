@@ -9,7 +9,7 @@ import {
 } from '../../../state/Perspectives';
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
 import { isDarkMode } from '../../../utils/ui/isDarkMode';
-import '../QueryView.css';
+import '../views.css';
 import './TrigView.css';
 
 enum MONACO_LANGUAGE {

@@ -4,6 +4,7 @@ import './Icon.css';
 
 export type IconProps = {
   className?: string;
+  'data-testid'?: string;
 } & (
   | { src?: never; character: string; component?: never; embedInSvg?: never }
   | { src: string; character?: never; component?: never; embedInSvg?: never }

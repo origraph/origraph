@@ -9,8 +9,8 @@ import {
   useState,
 } from 'react';
 import { useImmer } from 'use-immer';
-import { TrigView } from '../../components/QueryView/TrigView/TrigView';
-import { ViewComponent } from '../../components/QueryView/types';
+import { TrigView } from '../../components/views/TrigView/TrigView';
+import { ViewComponent } from '../../components/views/types';
 import { noop } from '../../constants/empty';
 import {
   PerspectiveAspect,

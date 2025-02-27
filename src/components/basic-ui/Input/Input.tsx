@@ -1,12 +1,13 @@
 import classNames from 'classnames';
 import { forwardRef, ReactElement, useMemo, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import { omit } from '../../utils/core/omit';
+import { omit } from '../../../utils/core/omit';
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   renderWhenUnfocused?: (
     props: React.InputHTMLAttributes<HTMLInputElement>
   ) => ReactElement;
+  'data-testid'?: string;
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(

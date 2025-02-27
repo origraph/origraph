@@ -37,7 +37,7 @@ import {
   useRef,
   useState,
 } from 'react';
-import { Button, ButtonProps } from './Button';
+import { Button, ButtonProps } from '../Button/Button';
 
 const MenuContext = createContext<{
   getItemProps: (
@@ -62,6 +62,7 @@ export type MenuProps = ButtonProps & {
   nested?: boolean;
   children?: ReactNode;
   placement?: Placement;
+  'data-testid'?: string;
 };
 
 export const MenuComponent = forwardRef<typeof Button, MenuProps>(

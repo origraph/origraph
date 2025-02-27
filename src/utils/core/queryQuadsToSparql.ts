@@ -28,7 +28,29 @@ export const queryQuadsToSparql = (quads: Quad[]) => {
   // use. We'll probably need to research this, to create a query builder
   // vocabulary that people actually understand intuitively)
 
-  console.log('queryQuadsToSparql', JSON.stringify(quads, null, 2));
+  console.log(
+    'queryQuadsToSparql',
+    JSON.stringify(
+      quads.map((quad) => ({
+        subject: quad.subject,
+        predicate: quad.predicate,
+        object: quad.object,
+        graph: quad.graph,
+      })),
+      null,
+      2
+    )
+  );
 
-  return 'SELECT * WHERE { ?s ?p ?o }';
+  return `SELECT *
+WHERE {
+  {
+    ?s ?p ?o .
+    BIND(<temp:default:graph> AS ?g)
+  }
+  UNION
+  {
+    GRAPH ?g { ?s ?p ?o . }
+  }
+}`;
 };

@@ -2,11 +2,12 @@ import { Quad } from 'n3';
 import { createContext, useContext, useMemo } from 'react';
 import { Updater } from 'use-immer';
 import { v4 as uuid } from 'uuid';
-import { TrigViewState } from '../components/QueryView/TrigView/TrigView';
+import { TrigViewState } from '../components/views/TrigView/TrigView';
 import { noop } from '../constants/empty';
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
 import { getDirectQuads } from '../queries/getDirectQuadsQuery/getDirectQuadsQuery';
 import { partitionSets } from '../utils/core/partitionSets';
+import { queryQuadsToSparql } from '../utils/core/queryQuadsToSparql';
 import { useMutable } from '../utils/core/useMutable';
 import { ComunicaInterface } from './Comunica';
 import {
@@ -64,6 +65,13 @@ export const getNewViewIri = (viewType: ViewType) => `${viewType}-${uuid()}`;
 export const getDefaultAspectsForNewlyOpenedPerspective = (): Partial<
   Record<PerspectiveAspect, PerspectiveAspectMetadata>
 > => ({
+  [PerspectiveAspect.PerspectiveQuery]: {
+    views: {
+      [getNewViewIri(ViewType.TrigView)]: {
+        type: ViewType.TrigView,
+      },
+    },
+  },
   [PerspectiveAspect.ResultPage]: {
     views: {
       [getNewViewIri(ViewType.TrigView)]: {
@@ -160,10 +168,10 @@ export class PerspectiveManager implements PerspectiveManagerProps {
       : null;
     // If the metadata job has already been cleaned up, we can safely default to
     // metadataQuery.currentQuads
-    const _metaQuads =
+    const metaQuads =
       (await metadataJob?.getResults())?.quads ||
       perspectivesByIri[perspectiveIri].metadataQuery.currentQuads;
-    const sparql = `SELECT * WHERE { { ?s ?p ?o . BIND(<default:graph> AS ?g) } UNION { GRAPH ?g { ?s ?p ?o . } } }`; // queryQuadsToSparql(metaQuads);
+    const sparql = queryQuadsToSparql(metaQuads);
     const resultsQuery: QueryState = {
       currentQuads: [],
       getSparql: async () => sparql,
