@@ -1,0 +1,58 @@
+/* Slightly darker navbar background than the default set by _brand.yml > primary */
+.navbar {
+  background-color: var(--cb-dark-1-teal);
+  .origraph-button {
+    color: var(--my-white);
+  }
+}
+
+.social-logo-wrapper {
+  padding-top: 0.3rem;
+}
+.social-logo-wrapper {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35em;
+}
+
+/* separator color overrides */
+.sidebar nav[role='doc-toc'] > ul a {
+  border-left: 1px solid var(--separator-color);
+}
+.sidebar nav[role='doc-toc'] ul > li > a.active,
+.sidebar nav[role='doc-toc'] ul > li > ul > li > a.active {
+  border-left: 3px solid var(--accent-color);
+}
+h2,
+.h2 {
+  border-bottom: 1px solid var(--separator-color);
+}
+
+/* overrides for in-page tabs */
+:root {
+  --my-tab-active-color: var(--cb-dark-1-teal);
+  --my-tab-inactive-color: var(--cb-light-6-yellow);
+  --my-tab-hover-color: var(--cb-6-yellow);
+  --my-tab-line-thickness: 2px;
+}
+.nav-tabs {
+  --bs-nav-tabs-border-width: 0px;
+  --bs-nav-tabs-border-radius: 1.35em;
+  --bs-nav-tabs-link-active-color: var(--my-white);
+  --bs-nav-tabs-link-active-bg: var(--my-tab-active-color);
+
+  .nav-link {
+    font-weight: 600;
+    color: var(--my-black);
+    background: var(--my-tab-inactive-color);
+    &.active {
+      color: var(--my-white);
+    }
+    &:hover:not(.active) {
+      background: var(--my-tab-hover-color);
+    }
+  }
+}
+.tab-content {
+  border: var(--my-tab-line-thickness) solid var(--my-tab-active-color);
+}

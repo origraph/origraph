@@ -14,8 +14,8 @@ color:
     # THESE COLORS ARE MANUALLY COPIED
     # FROM src/core-styles/variables.scss
 
-    # If you change them here, please also
-    # update them there
+    # If you change a color here, please
+    # also update it there
 
     cb-extra-dark-1-teal: '#0e4c32'
     cb-extra-dark-2-orange: '#6f200e'

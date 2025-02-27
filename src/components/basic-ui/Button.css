@@ -13,7 +13,7 @@
   gap: 0.25em;
   text-decoration: none;
   padding: 0.5em 0.75em 0.5em 0.75em;
-  border-radius: 2em;
+  border-radius: 1.35em;
   line-height: 1em;
   border: none;
   outline: none;
@@ -54,7 +54,7 @@
     flex-grow: 1;
   }
 
-  .Icon {
+  .origraph-icon {
     color: var(--background-color);
     &.useMask {
       background-color: var(--background-color);
@@ -77,7 +77,7 @@
   }
   &.minimal {
     color: var(--accent-color);
-    .Icon {
+    .origraph-icon {
       color: var(--accent-color);
       &.useMask {
         background-color: var(--accent-color);
@@ -87,7 +87,7 @@
     outline: 2px solid var(--accent-color);
     &.active {
       color: var(--accent-color-fg);
-      .Icon {
+      .origraph-icon {
         color: var(--accent-color-fg);
         &.useMask {
           background-color: var(--accent-color-fg);
@@ -97,7 +97,7 @@
     &:focus,
     &:hover {
       color: var(--accent-color-extra-fg);
-      .Icon {
+      .origraph-icon {
         color: var(--accent-color-extra-fg);
         &.useMask {
           background-color: var(--accent-color-extra-fg);
