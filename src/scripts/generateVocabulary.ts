@@ -5,8 +5,8 @@ import { clean, sort } from 'semver';
 // Importing the LAST VERSION from the same file that we're about to overwrite;
 // as we're doing some bizarre metaprogramming here, use these imports with
 // care!
-import omit from 'lodash.omit';
 import { IrisByPrefix, Vocabulary, VOCABULARY } from '../constants/vocabulary';
+import { omit } from '../utils/core/omit';
 (async () => {
   const VOCABULARY_DIR = 'public/vocabulary';
 

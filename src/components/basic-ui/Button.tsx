@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import omit from 'lodash.omit';
 import React, { forwardRef, ReactElement, useMemo, useRef } from 'react';
+import { omit } from '../../utils/core/omit';
 import './Button.css';
 import { Icon, IconProps } from './Icon';
 import { MenuProps } from './Menu';

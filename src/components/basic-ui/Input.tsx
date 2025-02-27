@@ -1,7 +1,7 @@
 import classNames from 'classnames';
-import omit from 'lodash.omit';
 import { forwardRef, ReactElement, useMemo, useRef, useState } from 'react';
 import { v4 as uuid } from 'uuid';
+import { omit } from '../../utils/core/omit';
 
 export type InputProps = React.InputHTMLAttributes<HTMLInputElement> & {
   renderWhenUnfocused?: (
