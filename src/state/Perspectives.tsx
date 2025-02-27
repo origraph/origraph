@@ -1,4 +1,4 @@
-import { DataFactory, Quad } from 'n3';
+import { Quad } from 'n3';
 import { createContext, useContext, useMemo } from 'react';
 import { Updater } from 'use-immer';
 import { v4 as uuid } from 'uuid';
@@ -7,7 +7,6 @@ import { noop } from '../constants/empty';
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
 import { getDirectQuads } from '../queries/getDirectQuadsQuery/getDirectQuadsQuery';
 import { partitionSets } from '../utils/core/partitionSets';
-import { queryQuadsToSparql } from '../utils/core/queryQuadsToSparql';
 import { useMutable } from '../utils/core/useMutable';
 import { ComunicaInterface } from './Comunica';
 import {
@@ -16,7 +15,6 @@ import {
   Job,
   JobManager,
 } from './Jobs';
-const { namedNode, quad, literal, defaultGraph } = DataFactory;
 
 export type ViewMetadata = {
   type: ViewType;
@@ -122,9 +120,11 @@ export class PerspectiveManager implements PerspectiveManagerProps {
         });
         console.log('metadataQuery onUpdate', update);
       },
-      onFinish: (update) => {
-        this.initResultsQuery(perspectiveIri);
+      onFinish: async (update) => {
         console.log('metadataQuery onFinish', update);
+        const resultsQuery = await this.initResultsQuery(perspectiveIri);
+        const job = this.jobManager.getJob(resultsQuery.jobIri as string);
+        job?.restart(resultsQuery);
       },
       onError: (error) => {
         console.warn('metadataQuery onError', error);
@@ -160,34 +160,15 @@ export class PerspectiveManager implements PerspectiveManagerProps {
       : null;
     // If the metadata job has already been cleaned up, we can safely default to
     // metadataQuery.currentQuads
-    const metaQuads =
+    const _metaQuads =
       (await metadataJob?.getResults())?.quads ||
       perspectivesByIri[perspectiveIri].metadataQuery.currentQuads;
-    const sparql = queryQuadsToSparql(metaQuads);
+    const sparql = `SELECT * WHERE { { ?s ?p ?o . BIND(<default:graph> AS ?g) } UNION { GRAPH ?g { ?s ?p ?o . } } }`; // queryQuadsToSparql(metaQuads);
     const resultsQuery: QueryState = {
       currentQuads: [],
       getSparql: async () => sparql,
     };
 
-    async function* generatorFn(initialInput: QueryState) {
-      console.log(
-        'resultsQuery generatorFn',
-        JSON.stringify(initialInput, null, 2)
-      );
-      const testQuad = quad(
-        namedNode('test:results:subject:result'),
-        namedNode('test:results:predicate:result'),
-        literal('test results literal'),
-        defaultGraph()
-      );
-      yield {
-        progress: 0.25,
-        quads: [testQuad],
-      };
-      return {
-        quads: [testQuad],
-      };
-    }
     const resultsJob = this.jobManager.createJob<
       QueryState,
       BaseIncrementalInput,
@@ -212,13 +193,15 @@ export class PerspectiveManager implements PerspectiveManagerProps {
         console.warn('resultsQuery onError', error);
       },
       initialInput: resultsQuery,
-      generatorFn,
+      generatorFn: this.comunicaInterface.getSelectQueryGeneratorFunction(),
+      waitToStart: true,
       cleanupDelay: -1, // Don't auto-cleanup results jobs, so it's easy to restart the perspective query
     });
     resultsQuery.jobIri = resultsJob.iri;
     this.setPerspectivesByIri((draft) => {
       draft[perspectiveIri].resultsQuery = resultsQuery;
     });
+    return resultsQuery;
   }
 
   updateOpenPerspectives(perspectiveIris: Set<string>) {
