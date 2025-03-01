@@ -1,0 +1,28 @@
+.origraph-title-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  align-items: baseline;
+  padding: 0.5em;
+
+  .title {
+    display: flex;
+    flex-direction: column;
+
+    h4,
+    h5 {
+      margin: 0;
+    }
+    h5 {
+      font-weight: 200;
+    }
+  }
+
+  & > :not(.gap) {
+    flex: 0 1 auto;
+  }
+
+  .spacer {
+    flex: 1 1 auto;
+  }
+}

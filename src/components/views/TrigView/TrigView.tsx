@@ -1,5 +1,6 @@
 import { Editor } from '@monaco-editor/react';
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useContext, useEffect, useMemo, useState } from 'react';
+import saveImg from '../../../assets/save.svg';
 import { PerspectiveAspect, ViewType } from '../../../constants/vocabulary';
 import {
   BaseViewState,
@@ -9,6 +10,8 @@ import {
 } from '../../../state/Perspectives';
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
 import { isDarkMode } from '../../../utils/ui/isDarkMode';
+import { MenuItemProps } from '../../basic-ui/Menu/Menu';
+import { TitleBar } from '../../basic-ui/TitleBar/TitleBar';
 import '../views.css';
 import './TrigView.css';
 
@@ -86,6 +89,17 @@ ${await perspective.resultsQuery.getSparql()}`);
     resultsJob,
   ]);
 
+  const menuItemProps: (MenuItemProps & { key: string })[] = useMemo(
+    () => [
+      {
+        key: 'save',
+        leftIcons: [{ src: saveImg }],
+        label: 'Save',
+      },
+    ],
+    []
+  );
+
   const [handleUpdate, _setHandleUpdate] = useState<(update: string) => void>(
     () => (update: string) => {
       console.log(`monaco update: ${update}`);
@@ -93,7 +107,12 @@ ${await perspective.resultsQuery.getSparql()}`);
   );
 
   return (
-    <div className="TrigView">
+    <div className="TrigView origraph-view">
+      <TitleBar
+        title={perspectiveIri} // TODO: look this up
+        subtitle={perspectiveAspect}
+        menuItemProps={menuItemProps}
+      />
       {/* <nav>
         <Button
           className="minimal"

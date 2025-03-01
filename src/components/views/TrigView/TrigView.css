@@ -1,11 +1,6 @@
 .TrigView {
-  flex: 1 0 auto;
   position: relative;
   .TrigView-monaco-wrapper {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+    flex: 1 0 auto;
   }
 }

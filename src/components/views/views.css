@@ -1,7 +1,4 @@
-.OrigraphView {
-  nav {
-    position: absolute;
-    right: 0;
-    top: 1em;
-  }
+.origraph-view {
+  display: flex;
+  flex-direction: column;
 }

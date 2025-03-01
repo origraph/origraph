@@ -58,7 +58,13 @@ export const ALL_VOCABULARIES = {
   '0.1.0': {
     versionNumber: '0.1.0',
     versionIri: 'https://origraph.net/vocabulary/v0.1.0',
-    unprefixedIris: ['https://origraph.net/vocabulary/v0.1.0'],
+    unprefixedIris: [
+      'https://origraph.net/vocabulary/v0.1.0',
+      '"Results"',
+      '"Query Definition"',
+      '"Overview"',
+      '"Current Selection"',
+    ],
     irisByPrefix: {
       origraph: {
         ts: {
@@ -101,6 +107,7 @@ export const ALL_VOCABULARIES = {
       },
       rdfs: {
         Vocabulary: 'http://www.w3.org/2000/01/rdf-schema#Vocabulary',
+        label: 'http://www.w3.org/2000/01/rdf-schema#label',
         subClassOf: 'http://www.w3.org/2000/01/rdf-schema#subClassOf',
         subPropertyOf: 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf',
       },
@@ -170,6 +177,7 @@ export const ALL_VOCABULARIES = {
         'ui',
         'ResultPage',
       ],
+      'http://www.w3.org/2000/01/rdf-schema#label': ['rdfs', 'label'],
       'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery': [
         'origraph',
         'ui',
