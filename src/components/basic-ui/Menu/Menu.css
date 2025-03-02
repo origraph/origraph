@@ -18,3 +18,11 @@
       0 0 100vh var(--background-color) inset;
   }
 }
+body > div[data-floating-ui-portal] {
+  /*
+  As far as I can tell from the docs, this isn't an ideal floating-ui practice,
+  but the monaco editor uses a z-index up to 5; we need menus to display higher
+  */
+  position: absolute;
+  z-index: 6;
+}

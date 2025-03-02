@@ -1,6 +1,6 @@
 import { Editor } from '@monaco-editor/react';
 import { FC, useContext, useEffect, useMemo, useState } from 'react';
-import saveImg from '../../../assets/save.svg';
+import saveImg from '../../../assets/save.svg?raw';
 import { PerspectiveAspect, ViewType } from '../../../constants/vocabulary';
 import {
   BaseViewState,
@@ -93,7 +93,8 @@ ${await perspective.resultsQuery.getSparql()}`);
     () => [
       {
         key: 'save',
-        leftIcons: [{ src: saveImg }],
+        collapse: false,
+        leftIcons: [{ srcSvg: saveImg }],
         label: 'Save',
       },
     ],
@@ -109,22 +110,10 @@ ${await perspective.resultsQuery.getSparql()}`);
   return (
     <div className="TrigView origraph-view">
       <TitleBar
-        title={perspectiveIri} // TODO: look this up
+        title={perspectiveIri} // TODO: look up the label; don't use the iri
         subtitle={perspectiveAspect}
         menuItemProps={menuItemProps}
       />
-      {/* <nav>
-        <Button
-          className="minimal"
-          collapse
-          rightIcons={[{ src: showDesktop }]}
-        >
-          Overview
-        </Button>
-        <Button className="minimal" collapse rightIcons={[{ src: hamburger }]}>
-          View
-        </Button>
-      </nav> */}
       <div className="TrigView-monaco-wrapper">
         <Editor
           theme={isDarkMode() ? 'vs-dark' : 'vs-light'}

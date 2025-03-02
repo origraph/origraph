@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { FC, useMemo } from 'react';
+import hamburgerImg from '../../../assets/hamburger.svg?raw';
 import { Button, ButtonProps } from '../Button/Button';
 import { Menu, MenuItem, MenuItemProps } from '../Menu/Menu';
 import './TitleBar.css';
@@ -53,7 +54,7 @@ export const TitleBar: FC<TitleBarProps> = ({
       <div className="spacer" />
 
       {shortcutButtons}
-      <Menu label="View Menu" collapse>
+      <Menu label="View Menu" leftIcons={[{ srcSvg: hamburgerImg }]} collapse>
         {menuItems}
       </Menu>
       {

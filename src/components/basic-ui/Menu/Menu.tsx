@@ -38,6 +38,7 @@ import {
   useState,
 } from 'react';
 import { Button, ButtonProps } from '../Button/Button';
+import './Menu.css';
 
 const MenuContext = createContext<{
   getItemProps: (

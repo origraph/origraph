@@ -6,16 +6,44 @@ export type IconProps = {
   className?: string;
   'data-testid'?: string;
 } & (
-  | { src?: never; character: string; component?: never; embedInSvg?: never }
-  | { src: string; character?: never; component?: never; embedInSvg?: never }
   | {
       src?: never;
+      srcSvg?: never;
+      character: string;
+      component?: never;
+      embedInSvg?: never;
+    }
+  | {
+      src: string;
+      srcSvg?: never;
+      character?: never;
+      component?: never;
+      embedInSvg?: never;
+    }
+  | {
+      src?: never;
+      srcSvg: string;
+      character?: never;
+      component?: never;
+      embedInSvg?: never;
+    }
+  | {
+      src?: never;
+      srcSvg?: never;
       character?: never;
       component: () => ReactElement;
       embedInSvg?: never;
     }
   | {
       src: string;
+      srcSvg?: never;
+      character?: never;
+      component?: never;
+      embedInSvg: { size: number; mask: string; wrapperClass?: string };
+    }
+  | {
+      src: never;
+      srcSvg?: string;
       character?: never;
       component?: never;
       embedInSvg: { size: number; mask: string; wrapperClass?: string };
@@ -23,12 +51,23 @@ export type IconProps = {
 );
 
 export const Icon: FC<IconProps> = ({
-  src,
+  src: regularSrc,
+  srcSvg,
   character,
   component,
   embedInSvg,
   className,
 }) => {
+  let src = regularSrc;
+  if (srcSvg) {
+    // REALLY annoying: React doesn't seem to cooperate with inline mask-image:
+    // url() for SVG images unless they're base64-encoded. This was totally fine
+    // with preact... TODO: should probably figure out how to configure this
+    // with vite instead
+
+    // Also, this may be unnecessary for embedInSvg?
+    src = `data:image/svg+xml;base64,${btoa(srcSvg)}`;
+  }
   if (embedInSvg) {
     // TODO: for now, doing a 2px workaround for some oddities in how mask-image happens to render...
     const buffer = 2;
@@ -66,7 +105,7 @@ export const Icon: FC<IconProps> = ({
         className,
         { useMask: Boolean(src), characterAsIcon: Boolean(character) },
       ])}
-      style={src ? { maskImage: `url('${src}')` } : undefined}
+      style={{ maskImage: src && `url(${src})` }}
     >
       {character || component?.() || ''}
     </div>
