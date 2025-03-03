@@ -30,16 +30,12 @@ export type QueryState = {
   jobIri?: string;
 };
 
-type QueryOutput = {
-  quads: Quad[];
+export type QueryFinalOutput = { quads: Quad[] };
+
+export type QueryIncrementalOutput = BaseIncrementalOutput & {
+  quadCache: Quad[];
+  lastQuadChunk: Quad[];
 };
-
-export type QueryFinalOutput = QueryOutput;
-
-export type QueryIncrementalOutput = QueryOutput &
-  BaseIncrementalOutput & {
-    quad: Quad;
-  };
 
 type PerspectiveAspectMetadata = {
   views: Record<string, ViewMetadata>;
@@ -127,7 +123,7 @@ export class PerspectiveManager implements PerspectiveManagerProps {
               `metadataQuery was unexpectedly set to null while it was running`
             );
           }
-          draft[perspectiveIri].metadataQuery.currentQuads = update.quads;
+          draft[perspectiveIri].metadataQuery.currentQuads = update.quadCache;
         });
         console.log('metadataQuery onUpdate', update);
       },
@@ -193,7 +189,7 @@ export class PerspectiveManager implements PerspectiveManagerProps {
               `resultsQuery was unexpectedly set to null while it was running`
             );
           }
-          draft[perspectiveIri].resultsQuery.currentQuads = update.quads;
+          draft[perspectiveIri].resultsQuery.currentQuads = update.quadCache;
         });
         console.log('resultsQuery onUpdate', update);
       },

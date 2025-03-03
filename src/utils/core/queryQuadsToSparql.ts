@@ -52,5 +52,5 @@ WHERE {
   {
     GRAPH ?g { ?s ?p ?o . }
   }
-}`;
+} LIMIT 1000`;
 };

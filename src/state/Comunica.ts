@@ -26,6 +26,16 @@ enum LockStates {
 }
 type LockState = (typeof LockStates)[keyof typeof LockStates];
 
+type QueryCacheSettings =
+  | {
+      noCache?: never;
+      maxCachedQuads: number;
+    }
+  | {
+      noCache: true;
+      maxCachedQuads?: never;
+    };
+
 export class ComunicaInterface {
   protected operationPercentDone: number = 100;
   store: Quadstore;
@@ -72,27 +82,29 @@ export class ComunicaInterface {
     this.projectsByVocabulary = {};
     this.installedVocabularies = new Set();
 
-    for await (const { quad } of this.selectQuery({
+    for await (const { lastQuadChunk } of this.selectQuery({
       sparql: getVocabulariesQuery(),
     })) {
-      if (
-        quad.predicate.value ===
-        EXTERNAL_VOCABULARY.irisByPrefix.void.vocabulary
-      ) {
-        const project = quad.subject.value;
-        const vocabulary = quad.object.value;
-        this.projectsByVocabulary[vocabulary] = new Set([
-          project,
-          ...(this.projectsByVocabulary[vocabulary] || []),
-        ]);
-      } else if (
-        quad.subject.value ===
-          VOCABULARY.irisByPrefix.origraphGlobal.vocabularies &&
-        quad.predicate.value ===
-          VOCABULARY.irisByPrefix.origraphGlobal.installed_version
-      ) {
-        this.installedVocabularies.add(quad.object.value);
-      }
+      lastQuadChunk.forEach((quad) => {
+        if (
+          quad.predicate.value ===
+          EXTERNAL_VOCABULARY.irisByPrefix.void.vocabulary
+        ) {
+          const project = quad.subject.value;
+          const vocabulary = quad.object.value;
+          this.projectsByVocabulary[vocabulary] = new Set([
+            project,
+            ...(this.projectsByVocabulary[vocabulary] || []),
+          ]);
+        } else if (
+          quad.subject.value ===
+            VOCABULARY.irisByPrefix.origraphGlobal.vocabularies &&
+          quad.predicate.value ===
+            VOCABULARY.irisByPrefix.origraphGlobal.installed_version
+        ) {
+          this.installedVocabularies.add(quad.object.value);
+        }
+      });
     }
 
     const requiredVocabularies = new Set([
@@ -101,7 +113,7 @@ export class ComunicaInterface {
     ]);
 
     const {
-      // onlyA: vocabulariesToRemove, TODO
+      // onlyA: vocabulariesToRemove, // TODO
       onlyB: vocabulariesToInstall,
     } = partitionSets(this.installedVocabularies, requiredVocabularies);
 
@@ -123,16 +135,17 @@ export class ComunicaInterface {
 
   async *selectQuery<T extends BaseIncrementalInput | undefined>({
     sparql,
-    maxCachedQuads,
+    settings: { noCache, maxCachedQuads } = { maxCachedQuads: 0 },
   }: {
     sparql: string;
-    maxCachedQuads?: number;
+    settings?: QueryCacheSettings;
   }): AsyncGenerator<QueryIncrementalOutput, QueryFinalOutput, T> {
-    let quads: Quad[] = [];
+    let quadCache: Quad[] = [];
+    let quadChunk: Quad[] = [];
     let done = false;
-    let resolve: (quad: Quad | null) => void;
+    let resolve: (quad: Quad[] | null) => void;
     let reject: (error?: Error) => void;
-    let promise = new Promise<Quad | null>((res, rej) => {
+    let promise = new Promise<Quad[] | null>((res, rej) => {
       resolve = res;
       reject = rej;
     });
@@ -145,7 +158,8 @@ export class ComunicaInterface {
         binding.get('o'),
         binding.get('g')
       );
-      resolve(quad);
+      quadChunk.push(quad);
+      resolve(quadChunk);
     });
     bindingsStream.on('error', (err) => {
       reject(err);
@@ -156,34 +170,39 @@ export class ComunicaInterface {
     });
 
     while (!done) {
-      const quad = await promise;
+      const lastQuadChunk = await promise;
+      quadChunk = [];
       promise = new Promise((res, rej) => {
         resolve = res;
         reject = rej;
       });
-      if (quad) {
-        quads = [
-          ...(maxCachedQuads !== undefined && quads.length >= maxCachedQuads
-            ? quads.slice(maxCachedQuads - quads.length + 1)
-            : quads),
-          quad,
-        ];
+      if (lastQuadChunk) {
+        if (!noCache) {
+          quadCache = [...quadCache, ...lastQuadChunk];
+          if (
+            maxCachedQuads !== undefined &&
+            maxCachedQuads > 0 &&
+            quadCache.length > maxCachedQuads
+          ) {
+            quadCache.splice(0, quadCache.length - maxCachedQuads);
+          }
+        }
         const input = yield {
           progress: 0.5,
-          quads,
-          quad,
+          quadCache,
+          lastQuadChunk,
         } as QueryIncrementalOutput;
         if (input?.forceStop) {
-          return { quads } as QueryFinalOutput;
+          return { quads: quadCache } as QueryFinalOutput;
         }
       } else {
-        return { progress: 1.0, quads } as QueryFinalOutput;
+        return { progress: 1.0, quads: quadCache } as QueryFinalOutput;
       }
     }
-    return { quads } as QueryFinalOutput;
+    return { quads: quadCache } as QueryFinalOutput;
   }
 
-  getSelectQueryGeneratorFunction(maxCachedQuads?: number) {
+  getSelectQueryGeneratorFunction(settings?: QueryCacheSettings) {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this;
     async function* generatorFn({
@@ -195,16 +214,16 @@ export class ComunicaInterface {
     > {
       const iterator = self.selectQuery({
         sparql: await getSparql(),
-        maxCachedQuads,
+        settings,
       });
 
       let lastInput: BaseIncrementalInput = { forceStop: false };
       while (true) {
         const output = await iterator.next(lastInput);
         if (!lastInput.forceStop && !output.done) {
-          lastInput = yield output.value;
+          lastInput = yield output.value as QueryIncrementalOutput;
         } else {
-          return output.value;
+          return output.value as QueryFinalOutput;
         }
       }
     }

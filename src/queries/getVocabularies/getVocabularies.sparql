@@ -1,4 +1,4 @@
-PREFIX app: <app:origraph:global:>
+PREFIX origraphGlobal: <https://origraph.net/vocabulary/global/>
 PREFIX void: <http://rdfs.org/ns/void#>
 
 # Gets all versions of the origraph ontology that are currently installed in the
@@ -6,9 +6,9 @@ PREFIX void: <http://rdfs.org/ns/void#>
 SELECT DISTINCT ?s ?p ?o ?g WHERE {
   {
     GRAPH ?g {
-      app:vocabularies app:installed_version ?o .
-      BIND(app:vocabularies AS ?s)
-      BIND(app:installed_version AS ?p)
+      origraphGlobal:vocabularies origraphGlobal:installed_version ?o .
+      BIND(origraphGlobal:vocabularies AS ?s)
+      BIND(origraphGlobal:installed_version AS ?p)
     }
   } UNION {
     GRAPH ?g {
