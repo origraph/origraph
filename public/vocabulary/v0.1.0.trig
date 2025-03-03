@@ -1,55 +1,63 @@
-@prefix origraph: <https://origraph.net/vocabulary/v0.1.0> .
-@prefix : <https://origraph.net/vocabulary/v0.1.0/> .
-@prefix ui: <https://origraph.net/vocabulary/v0.1.0/ui/> .
-@prefix ts: <https://origraph.net/vocabulary/v0.1.0/typescript/> .
+@prefix origraph: <https://origraph.net/vocabulary/v0.1.0/> .
+@prefix origraphGlobal: <https://origraph.net/vocabulary/global/> .
+@prefix origraphVersion: <https://origraph.net/vocabulary/v0.1.0> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ts: <https://origraph.net/vocabulary/v0.1.0/typescript/> .
+@prefix ui: <https://origraph.net/vocabulary/v0.1.0/ui/> .
+@prefix void: <http://rdfs.org/ns/void#> .
 
-origraph: {
-  origraph: a rdfs:Vocabulary .
+origraphVersion: {
+  # "Installed" / available versions of the origraph vocabulary
+  # are queryable from a versionless global.
+  origraphGlobal:vocabularies origraphGlobal:installed_version origraphVersion: .
+  # All projects should have a descriptive triple like:
+  # <my:project> a void:Dataset;
+  #   void:vocabulary origraph: .
 
-  :Node :inheritsFrom :Item .
-  :Link :inheritsFrom :Item .
-  :Group :inheritsFrom :Item .
-  :Attribute :inheritsFrom :Item .
+  # Core origraph concepts
+  origraph:Node origraph:inheritsFrom origraph:Item .
+  origraph:Link origraph:inheritsFrom origraph:Item .
+  origraph:Group origraph:inheritsFrom origraph:Item .
+  origraph:Attribute origraph:inheritsFrom origraph:Item .
   
-  :Hyperedge :inheritsFrom :Group .
+  origraph:Hyperedge origraph:inheritsFrom origraph:Group .
 
-  # Introspection stuff, i.e. how Origraph should render its own concepts
-  # by default
-  :inheritsFrom :inheritsFrom :Link .
-  :memberOfGroup :inheritsFrom :Link .
+  # Introspection stuff, i.e. how Origraph should render its own concepts by
+  # default
+  origraph:inheritsFrom origraph:inheritsFrom origraph:Link .
+  origraph:memberOfGroup origraph:inheritsFrom origraph:Link .
 
   # UI
-  ui:ViewType :inheritsFrom :Group ;
+  ui:ViewType origraph:inheritsFrom origraph:Group ;
     ts:translateAs ts:Enum .
-  ui:TrigView :memberOfGroup ui:ViewType .
+  ui:TrigView origraph:memberOfGroup ui:ViewType .
   # TODO: add more views here...
-  # ui:NeldView :memberOfGroup ui:ViewType .
+  # ui:NeldView origraph:memberOfGroup ui:ViewType .
 
-  ui:PerspectiveAspect :inheritsFrom :Group ;
+  ui:PerspectiveAspect origraph:inheritsFrom origraph:Group ;
     ts:translateAs ts:Enum .
-  ui:ResultPage :memberOfGroup ui:PerspectiveAspect ;
+  ui:ResultPage origraph:memberOfGroup ui:PerspectiveAspect ;
     rdfs:label "Results".
-  ui:PerspectiveQuery :memberOfGroup ui:PerspectiveAspect ;
+  ui:PerspectiveQuery origraph:memberOfGroup ui:PerspectiveAspect ;
     rdfs:label "Query Definition".
 
-  :Constants
-    ui:overviewQueryIri :OverviewQuery ;
-    ui:selectionQueryIri :SelectionQuery ;
-    ui:basePerspectiveIri :Perspective ;
-    ui:baseJobIri :Job .
+  origraph:Constants
+    ui:overviewQueryIri origraph:OverviewQuery ;
+    ui:selectionQueryIri origraph:SelectionQuery ;
+    ui:basePerspectiveIri origraph:Perspective ;
+    ui:baseJobIri origraph:Job .
   
-  :OverviewQuery :inheritsFrom :Perspective ;
+  origraph:OverviewQuery origraph:inheritsFrom origraph:Perspective ;
     rdfs:label "Overview".
-  :SelectionQuery :inheritsFrom :Perspective ;
+  origraph:SelectionQuery origraph:inheritsFrom origraph:Perspective ;
     rdfs:label "Current Selection".
 
   # Some basic adapters to do the "right" thing when using RDF data from
   # elsewhere; Origraph uses a vocabulary that's at the extreme informal end of
   # the spectrum. For our purposes, deliberately vague notions of inheritance
   # are a feature, not a bug, to support rapid re-interpretation
-  rdf:type :inheritsFrom :inheritsFrom .
-  rdfs:subClassOf :inheritsFrom :inheritsFrom .
-  rdfs:subPropertyOf :inheritsFrom :inheritsFrom .
+  rdf:type origraph:inheritsFrom origraph:inheritsFrom .
+  rdfs:subClassOf origraph:inheritsFrom origraph:inheritsFrom .
+  rdfs:subPropertyOf origraph:inheritsFrom origraph:inheritsFrom .
 }

@@ -4,7 +4,12 @@ import { DataFactory, Quad, StreamParser } from 'n3';
 import { Quadstore } from 'quadstore';
 import { Engine } from 'quadstore-comunica';
 import { readableFromWeb } from 'readable-from-web';
+import { EXTERNAL_VOCABULARY } from '../constants/iris';
+import { VOCABULARY } from '../constants/vocabulary';
+import { getVocabulariesQuery } from '../queries/getVocabularies/getVocabularies';
 import { AsyncLock } from '../utils/core/asyncLock';
+import { getVersionNumberFromOrigraphVocabIri } from '../utils/core/getVersionNumberFromOrigraphVocabIri';
+import { partitionSets } from '../utils/core/partitionSets';
 import { BaseIncrementalInput } from './Jobs';
 import {
   QueryFinalOutput,
@@ -29,6 +34,8 @@ export class ComunicaInterface {
   lock: AsyncLock<LockState> = new AsyncLock(
     LockStates.UNINITIALIZED as LockState
   );
+  projectsByVocabulary: Record<string, Set<string>> = {};
+  installedVocabularies: Set<string> = new Set();
 
   constructor() {
     this.store = new Quadstore({
@@ -62,15 +69,47 @@ export class ComunicaInterface {
     // ontology files instead of ingesting them into quadstore. But these files
     // are still tiny, so there shouldn't be noticeable overhead for now...
 
-    // TODO: need to check which ontology versions are already in use; don't
-    // add stuff we already have in IndexedDB. Current implementation is
-    // duplicating things on page reload, so I'm disabling this function for now
-    // (re-enable once if you Clear site data)
-    const ontologyVersions = ['v0.1.0'];
+    this.projectsByVocabulary = {};
+    this.installedVocabularies = new Set();
+
+    for await (const { quad } of this.selectQuery({
+      sparql: getVocabulariesQuery(),
+    })) {
+      if (
+        quad.predicate.value ===
+        EXTERNAL_VOCABULARY.irisByPrefix.void.vocabulary
+      ) {
+        const project = quad.subject.value;
+        const vocabulary = quad.object.value;
+        this.projectsByVocabulary[vocabulary] = new Set([
+          project,
+          ...(this.projectsByVocabulary[vocabulary] || []),
+        ]);
+      } else if (
+        quad.subject.value ===
+          VOCABULARY.irisByPrefix.origraphGlobal.vocabularies &&
+        quad.predicate.value ===
+          VOCABULARY.irisByPrefix.origraphGlobal.installed_version
+      ) {
+        this.installedVocabularies.add(quad.object.value);
+      }
+    }
+
+    const requiredVocabularies = new Set([
+      VOCABULARY.versionIri,
+      ...Object.keys(this.projectsByVocabulary),
+    ]);
+
+    const {
+      // onlyA: vocabulariesToRemove, TODO
+      onlyB: vocabulariesToInstall,
+    } = partitionSets(this.installedVocabularies, requiredVocabularies);
 
     await Promise.all(
-      ontologyVersions.map(async (ontologyVersion) => {
-        const response = await fetch(`vocabulary/${ontologyVersion}.trig`);
+      Array.from(vocabulariesToInstall).map(async (vocabularyIri: string) => {
+        const versionNumber =
+          getVersionNumberFromOrigraphVocabIri(vocabularyIri);
+        const response = await fetch(`vocabulary/v${versionNumber}.trig`);
         if (response.ok && response.body) {
           const parser = new StreamParser({ format: 'application/trig' });
           return await this.store.putStream(
@@ -80,6 +119,68 @@ export class ComunicaInterface {
         }
       })
     );
+  }
+
+  async *selectQuery<T extends BaseIncrementalInput | undefined>({
+    sparql,
+    maxCachedQuads,
+  }: {
+    sparql: string;
+    maxCachedQuads?: number;
+  }): AsyncGenerator<QueryIncrementalOutput, QueryFinalOutput, T> {
+    let quads: Quad[] = [];
+    let done = false;
+    let resolve: (quad: Quad | null) => void;
+    let reject: (error?: Error) => void;
+    let promise = new Promise<Quad | null>((res, rej) => {
+      resolve = res;
+      reject = rej;
+    });
+
+    const bindingsStream = await this.engine.queryBindings(sparql);
+    bindingsStream.on('data', (binding) => {
+      const quad = new Quad(
+        binding.get('s'),
+        binding.get('p'),
+        binding.get('o'),
+        binding.get('g')
+      );
+      resolve(quad);
+    });
+    bindingsStream.on('error', (err) => {
+      reject(err);
+    });
+    bindingsStream.on('end', () => {
+      done = true;
+      resolve(null);
+    });
+
+    while (!done) {
+      const quad = await promise;
+      promise = new Promise((res, rej) => {
+        resolve = res;
+        reject = rej;
+      });
+      if (quad) {
+        quads = [
+          ...(maxCachedQuads !== undefined && quads.length >= maxCachedQuads
+            ? quads.slice(maxCachedQuads - quads.length + 1)
+            : quads),
+          quad,
+        ];
+        const input = yield {
+          progress: 0.5,
+          quads,
+          quad,
+        } as QueryIncrementalOutput;
+        if (input?.forceStop) {
+          return { quads } as QueryFinalOutput;
+        }
+      } else {
+        return { progress: 1.0, quads } as QueryFinalOutput;
+      }
+    }
+    return { quads } as QueryFinalOutput;
   }
 
   getSelectQueryGeneratorFunction(maxCachedQuads?: number) {
@@ -92,59 +193,20 @@ export class ComunicaInterface {
       QueryFinalOutput,
       BaseIncrementalInput
     > {
-      let quads: Quad[] = [];
-      let done = false;
-      let resolve: (quad: Quad | null) => void;
-      let reject: (error?: Error) => void;
-      let promise = new Promise<Quad | null>((res, rej) => {
-        resolve = res;
-        reject = rej;
+      const iterator = self.selectQuery({
+        sparql: await getSparql(),
+        maxCachedQuads,
       });
 
-      const bindingsStream = await self.engine.queryBindings(await getSparql());
-      bindingsStream.on('data', (binding) => {
-        const quad = new Quad(
-          binding.get('s'),
-          binding.get('p'),
-          binding.get('o'),
-          binding.get('g')
-        );
-        resolve(quad);
-      });
-      bindingsStream.on('error', (err) => {
-        reject(err);
-      });
-      bindingsStream.on('end', () => {
-        done = true;
-        resolve(null);
-      });
-
-      while (!done) {
-        const quad = await promise;
-        console.log('quad', quad);
-        promise = new Promise((res, rej) => {
-          resolve = res;
-          reject = rej;
-        });
-        if (quad) {
-          quads = [
-            ...(maxCachedQuads !== undefined && quads.length >= maxCachedQuads
-              ? quads.slice(maxCachedQuads - quads.length + 1)
-              : quads),
-            quad,
-          ];
-          const input = yield {
-            progress: 0.5,
-            quads,
-          } as QueryIncrementalOutput;
-          if (input.forceStop) {
-            return { quads } as QueryFinalOutput;
-          }
+      let lastInput: BaseIncrementalInput = { forceStop: false };
+      while (true) {
+        const output = await iterator.next(lastInput);
+        if (!lastInput.forceStop && !output.done) {
+          lastInput = yield output.value;
         } else {
-          return { progress: 1.0, quads } as QueryFinalOutput;
+          return output.value;
         }
       }
-      return { quads } as QueryFinalOutput;
     }
     return generatorFn;
   }

@@ -1,0 +1,20 @@
+PREFIX app: <app:origraph:global:>
+PREFIX void: <http://rdfs.org/ns/void#>
+
+# Gets all versions of the origraph ontology that are currently installed in the
+# browser's quadstore, as well as all vocabularies that are in use by specific projects
+SELECT DISTINCT ?s ?p ?o ?g WHERE {
+  {
+    GRAPH ?g {
+      app:vocabularies app:installed_version ?o .
+      BIND(app:vocabularies AS ?s)
+      BIND(app:installed_version AS ?p)
+    }
+  } UNION {
+    GRAPH ?g {
+      ?s a void:Dataset ;
+        void:vocabulary ?o .
+      BIND(void:vocabulary AS ?p)
+    }
+  }
+}

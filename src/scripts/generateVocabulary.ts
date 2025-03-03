@@ -1,16 +1,17 @@
 import { NamedNode as RdfJsNamedNode } from '@rdfjs/types/data-model';
 import fs from 'fs';
 import n3, { NamedNode as N3NamedNode, Quad, Term } from 'n3';
-import { clean, sort } from 'semver';
+import { sort } from 'semver';
 // Importing the LAST VERSION from the same file that we're about to overwrite;
 // as we're doing some bizarre metaprogramming here, use these imports with
 // care!
 import { IrisByPrefix, Vocabulary, VOCABULARY } from '../constants/vocabulary';
+import { getVersionNumberFromOrigraphVocabIri } from '../utils/core/getVersionNumberFromOrigraphVocabIri';
 import { omit } from '../utils/core/omit';
 (async () => {
   const VOCABULARY_DIR = 'public/vocabulary';
 
-  const vocabularyByVersionIri: Record<
+  const vocabulariesByIri: Record<
     string,
     Vocabulary & {
       enums: Record<string, string[]>;
@@ -41,26 +42,27 @@ import { omit } from '../utils/core/omit';
             );
           }
           if (prefixes) {
-            const origraphPrefix = getIriFromNode(prefixes.origraph);
+            const origraphVersion = getIriFromNode(prefixes.origraphVersion);
             if (!versionIri) {
-              versionIri = origraphPrefix;
-            } else if (versionIri !== origraphPrefix) {
+              versionIri = origraphVersion;
+            } else if (versionIri !== origraphVersion) {
               reject(
                 new Error(
-                  `Expected ${path} to define its @prefix origraph: <${versionIri}> .\ninstead of @prefix origraph: <${origraphPrefix}> .`
+                  `Expected ${path} to define
+
+@prefix origraphVersion: <${versionIri}> .
+
+instead of
+
+@prefix origraphVersion: <${origraphVersion}> .
+
+`
                 )
               );
             }
             Object.entries(prefixes).forEach(([key, prefix]) => {
-              // Kinda strange tweak to make both our TriG and typescript more
-              // natural; in typescript we want to reference IRIs like
-              // origraph.ui.TrigView, but in TriG we want to use : for our base
-              // IRI, and origraph: for the named graph & vocabulary itself.
-              // This means we need to swap origraph: for : to enable natural
-              // typescript references (and we can omit the origraph: prefix)
-              if (key === '') {
-                allPrefixes.origraph = getIriFromNode(prefix);
-              } else if (key !== 'origraph') {
+              // Don't nest origraph under origraphVersion in irisByPrefix
+              if (key !== 'origraphVersion') {
                 allPrefixes[key] = getIriFromNode(prefix);
               }
             });
@@ -107,7 +109,7 @@ import { omit } from '../utils/core/omit';
           }
           if (quad === null) {
             // quad === null means this file has finished parsing
-            if (vocabularyByVersionIri[versionIri]) {
+            if (vocabulariesByIri[versionIri]) {
               reject(`Duplicate vocabulary version: ${versionIri}`);
             }
 
@@ -191,9 +193,8 @@ import { omit } from '../utils/core/omit';
             );
 
             // Check and include the version number
-            const versionNumber = clean(
-              versionIri.match(/v([.\d]+)$/)?.[1] || ''
-            );
+            const versionNumber =
+              getVersionNumberFromOrigraphVocabIri(versionIri);
             if (!versionNumber) {
               reject(
                 new Error(
@@ -202,7 +203,7 @@ import { omit } from '../utils/core/omit';
               );
               return;
             }
-            vocabularyByVersionIri[versionNumber] = {
+            vocabulariesByIri[versionIri] = {
               versionNumber,
               versionIri,
               unprefixedIris: Array.from(unprefixedIris),
@@ -212,7 +213,7 @@ import { omit } from '../utils/core/omit';
               constants,
               enums,
             };
-            resolve(vocabularyByVersionIri[versionIri]);
+            resolve(vocabulariesByIri[versionIri]);
           }
         });
       });
@@ -229,7 +230,8 @@ import { omit } from '../utils/core/omit';
 
   // TODO: for now, we're just going to hard-code 0.1.0 as the universal, unchanging
   // vocabulary
-  const exportedVocabulary = vocabularyByVersionIri['0.1.0'];
+  const exportedVocabulary =
+    vocabulariesByIri['https://origraph.net/vocabulary/v0.1.0'];
 
   // Convert objects into typescript enums
   const enumChunks = Object.entries(exportedVocabulary.enums)
@@ -248,7 +250,7 @@ ${memberIris
 
   // Cleanup before outputting vocabularies
   const exportedVocabularies = Object.fromEntries(
-    Object.entries(vocabularyByVersionIri).map(([vocabIri, vocab]) => {
+    Object.entries(vocabulariesByIri).map(([vocabIri, vocab]) => {
       // Remove temporary stuff we don't want in the output
       const cleanedVocab = omit(vocab, ['enums']);
       // Make constants reference-able by their abbreviated definition
@@ -332,7 +334,7 @@ export const VOCABULARY_VERSION_ORDER = ${formatJsObj(sort(Object.keys(exportedV
 export const ALL_VOCABULARIES = ${formatJsObj(exportedVocabularies)};
 
 // TODO: this hard-coding is likely to change...
-export const VOCABULARY = ALL_VOCABULARIES['0.1.0'];
+export const VOCABULARY = ALL_VOCABULARIES['https://origraph.net/vocabulary/v0.1.0'];
 
 ${enumChunks}
 `

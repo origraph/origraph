@@ -5,7 +5,7 @@ import { v4 as uuid } from 'uuid';
 import { TrigViewState } from '../components/views/TrigView/TrigView';
 import { noop } from '../constants/empty';
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
-import { getDirectQuads } from '../queries/getDirectQuadsQuery/getDirectQuadsQuery';
+import { getDirectQuadsQuery } from '../queries/getDirectQuadsQuery/getDirectQuadsQuery';
 import { partitionSets } from '../utils/core/partitionSets';
 import { queryQuadsToSparql } from '../utils/core/queryQuadsToSparql';
 import { useMutable } from '../utils/core/useMutable';
@@ -30,11 +30,16 @@ export type QueryState = {
   jobIri?: string;
 };
 
-export type QueryFinalOutput = {
-  quads: Quad[]; // TODO: maybe want to use streams instead of finalized lists?
+type QueryOutput = {
+  quads: Quad[];
 };
 
-export type QueryIncrementalOutput = QueryFinalOutput & BaseIncrementalOutput;
+export type QueryFinalOutput = QueryOutput;
+
+export type QueryIncrementalOutput = QueryOutput &
+  BaseIncrementalOutput & {
+    quad: Quad;
+  };
 
 type PerspectiveAspectMetadata = {
   views: Record<string, ViewMetadata>;
@@ -244,7 +249,7 @@ export class PerspectiveManager implements PerspectiveManagerProps {
           draft[iri] = {
             perspectiveIri: iri,
             metadataQuery: {
-              getSparql: async () => getDirectQuads({ iri }),
+              getSparql: async () => getDirectQuadsQuery({ iri }),
               currentQuads: [],
             },
             resultsQuery: null,

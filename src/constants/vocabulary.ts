@@ -52,10 +52,12 @@ export interface Vocabulary {
   constants: Record<string, string>;
 }
 
-export const VOCABULARY_VERSION_ORDER = ['0.1.0'];
+export const VOCABULARY_VERSION_ORDER = [
+  'https://origraph.net/vocabulary/v0.1.0',
+];
 
 export const ALL_VOCABULARIES = {
-  '0.1.0': {
+  'https://origraph.net/vocabulary/v0.1.0': {
     versionNumber: '0.1.0',
     versionIri: 'https://origraph.net/vocabulary/v0.1.0',
     unprefixedIris: [
@@ -105,28 +107,43 @@ export const ALL_VOCABULARIES = {
       rdf: {
         type: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
       },
+      origraphGlobal: {
+        vocabularies: 'https://origraph.net/vocabulary/global/vocabularies',
+        installed_version:
+          'https://origraph.net/vocabulary/global/installed_version',
+      },
       rdfs: {
-        Vocabulary: 'http://www.w3.org/2000/01/rdf-schema#Vocabulary',
         label: 'http://www.w3.org/2000/01/rdf-schema#label',
         subClassOf: 'http://www.w3.org/2000/01/rdf-schema#subClassOf',
         subPropertyOf: 'http://www.w3.org/2000/01/rdf-schema#subPropertyOf',
       },
+      void: {},
     },
     prefixes: {
       origraph: 'https://origraph.net/vocabulary/v0.1.0/',
-      ui: 'https://origraph.net/vocabulary/v0.1.0/ui/',
-      ts: 'https://origraph.net/vocabulary/v0.1.0/typescript/',
+      origraphGlobal: 'https://origraph.net/vocabulary/global/',
       rdf: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#',
       rdfs: 'http://www.w3.org/2000/01/rdf-schema#',
+      ts: 'https://origraph.net/vocabulary/v0.1.0/typescript/',
+      ui: 'https://origraph.net/vocabulary/v0.1.0/ui/',
+      void: 'http://rdfs.org/ns/void#',
     },
     keyChainsByIri: {
       'https://origraph.net/vocabulary/v0.1.0/': ['origraph'],
       'https://origraph.net/vocabulary/v0.1.0/typescript/': ['origraph', 'ts'],
       'http://www.w3.org/1999/02/22-rdf-syntax-ns#': ['rdf'],
       'https://origraph.net/vocabulary/v0.1.0/ui/': ['origraph', 'ui'],
+      'https://origraph.net/vocabulary/global/': ['origraphGlobal'],
       'http://www.w3.org/2000/01/rdf-schema#': ['rdfs'],
-      'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': ['rdf', 'type'],
-      'http://www.w3.org/2000/01/rdf-schema#Vocabulary': ['rdfs', 'Vocabulary'],
+      'http://rdfs.org/ns/void#': ['void'],
+      'https://origraph.net/vocabulary/global/vocabularies': [
+        'origraphGlobal',
+        'vocabularies',
+      ],
+      'https://origraph.net/vocabulary/global/installed_version': [
+        'origraphGlobal',
+        'installed_version',
+      ],
       'https://origraph.net/vocabulary/v0.1.0/Node': ['origraph', 'Node'],
       'https://origraph.net/vocabulary/v0.1.0/inheritsFrom': [
         'origraph',
@@ -220,6 +237,7 @@ export const ALL_VOCABULARIES = {
         'baseJobIri',
       ],
       'https://origraph.net/vocabulary/v0.1.0/Job': ['origraph', 'Job'],
+      'http://www.w3.org/1999/02/22-rdf-syntax-ns#type': ['rdf', 'type'],
       'http://www.w3.org/2000/01/rdf-schema#subClassOf': ['rdfs', 'subClassOf'],
       'http://www.w3.org/2000/01/rdf-schema#subPropertyOf': [
         'rdfs',
@@ -237,7 +255,8 @@ export const ALL_VOCABULARIES = {
 };
 
 // TODO: this hard-coding is likely to change...
-export const VOCABULARY = ALL_VOCABULARIES['0.1.0'];
+export const VOCABULARY =
+  ALL_VOCABULARIES['https://origraph.net/vocabulary/v0.1.0'];
 
 export enum ViewType {
   TrigView = 'https://origraph.net/vocabulary/v0.1.0/ui/TrigView',
