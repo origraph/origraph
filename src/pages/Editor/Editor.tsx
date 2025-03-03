@@ -14,7 +14,6 @@ import '../../../node_modules/react-grid-layout/css/styles.css';
 import '../../../node_modules/react-resizable/css/styles.css';
 import { TrigView } from '../../components/views/TrigView/TrigView';
 import { ViewComponent } from '../../components/views/types';
-import { noop } from '../../constants/empty';
 import {
   PerspectiveAspect,
   ViewType,
@@ -85,8 +84,6 @@ export const Editor: FC = () => {
   const [perspectivesByIri, setPerspectivesByIri] = useImmer<
     Record<string, Perspective>
   >({});
-  const [perspectiveUpdateSideEffect, setPerspectiveUpdateSideEffect] =
-    useState<() => void>(() => noop);
   const perspectivesByIriRef =
     useRef<Record<string, Perspective>>(perspectivesByIri);
   perspectivesByIriRef.current = perspectivesByIri;
@@ -95,7 +92,6 @@ export const Editor: FC = () => {
       new PerspectiveManager({
         getPerspectivesByIri: () => perspectivesByIriRef.current,
         setPerspectivesByIri,
-        setPerspectiveUpdateSideEffect: setPerspectiveUpdateSideEffect,
       })
   );
 
@@ -153,15 +149,17 @@ export const Editor: FC = () => {
   });
   useEffect(() => {
     if (justMounted || didPerspectiveIrisChange) {
-      perspectiveManager.updateOpenPerspectives(perspectiveIris);
-      perspectiveUpdateSideEffect();
+      const { openedPerspectiveIris } =
+        perspectiveManager.updateOpenPerspectives(perspectiveIris);
+      openedPerspectiveIris.forEach((perspectiveIri) => {
+        perspectiveManager.startMetadataQuery(perspectiveIri);
+      });
     }
   }, [
     didPerspectiveIrisChange,
     justMounted,
     perspectiveIris,
     perspectiveManager,
-    perspectiveUpdateSideEffect,
   ]);
 
   const viewStates: ViewState[] = useMemo(

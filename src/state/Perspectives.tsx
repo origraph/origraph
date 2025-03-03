@@ -89,7 +89,6 @@ export const getDefaultAspectsForNewlyOpenedPerspective = (): Partial<
 interface PerspectiveManagerProps {
   getPerspectivesByIri: () => Record<string, Perspective>;
   setPerspectivesByIri: Updater<Record<string, Perspective>>;
-  setPerspectiveUpdateSideEffect: (callback: () => void) => void;
 }
 
 export class PerspectiveManager implements PerspectiveManagerProps {
@@ -97,18 +96,17 @@ export class PerspectiveManager implements PerspectiveManagerProps {
   comunicaInterface: ComunicaInterface;
   getPerspectivesByIri: () => Record<string, Perspective>;
   setPerspectivesByIri: Updater<Record<string, Perspective>>;
-  setPerspectiveUpdateSideEffect: (callback: () => void) => void;
 
   constructor(props: PerspectiveManagerProps) {
     this.jobManager = new JobManager();
     this.comunicaInterface = new ComunicaInterface();
     this.getPerspectivesByIri = props.getPerspectivesByIri;
     this.setPerspectivesByIri = props.setPerspectivesByIri;
-    this.setPerspectiveUpdateSideEffect = props.setPerspectiveUpdateSideEffect;
   }
 
   async startMetadataQuery(perspectiveIri: string) {
     await this.comunicaInterface.init();
+    console.log('startMetadataQuery', perspectiveIri);
     const perspectivesByIri = this.getPerspectivesByIri();
     if (!perspectivesByIri[perspectiveIri].metadataQuery) {
       throw new Error(`Called startMetadataQuery before it exists`);
@@ -219,21 +217,11 @@ export class PerspectiveManager implements PerspectiveManagerProps {
 
   updateOpenPerspectives(perspectiveIris: Set<string>) {
     const perspectivesByIri = this.getPerspectivesByIri();
-    const { onlyA: perspectiveIrisToOpen, onlyB: perspectiveIrisToClose } =
+    const { onlyA: openedPerspectiveIris, onlyB: closedPerspectiveIris } =
       partitionSets(perspectiveIris, new Set(Object.keys(perspectivesByIri)));
-    if (perspectiveIrisToOpen.size > 0) {
-      // Some awkwardness here, as a result of sitting between non-mutable react
-      // state, and mutable running Job state. Only start jobs AFTER React has
-      // finished saving info about new perspectives
-      this.setPerspectiveUpdateSideEffect(() => {
-        perspectiveIrisToOpen.forEach((iri) => {
-          this.startMetadataQuery(iri);
-        });
-      });
-    }
-    if (perspectiveIrisToOpen.size > 0 || perspectiveIrisToClose.size > 0) {
+    if (openedPerspectiveIris.size > 0 || closedPerspectiveIris.size > 0) {
       this.setPerspectivesByIri((draft) => {
-        perspectiveIrisToClose.forEach((iri) => {
+        closedPerspectiveIris.forEach((iri) => {
           const closingPerspective = draft[iri];
           [
             closingPerspective.metadataQuery?.jobIri,
@@ -245,7 +233,7 @@ export class PerspectiveManager implements PerspectiveManagerProps {
             });
           delete draft[iri];
         });
-        perspectiveIrisToOpen.forEach((iri) => {
+        openedPerspectiveIris.forEach((iri) => {
           draft[iri] = {
             perspectiveIri: iri,
             metadataQuery: {
@@ -258,6 +246,7 @@ export class PerspectiveManager implements PerspectiveManagerProps {
         });
       });
     }
+    return { openedPerspectiveIris, closedPerspectiveIris };
   }
 }
 
@@ -265,7 +254,6 @@ export const PerspectiveContext = createContext(
   new PerspectiveManager({
     getPerspectivesByIri: () => ({}),
     setPerspectivesByIri: noop,
-    setPerspectiveUpdateSideEffect: noop,
   })
 );
 
