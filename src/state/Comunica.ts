@@ -1,8 +1,9 @@
 import { BindingsFactory } from '@comunica/bindings-factory';
 import { BrowserLevel } from 'browser-level';
-import { DataFactory, Quad } from 'n3';
+import { DataFactory, Quad, StreamParser } from 'n3';
 import { Quadstore } from 'quadstore';
 import { Engine } from 'quadstore-comunica';
+import { readableFromWeb } from 'readable-from-web';
 import { AsyncLock } from '../utils/core/asyncLock';
 import { BaseIncrementalInput } from './Jobs';
 import {
@@ -65,13 +66,11 @@ export class ComunicaInterface {
     // add stuff we already have in IndexedDB. Current implementation is
     // duplicating things on page reload, so I'm disabling this function for now
     // (re-enable once if you Clear site data)
-    return;
-    /*
     const ontologyVersions = ['v0.1.0'];
 
     await Promise.all(
       ontologyVersions.map(async (ontologyVersion) => {
-        const response = await fetch(`/vocabulary/${ontologyVersion}.trig`);
+        const response = await fetch(`vocabulary/${ontologyVersion}.trig`);
         if (response.ok && response.body) {
           const parser = new StreamParser({ format: 'application/trig' });
           return await this.store.putStream(
@@ -81,7 +80,6 @@ export class ComunicaInterface {
         }
       })
     );
-    */
   }
 
   getSelectQueryGeneratorFunction(maxCachedQuads?: number) {

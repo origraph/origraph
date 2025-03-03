@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import { DynamicPublicDirectory } from 'vite-multiple-assets';
 import { createHtmlPlugin } from 'vite-plugin-html';
 import { configDefaults, defineConfig } from 'vitest/config';
 
@@ -26,6 +27,17 @@ export default defineConfig({
     createHtmlPlugin({
       template: 'src/entryPoints/index.html',
     }),
+    DynamicPublicDirectory(
+      [
+        { input: 'public/**', output: '/' },
+        { input: 'node_modules/monaco-editor/min/vs/**', output: '/vs' },
+      ],
+      {
+        mimeTypes: {
+          '.trig': 'application/trig',
+        },
+      }
+    ),
   ],
   build: {
     target: 'esnext',
@@ -33,4 +45,5 @@ export default defineConfig({
     emptyOutDir: true,
   },
   assetsInclude: ['**/*.sparql'],
+  publicDir: false,
 });

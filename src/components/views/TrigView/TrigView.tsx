@@ -1,4 +1,4 @@
-import { Editor } from '@monaco-editor/react';
+import { Editor, loader } from '@monaco-editor/react';
 import { FC, useContext, useEffect, useMemo, useState } from 'react';
 import saveImg from '../../../assets/save.svg?raw';
 import { PerspectiveAspect, ViewType } from '../../../constants/vocabulary';
@@ -14,6 +14,12 @@ import { MenuItemProps } from '../../basic-ui/Menu/Menu';
 import { TitleBar } from '../../basic-ui/TitleBar/TitleBar';
 import '../views.css';
 import './TrigView.css';
+
+loader.config({
+  // Monaco tries to load files from a CDN; this would break the
+  // app for offline uses, so we serve its files ourselves
+  paths: { vs: globalThis.location.origin + '/vs' },
+});
 
 enum MONACO_LANGUAGE {
   Text = 'txt',
@@ -31,8 +37,6 @@ export const TrigView: FC<TrigViewState> = ({
 }) => {
   const perspective = usePerspective(perspectiveIri);
   const { jobManager } = useContext(PerspectiveContext);
-
-  console.log('Rendering TrigView', perspective);
 
   const [localDisplayText, _setLocalDisplayText] =
     useState<string>('Loading...');
