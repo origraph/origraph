@@ -1,6 +1,6 @@
 # origraph
 
-UX experiences for NoSQL thinking
+UX innovations for NoSQL thinking
 
 ## Setup
 
