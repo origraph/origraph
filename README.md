@@ -1,4 +1,4 @@
-# OriGraph
+# origraph
 
 UX experiences for NoSQL thinking
 

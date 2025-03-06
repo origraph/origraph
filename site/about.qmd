@@ -5,6 +5,7 @@ author:
     url: https://alex-r-bigelow.github.io
 date: 6 March 2025
 url: about
+bibliography: bibliography.bib
 ---
 
 Origraph is a work-in-progress data editor, that we hope to release under an open source license in the coming months.
@@ -23,13 +24,13 @@ So far, the only universal ways that computers allow non-developers to organize 
 2. images, or
 3. spreadsheets.
 
-But people rarely color strictly within those rigid constraints.
+But people rarely think about or organize information, strictly within those rigid constraints.
 
 ### Low-hanging fruit
 
-Origraph is focusing on other [**data abstractions**]{.teal .accent}—the cool LEGOs that the computer science nerds have been hoarding all this time—that most people already intuitively understand.
+Origraph is focusing on other [**data abstractions**]{.teal .accent}—cool LEGOs that the computer science nerds have been hoarding all this time inside programming languages—that most people already intuitively understand.
 
-Yes, when we've finally achieved an MVP app, you'll still get the rows and columns that you know from spreadsheets, images, and unstructured / semi-structured text documents. But you'll also be more free to [**reshape**]{.pink .accent} that information as hierarchies, networks, sets, and vectors.
+Yes, when we've finally achieved an MVP app, you'll still have the rows and columns that you know from spreadsheets, the pixels you know from images, and the text in unstructured / semi-structured documents. But you'll also be more free to [**reshape**]{.pink .accent} that information as hierarchies, networks, sets, and vectors.
 
 ::: {.panel-tabset}
 
@@ -37,12 +38,11 @@ Yes, when we've finally achieved an MVP app, you'll still get the rows and colum
 
 **Hierarchies are everywhere.**
 
-From organization charts, to recipies, to the last bulleted outline that you made, hierarchical structures are older than writing itself—most social animals use them, and understand them intimately.
+From organization charts, to recipe ingredient lists, to the last bulleted outline that you made, hierarchical structures are older than writing itself—most social animals use them, and understand them intimately.
 
 - todo: When it gets big / messy: manufacturing, recipies, what kinds of questions we'd LIKE to ask
 
-- todo: ... but we're doing data analysis in Word??? or folders?
-
+- todo: ... people are stuck doing hierarchical data analysis in ... Word??? or OS folders? at best
 
 ## Networks
 
@@ -52,7 +52,7 @@ Even if you've never heard the word "graph" as a synonym for "network," Hollywoo
 
 - todo: hierarchies are arguably just a type of network; so those questions plus more (genealogy, kevin bacon)
 
-- todo: ... but pins and red string are the state of the art
+- todo: ... but physical pins and red string are the state of the art; still missing an app focused on editing network data
 
 ## Sets
 
@@ -68,12 +68,11 @@ Fallacious "true Scotsman" appeals to authority aside, categorizing things into 
 
 Whether you're trying to understand [why some chestnut trees are more similar to Broccoli than each other](https://www.youtube.com/watch?v=k5msNfrYeKk), how menu placement might be impacting your restaurant's sales, or [how being put in one category versus another can be a life-or-death decision](https://doi.org/10.7551/mitpress/6352.001.0001): [**good categories matter.**]{.orange .accent}
 
-But nobody's perfect when we create. Getting creative about good categories, and revising bad ones, requires the freedom to edit.
+But nobody's perfect, especially when we're working with data. Getting creative about good categories, and revising bad ones, requires the freedom to edit.
 
-Our best software tools for organizing, communicating, and debating about set relationships are ... hand-drawn Venn diagrams, or argumentative walls of Reddit text.
+The state of the art for organizing, communicating, and debating about set relationships are ... boolean spreadsheets (cells are a 1 or a 0) that you can visualize with UpSet&nbsp;[@2014_infovis_upset], hand-drawn Venn diagrams, or argumentative walls of Reddit text.
 
-
-- todo: ... but our best tools for organizing, communicating, and debating that kind of information are... hand-drawn Venns, or argumentative walls of text
+We're still missing an app focused on **editing** and **modeling** data from the perspective of set relationships.
 
 ## Vectors
 
