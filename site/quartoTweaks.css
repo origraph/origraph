@@ -30,10 +30,10 @@ h2,
 
 /* overrides for in-page tabs */
 :root {
-  --my-tab-active-color: var(--cb-dark-1-teal);
-  --my-tab-inactive-color: var(--cb-light-6-yellow);
-  --my-tab-hover-color: var(--cb-6-yellow);
-  --my-tab-line-thickness: 2px;
+  --my-tab-active-color: var(--cb-1-teal);
+  --my-tab-inactive-color: var(--cb-light-1-teal);
+  --my-tab-hover-color: var(--cb-dark-1-teal);
+  --my-tab-line-thickness: 1px;
 }
 .nav-tabs {
   --bs-nav-tabs-border-width: 0px;
@@ -45,7 +45,8 @@ h2,
     font-weight: 600;
     color: var(--my-black);
     background: var(--my-tab-inactive-color);
-    &.active {
+    &.active,
+    &:hover {
       color: var(--my-white);
     }
     &:hover:not(.active) {
@@ -55,4 +56,8 @@ h2,
 }
 .tab-content {
   border: var(--my-tab-line-thickness) solid var(--my-tab-active-color);
+}
+
+.accent {
+  color: var(--accent-color);
 }

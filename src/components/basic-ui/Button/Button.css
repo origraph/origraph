@@ -61,19 +61,24 @@
     }
   }
 
-  /* Unless otherwise-classed, buttons will default to the grey accent */
+  /* Unless otherwise-classed, buttons will default to the teal accent */
   color: var(--background-color);
   background-color: var(--accent-color);
   transition: all 0.2s ease-in-out;
-  &.active {
+  &.active,
+  &:focus,
+  &:hover {
     color: var(--background-color);
     background-color: var(--accent-color-fg);
   }
   &:focus,
   &:hover {
+    box-shadow: 0px 0px 70px 3px var(--accent-color-extra-bg);
+  }
+  &.active:focus,
+  &.active:hover {
     color: var(--background-color);
     background-color: var(--accent-color-extra-fg);
-    box-shadow: 0px 0px 70px 3px var(--accent-color-extra-bg);
   }
   &.minimal {
     color: var(--accent-color);
@@ -85,7 +90,9 @@
     }
     background-color: transparent;
     outline: 2px solid var(--accent-color);
-    &.active {
+    &.active,
+    &:focus,
+    &:hover {
       color: var(--accent-color-fg);
       .origraph-icon {
         color: var(--accent-color-fg);
@@ -94,8 +101,8 @@
         }
       }
     }
-    &:focus,
-    &:hover {
+    &.active:focus,
+    &.active:hover {
       color: var(--accent-color-extra-fg);
       .origraph-icon {
         color: var(--accent-color-extra-fg);

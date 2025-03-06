@@ -11,7 +11,7 @@ origraphVersion: {
   # "Installed" / available versions of the origraph vocabulary
   # are queryable from a versionless global.
   origraphGlobal:vocabularies origraphGlobal:installed_version origraphVersion: .
-  # All projects should have a descriptive triple like:
+  # All projects should have descriptive triples like:
   # <my:project> a void:Dataset;
   #   void:vocabulary origraph: .
 
@@ -20,7 +20,6 @@ origraphVersion: {
   origraph:Link origraph:inheritsFrom origraph:Item .
   origraph:Group origraph:inheritsFrom origraph:Item .
   origraph:Attribute origraph:inheritsFrom origraph:Item .
-  
   origraph:Hyperedge origraph:inheritsFrom origraph:Group .
 
   # Introspection stuff, i.e. how Origraph should render its own concepts by

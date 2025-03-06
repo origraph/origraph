@@ -1,13 +1,15 @@
 ---
-title: About
+title: About the App
 author:
   - name: Alex Bigelow
     url: https://alex-r-bigelow.github.io
-date: 4 Feb 2025
+date: 6 March 2025
 url: about
 ---
 
 Origraph is a work-in-progress data editor, that we hope to release under an open source license in the coming months.
+
+Want better, free data LEGOs sooner?
 
 [![Patreon Logo](./logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
 
@@ -23,9 +25,17 @@ So far, the only universal ways that computers allow non-developers to organize 
 
 But people rarely color strictly within those rigid constraints.
 
-## Hierarchies are everywhere
+### Low-hanging fruit
 
+Origraph is focusing on other [**data abstractions**]{.teal .accent}—the cool LEGOs that the computer science nerds have been hoarding all this time—that most people already intuitively understand.
 
+Yes, when we've finally achieved an MVP app, you'll still get the rows and columns that you know from spreadsheets, images, and unstructured / semi-structured text documents. But you'll also be more free to [**reshape**]{.pink .accent} that information as hierarchies, networks, sets, and vectors.
+
+::: {.panel-tabset}
+
+## Hierarchies
+
+**Hierarchies are everywhere.**
 
 From organization charts, to recipies, to the last bulleted outline that you made, hierarchical structures are older than writing itself—most social animals use them, and understand them intimately.
 
@@ -34,7 +44,9 @@ From organization charts, to recipies, to the last bulleted outline that you mad
 - todo: ... but we're doing data analysis in Word??? or folders?
 
 
-## Networks aren't just for conspiracy theories
+## Networks
+
+**Networks aren't just for conspiracy theories.**
 
 Even if you've never heard the word "graph" as a synonym for "network," Hollywood is already comfortable showing you boards of pins and red string with zero explanation.
 
@@ -42,7 +54,9 @@ Even if you've never heard the word "graph" as a synonym for "network," Hollywoo
 
 - todo: ... but pins and red string are the state of the art
 
-## You're already a set theorist / ontologist
+## Sets
+
+**You're already a set theorist / ontologist.**
 
 Are hot dogs a type of sandwich?
 
@@ -50,14 +64,20 @@ Is a waffle just a dessert pizza?
 
 [Is butt legs](https://youtu.be/RHKGWLml_mg?feature=shared)?
 
-What makes a **true** Scotsman?
+Fallacious "true Scotsman" appeals to authority aside, categorizing things into groups—math nerds often use the word "sets"—matters a lot for how science, business, and society work.
 
-- todo: Fallacious appeals to authority aside, categorizing things into groups matter a lot for how science / society work
+Whether you're trying to understand [why some chestnut trees are more similar to Broccoli than each other](https://www.youtube.com/watch?v=k5msNfrYeKk), how menu placement might be impacting your restaurant's sales, or [how being put in one category versus another can be a life-or-death decision](https://doi.org/10.7551/mitpress/6352.001.0001): [**good categories matter.**]{.orange .accent}
+
+But nobody's perfect when we create. Getting creative about good categories, and revising bad ones, requires the freedom to edit.
+
+Our best software tools for organizing, communicating, and debating about set relationships are ... hand-drawn Venn diagrams, or argumentative walls of Reddit text.
+
 
 - todo: ... but our best tools for organizing, communicating, and debating that kind of information are... hand-drawn Venns, or argumentative walls of text
 
-<!--
-## High school algebra wasn't for nothing
+## Vectors
+
+**You probably endured High School algebra, ... but never get to use it.**
 
 If you vageuly remember what $y=mx+c$ means, you're already most of the way there when it comes to understanding vectors, regression, and Machine Learning / AI.
 
@@ -71,7 +91,7 @@ They can have as many **dimensions** as you'd like:
 
 todo
 
-... but for our brains that are used to thinking in 2, 3 (or *maybe* 4) dimensions, it helps to **project** those points into just a few at a time, like looking at the different shadows that a 3D object casts on a 2D wall:
+... but for our brains that are used to thinking in 2, 3 (or *maybe* 4) dimensions, it helps to **project** those points into just a couple dimensions at a time, like looking at 2D shadows of a 3D (or $n$-D) object, from different angles:
 
 todo: scatterplot matrix
 
@@ -80,7 +100,8 @@ todo: scatterplot matrix
 **Regression** todo
 
 - ... but vectors, clusters, regressions, projections—but actually using your intuition and your high school skills aren't things that software lets you do.
- -->
+
+:::
 
 # Artificial complexity: non-tabular concepts hiding in tables
 todo
@@ -96,8 +117,8 @@ todo
 ## Sets
 todo
 
-<!-- ## Vectors
-todo -->
+## Vectors
+todo
 
 :::
 
@@ -115,8 +136,8 @@ todo
 ## Sets
 todo
 
-<!-- ## Vectors
-todo -->
+## Vectors
+todo
 
 :::
 
@@ -147,6 +168,8 @@ todo
 
 ## The slow way there, because capitalism
 todo
+
+[Consulting services](consulting.qmd){.origraph-button .yellow style="display:inline-block"}
 
 ## The faster way
 todo
