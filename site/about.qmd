@@ -6,6 +6,7 @@ author:
 date: 6 March 2025
 url: about
 bibliography: bibliography.bib
+draft: true
 ---
 
 Origraph is a work-in-progress data editor, that we hope to release under an open source license in the coming months.
