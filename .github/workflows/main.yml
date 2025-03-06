@@ -26,6 +26,5 @@ jobs:
         if: github.ref == 'refs/heads/main'
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: builds/website
-          
-      
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          source: builds/website
