@@ -5,6 +5,11 @@
   --header-font: 'Raleway', sans-serif;
   --body-font: 'Raleway', sans-serif;
 
+  --tiny-view-threshold: 320px;
+  --small-view-threshold: 640px;
+  --large-view-threshold: 1280px;
+  --huge-view-threshold: 1600px;
+
   color-scheme: light dark;
   font-family: var(--body-font);
   background-color: var(--background-color);

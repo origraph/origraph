@@ -2,6 +2,7 @@ import { Quad } from 'n3';
 import { createContext, useContext, useMemo } from 'react';
 import { Updater } from 'use-immer';
 import { v4 as uuid } from 'uuid';
+import { SPACE_SECTION } from '../components/utils/SpaceDivider/SpaceDivider';
 import { TrigViewState } from '../components/views/TrigView/TrigView';
 import { noop } from '../constants/empty';
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
@@ -50,6 +51,8 @@ export type BaseViewState = {
   viewIri: string;
   viewType: ViewType;
   perspectiveAspect: PerspectiveAspect;
+  section?: SPACE_SECTION;
+  style?: CSSStyleDeclaration /* Needed to forward styles from SpaceDivider; see also: https://github.com/facebook/react/issues/32531#issuecomment-2712091021 */;
 };
 
 export type ViewState = TrigViewState; // & OtherViewState;

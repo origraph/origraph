@@ -1,5 +1,12 @@
 import { Editor, loader } from '@monaco-editor/react';
-import { FC, useContext, useEffect, useMemo, useState } from 'react';
+import {
+  CSSProperties,
+  FC,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import saveImg from '../../../assets/save.svg?raw';
 import { PerspectiveAspect, ViewType } from '../../../constants/vocabulary';
 import {
@@ -34,6 +41,7 @@ export type TrigViewState = BaseViewState & {
 export const TrigView: FC<TrigViewState> = ({
   perspectiveIri,
   perspectiveAspect,
+  style,
 }) => {
   const perspective = usePerspective(perspectiveIri);
   const { jobManager } = useContext(PerspectiveContext);
@@ -112,7 +120,10 @@ ${await perspective.resultsQuery.getSparql()}`);
   );
 
   return (
-    <div className="TrigView origraph-view">
+    <div
+      className="TrigView origraph-view"
+      style={(style || {}) as CSSProperties}
+    >
       <TitleBar
         title={perspectiveIri} // TODO: look up the label; don't use the iri
         subtitle={perspectiveAspect}

@@ -8,10 +8,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import ReactGridLayout, { Responsive, WidthProvider } from 'react-grid-layout';
 import { useImmer } from 'use-immer';
-import '../../../node_modules/react-grid-layout/css/styles.css';
-import '../../../node_modules/react-resizable/css/styles.css';
+import { SpaceDivider } from '../../components/utils/SpaceDivider/SpaceDivider';
 import { TrigView } from '../../components/views/TrigView/TrigView';
 import { ViewComponent } from '../../components/views/types';
 import {
@@ -30,8 +28,6 @@ import { useIsMounted } from '../../utils/core/useIsMounted';
 import { useSearchParams } from '../../utils/core/useSearchParams';
 import './Editor.css';
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
-
 const viewComponentByType: Record<ViewType, ViewComponent> = {
   [ViewType.TrigView]: TrigView,
 };
@@ -47,14 +43,8 @@ export const EditorContext = createContext<{
   // TODO: functions for manipulating the current selection
 }>(getEmptyEditorContext());
 
-const GRID_BREAKPOINTS = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 };
-const COLS_PER_LAYOUT = { lg: 3, md: 2, sm: 2, xs: 1, xxs: 1 };
-
 const EditorViews = () => {
   const { viewStates } = useContext(EditorContext);
-  const [layouts, _setLayouts] = useState<ReactGridLayout.Layouts>({
-    // TODO: figure this GrigLayout shit out
-  });
 
   const views = useMemo(() => {
     const views = viewStates.map((viewState) => {
@@ -65,15 +55,9 @@ const EditorViews = () => {
   }, [viewStates]);
 
   return (
-    <ResponsiveGridLayout
-      autoSize={false}
-      className="EditorViews"
-      layouts={layouts}
-      breakpoints={GRID_BREAKPOINTS}
-      cols={COLS_PER_LAYOUT}
-    >
+    <SpaceDivider className="EditorViews" emptyState="TODO: empty state">
       {views}
-    </ResponsiveGridLayout>
+    </SpaceDivider>
   );
 };
 
