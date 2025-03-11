@@ -1,5 +1,8 @@
-name: Build and Deploy
-on: push
+name: Build and deploy main branch
+on:
+  push:
+    branches:
+      - main
 permissions:
   pages: write
   id-token: write
@@ -31,6 +34,6 @@ jobs:
     needs: build
     steps:
       - name: Deploy to GitHub Pages
-        if: github.ref == 'refs/heads/main'
+        if: success() && github.ref == 'refs/heads/main'
         id: deployment
         uses: actions/deploy-pages@v4
