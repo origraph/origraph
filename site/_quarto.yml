@@ -11,17 +11,23 @@ website:
   navbar:
     logo: 'logos/origraph/Logo Light Background.png'
     # left:
-    # - href: about.qmd
-    #   text: About
-    # - href: consulting.qmd
-    #   text: Consulting
-    # - href: support.qmd
-    #   text: Support
+    #   - text: About
+    #     menu:
+    #       - href: blog/about.qmd
+    #         text: About the App
+    #       - href: consulting.qmd
+    #         text: Consulting
+    #       - href: support.qmd
+    #         text: Support
+    #       - href: blog.qmd
+    #         text: Blog
     # right:
+    #   #- href: blog.xml
+    #   #  text: '[![RSS Logo](/logos/social/rss.svg){height=1em} RSS Feed]{.social-logo-wrapper}'
     #   - href: https://patreon.com/Origraph
-    #     text: '[![Patreon Logo](./logos/social/patreonWhite.png){height=1em} Patreon]{.social-logo-wrapper}'
-    # - href: app.qmd
-    #   text: '[Launch App]{.origraph-button}'
+    #     text: '[![Patreon Logo](/logos/social/patreonWhite.png){height=1em} Patreon]{.social-logo-wrapper}'
+    #   - href: app.qmd
+    #     text: '[Launch App]{.origraph-button}'
 
 format:
   html:

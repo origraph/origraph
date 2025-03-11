@@ -1,0 +1,20 @@
+name: Test build on pull request
+on: pull_request
+permissions:
+  pages: write
+  id-token: write
+jobs:
+  build:
+    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+      - name: Install Quarto
+        uses: quarto-dev/quarto-actions/setup@v2
+      - name: Install Node
+        uses: actions/setup-node@v4
+      - name: Build
+        run: |
+          npm install
+          npm run build
