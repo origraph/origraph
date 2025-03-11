@@ -20,9 +20,9 @@ The website is built in two chunks: `/app` is a Vite app, and `/site` is a Quart
 
 For a preview of the full, combined site (both `/app` and `/site`), `npm run preview`
 
-To work on the app, `npm dev-app`
+To work on the app, `npm run dev-app`
 
-To work on the site, `npm dev-site`
+To work on the site, `npm run dev-site`
 
 The site itself imports the built library; if you change something like a component in the app, and want it reflected in the site, you'll need to run `npm run build-library`
 
