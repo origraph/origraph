@@ -1,0 +1,11 @@
+---
+title: We Need a Better Goodreads
+author: Sarah Wolf
+date: 11 March 2025
+categories:
+  - op-ed
+  - vision
+draft: true
+---
+
+TODO

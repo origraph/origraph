@@ -4,6 +4,9 @@ author:
   - name: Alex Bigelow
     url: https://alex-r-bigelow.github.io
 date: 6 March 2025
+categories:
+  - op-ed
+  - vision
 url: about
 bibliography: bibliography.bib
 draft: true
@@ -13,7 +16,7 @@ Origraph is a work-in-progress data editor, that we hope to release under an ope
 
 Want better, free data LEGOs sooner?
 
-[![Patreon Logo](./logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
+[![Patreon Logo](../logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
 
 # There are more ways to organize data than rows and columns
 
