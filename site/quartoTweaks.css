@@ -1,3 +1,12 @@
+:root {
+  /*
+    Unsure if this is exposed anywhere, so hard-coding it here; this is the
+    screen size below which bootstrap uses a media query to collapse the
+    navbar into a menu
+  */
+  --bootstrap-navbar-cutoff: 992px;
+}
+
 /* Slightly darker navbar background than the default set by _brand.yml > primary */
 .navbar {
   background-color: var(--cb-dark-1-teal);
@@ -6,13 +15,26 @@
   }
 }
 
-.social-logo-wrapper {
+.navbar-logo-wrapper {
   padding-top: 0.3rem;
 }
-.social-logo-wrapper {
+.navbar-logo-wrapper {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 0.35em;
+  img {
+    height: 1em;
+  }
+}
+@media (min-width: 992px) {
+  .navbar-logo-wrapper {
+    .navbar-logo-label {
+      display: none;
+    }
+    img {
+      height: 20px;
+    }
+  }
 }
 
 /* separator color overrides */
