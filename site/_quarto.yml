@@ -3,6 +3,8 @@ project:
   output-dir: ../public/site
   preview:
     port: 7777
+    browser: false
+    navigate: false
 
 website:
   title: 'origraph'
@@ -23,18 +25,23 @@ website:
             text: Blog
     right:
       - href: blog.xml
-        text: '[![RSS Logo](/logos/social/rss.svg)[RSS Feed]{.navbar-logo-label}]{.navbar-logo-wrapper}'
+        text: '[![RSS Logo](/logos/social/rss.svg){.origraph-icon}[RSS Feed]{.navbar-button-label}]{.origraph-button .minimal}'
       - href: https://patreon.com/Origraph
-        text: '[![Patreon Logo](/logos/social/patreonWhite.png)[Patreon]{.navbar-logo-label}]{.navbar-logo-wrapper}'
+        text: '[![Patreon Logo](/logos/social/patreonWhite.png){.origraph-icon}[Patreon]{.navbar-button-label}]{.origraph-button .minimal}'
       - href: app.qmd
-        text: '[Launch App]{.origraph-button}'
+        text: '[![Application icon](/logos/ui/application.svg){.origraph-icon} Launch App]{.origraph-button}'
 
 format:
   html:
+    include-in-header:
+      text: |
+        <script type="application/javascript" src="/lib/react.production.min.js"></script>
+        <script type="application/javascript" src="/lib/react-dom.production.min.js"></script>
+        <script type="application/javascript" src="/lib/origraph.umd.cjs"></script>
     theme:
       - minty
       - brand
     css:
       - quartoTweaks.css
-      - built-library/origraph.css
+      - lib/origraph.css
     toc: true

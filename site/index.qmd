@@ -1,7 +1,7 @@
 ---
 toc: false
 title-block-banner: true
-title: '![](./logos/origraph/Logo Light Background.svg){fig-alt="Origraph Logo" height="5em" .header-logo} Origraph'
+title: '![](/logos/origraph/Logo Light Background.svg){fig-alt="Origraph Logo" height="5em" .header-logo} Origraph'
 subtitle: UX Innovations for NoSQL Thinking
 ---
 

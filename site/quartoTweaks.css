@@ -7,34 +7,30 @@
   --bootstrap-navbar-cutoff: 992px;
 }
 
-/* Slightly darker navbar background than the default set by _brand.yml > primary */
 .navbar {
+  /* Slightly darker navbar background than the default set by _brand.yml > primary */
   background-color: var(--cb-dark-1-teal);
   .origraph-button {
     color: var(--my-white);
   }
-}
-
-.navbar-logo-wrapper {
-  padding-top: 0.3rem;
-}
-.navbar-logo-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.35em;
-  img {
-    height: 1em;
+  .navbar-nav {
+    /*
+    TODO: AFAIK, these overrides are not yet supported by _brand.yml, but
+    if they are, these should move
+    */
+    --bs-nav-link-color: var(--my-white);
+    --bs-nav-link-hover-color: var(--my-extra-white);
+    --bs-nav-link-disabled-color: var(--my-soft-white);
   }
 }
 @media (min-width: 992px) {
-  .navbar-logo-wrapper {
-    .navbar-logo-label {
-      display: none;
-    }
-    img {
-      height: 20px;
-    }
+  .navbar .origraph-button .navbar-button-label {
+    display: none;
   }
+}
+.origraph-icon {
+  /* A little redundant, but needed to override some of the img stuff bootstrap is doing */
+  height: 1em;
 }
 
 /* separator color overrides */

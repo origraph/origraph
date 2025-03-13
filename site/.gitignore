@@ -1,2 +1,3 @@
 /.quarto/
-built-library
+_extensions
+lib

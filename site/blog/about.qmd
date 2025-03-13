@@ -9,14 +9,13 @@ categories:
   - vision
 url: about
 bibliography: bibliography.bib
-draft: true
 ---
 
 Origraph is a work-in-progress data editor, that we hope to release under an open source license in the coming months.
 
 Want better, free data LEGOs sooner?
 
-[![Patreon Logo](../logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
+[![Patreon Logo](/logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
 
 # There are more ways to organize data than rows and columns
 
@@ -172,12 +171,25 @@ todo
 ## The slow way there, because capitalism
 todo
 
-[Consulting services](consulting.qmd){.origraph-button .yellow style="display:inline-block"}
+[![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Consulting services](../consulting.html){.origraph-button .yellow style="display:inline-block"}
+
+[[Placeholder Button]{.origraph-button}]{.test-button-container}
+
+<script type="application/javascript">
+  origraph.components.basicUi.renderButton({
+    targetElement: document.querySelector('.test-button-container'),
+    children: 'Test Button',
+    leftIcons: [{
+      src: '/logos/ui/headset.svg'
+    }],
+    className: 'green'
+  });
+</script>
 
 ## The faster way
 todo
 
-[![Patreon Logo](./logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
+[![Patreon Logo](/logos/social/patreonWhite.png){.origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
 
 ## Delusions of grandeur: after launch
 todo

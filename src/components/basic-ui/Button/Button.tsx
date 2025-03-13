@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { forwardRef, ReactElement, useMemo, useRef } from 'react';
+import { forwardRef, ReactElement, useMemo, useRef } from 'react';
 import { omit } from '../../../utils/core/omit';
 import { Icon, IconProps } from '../Icon/Icon';
 import { MenuProps } from '../Menu/Menu';

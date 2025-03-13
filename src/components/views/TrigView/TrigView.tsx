@@ -7,8 +7,8 @@ import {
   useMemo,
   useState,
 } from 'react';
-import saveImg from '../../../assets/save.svg?raw';
 import { PerspectiveAspect, ViewType } from '../../../constants/vocabulary';
+import saveImg from '../../../logos/ui/save.svg?raw';
 import {
   BaseViewState,
   PerspectiveContext,

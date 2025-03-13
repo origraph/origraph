@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC, useMemo } from 'react';
-import hamburgerImg from '../../../assets/hamburger.svg?raw';
+import hamburgerImg from '../../../logos/ui/hamburger.svg?raw';
 import { Button, ButtonProps } from '../Button/Button';
 import { Menu, MenuItem, MenuItemProps } from '../Menu/Menu';
 import './TitleBar.css';

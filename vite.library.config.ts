@@ -14,14 +14,26 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: 'src/entryPoints/library.ts',
-      formats: ['es'],
+      entry: 'src/entryPoints/library.tsx',
+      formats: ['es', 'umd'],
+      name: 'origraph',
     },
+    // minify: false,
+    // terserOptions: { compress: false, mangle: false },
     outDir: 'builds/library',
     emptyOutDir: true,
     copyPublicDir: false,
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime'],
+      external: ['react', 'react-dom'],
+      output: {
+        globals: {
+          react: 'React',
+          'react-dom': 'ReactDOM',
+        },
+      },
     },
+  },
+  define: {
+    'process.env': { NODE_ENV: 'production' },
   },
 });
