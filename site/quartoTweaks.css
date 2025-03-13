@@ -1,3 +1,29 @@
+/* overrides to make origraph ui stuff play nicely with quarto */
+
+:root {
+  /* Quarto doesn't support light-dark() very well yet; just use the light colors for now */
+  color-scheme: light !important;
+  --hard-background-color: var(--my-extra-white) !important;
+  --background-color: var(--my-white) !important;
+  --mid-soft-background-color: var(--my-mid-soft-white) !important;
+  --soft-background-color: var(--my-soft-white) !important;
+  --soft-foreground-color: var(--my-soft-black) !important;
+  --mid-soft-foreground-color: var(--my-mid-soft-black) !important;
+  --foreground-color: var(--my-black) !important;
+  --hard-foreground-color: var(--my-extra-black) !important;
+}
+
+span.origraph-ui-button-container {
+  display: inline-block;
+}
+.origraph-button {
+  width: fit-content;
+}
+.origraph-icon {
+  height: 1em;
+}
+
+/* overrides for the navbar */
 :root {
   /*
     Unsure if this is exposed anywhere, so hard-coding it here; this is the
@@ -25,12 +51,10 @@
 }
 @media (min-width: 992px) {
   .navbar .origraph-button .navbar-button-label {
-    display: none;
+    /* Just show icons on small screens, but keep labels accessible to screen readers */
+    position: absolute;
+    left: -10000px;
   }
-}
-.origraph-icon {
-  /* A little redundant, but needed to override some of the img stuff bootstrap is doing */
-  height: 1em;
 }
 
 /* separator color overrides */

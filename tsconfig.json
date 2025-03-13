@@ -5,6 +5,6 @@
     { "path": "./tsconfig.node.json" }
   ],
   "compilerOptions": {
-    "jsx": "react"
+    "jsx": "react" // Needed for the library build; if this creates a problem elsewhere, make a separate tsconfig for the library that keeps it
   }
 }

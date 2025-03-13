@@ -173,18 +173,13 @@ todo
 
 [![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Consulting services](../consulting.html){.origraph-button .yellow style="display:inline-block"}
 
-[[Placeholder Button]{.origraph-button}]{.test-button-container}
+{{< origraph-ui-button contents="My Block Button 1" jsArgs="className: ['pink', 'minimal'], leftIcons:[{ src: '/logos/ui/headset.svg' }]" >}}
 
-<script type="application/javascript">
-  origraph.components.basicUi.renderButton({
-    targetElement: document.querySelector('.test-button-container'),
-    children: 'Test Button',
-    leftIcons: [{
-      src: '/logos/ui/headset.svg'
-    }],
-    className: 'green'
-  });
-</script>
+{{< origraph-ui-button contents="My Block Button 2" placeholderIcon="/logos/ui/headset.svg" >}}
+
+This is {{< origraph-ui-button contents="my end of line button" >}}
+
+This is {{< origraph-ui-button contents="my inline button" >}} in the middle of a paragraph; who knows if it will render sensibly?
 
 ## The faster way
 todo
