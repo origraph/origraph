@@ -140,6 +140,8 @@ export const divideAvailableSpace = ({
       hiddenViewIris: hiddenViewIris,
       parentStyle: {
         display: 'flex',
+        flexDirection:
+          gridOrientation === SPACE_ORIENTATION.column ? 'column' : 'row',
       },
       stylesByViewIri: undefined,
       rectanglesByViewIri: undefined,

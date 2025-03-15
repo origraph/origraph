@@ -4,6 +4,7 @@
     "esbenp.prettier-vscode",
     "stardog-union.stardog-rdf-grammars",
     "github.vscode-github-actions",
-    "quarto.quarto"
+    "quarto.quarto",
+    "dbaeumer.vscode-eslint"
   ]
 }

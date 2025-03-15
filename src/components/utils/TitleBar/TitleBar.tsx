@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import { FC, useMemo } from 'react';
 import hamburgerImg from '../../../logos/ui/hamburger.svg?raw';
-import { Button, ButtonProps } from '../Button/Button';
-import { Menu, MenuItem, MenuItemProps } from '../Menu/Menu';
+import { Button, ButtonProps } from '../../basic-ui/Button/Button';
+import { Menu, MenuItem, MenuItemProps } from '../../basic-ui/Menu/Menu';
 import './TitleBar.css';
 
 type TitleBarProps = {

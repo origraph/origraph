@@ -4,7 +4,7 @@
   height: 100%;
 
   .SpaceDivider-offscreen {
-    position: fixed;
+    position: absolute;
     left: -500px;
     top: -500px;
     right: -100px;
@@ -23,13 +23,8 @@
 
   &.flex .SpaceDivider-content {
     align-items: stretch;
-    justify-content: flex-end;
-  }
-
-  &.row &.flex .SpaceDivider-content {
-    flex-direction: row;
-  }
-  &.column &.flex .SpaceDivider-content {
-    flex-direction: column;
+    & > * {
+      flex: 1 0 auto;
+    }
   }
 }

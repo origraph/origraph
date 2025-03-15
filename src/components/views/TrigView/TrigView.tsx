@@ -18,7 +18,7 @@ import {
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
 import { isDarkMode } from '../../../utils/ui/isDarkMode';
 import { MenuItemProps } from '../../basic-ui/Menu/Menu';
-import { TitleBar } from '../../basic-ui/TitleBar/TitleBar';
+import { TitleBar } from '../../utils/TitleBar/TitleBar';
 import '../views.css';
 import './TrigView.css';
 
@@ -46,7 +46,7 @@ export const TrigView: FC<TrigViewState> = ({
   const perspective = usePerspective(perspectiveIri);
   const { jobManager } = useContext(PerspectiveContext);
 
-  const [localDisplayText, _setLocalDisplayText] =
+  const [localDisplayText, setLocalDisplayText] =
     useState<string>('Loading...');
 
   const [savedDisplayText, setSavedDisplayText] =
@@ -106,17 +106,13 @@ ${await perspective.resultsQuery.getSparql()}`);
       {
         key: 'save',
         collapse: false,
+        disabled: true,
+        className: 'minimal',
         leftIcons: [{ srcSvg: saveImg }],
         label: 'Save',
       },
     ],
     []
-  );
-
-  const [handleUpdate, _setHandleUpdate] = useState<(update: string) => void>(
-    () => (update: string) => {
-      console.log(`monaco update: ${update}`);
-    }
   );
 
   return (
@@ -134,7 +130,7 @@ ${await perspective.resultsQuery.getSparql()}`);
           theme={isDarkMode() ? 'vs-dark' : 'vs-light'}
           language={language}
           value={savedDisplayText}
-          onChange={(newValue) => handleUpdate?.(newValue || '')}
+          onChange={(newValue) => setLocalDisplayText(newValue || '')}
         />
       </div>
     </div>
