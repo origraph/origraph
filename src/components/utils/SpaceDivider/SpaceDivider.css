@@ -1,3 +1,7 @@
+:root {
+  --minimized-title-size: 60px;
+}
+
 .SpaceDivider {
   position: relative;
   width: 100%;
@@ -20,11 +24,32 @@
     right: 0;
     gap: 0.5em;
   }
+  &.hasMinimizedViews {
+    .SpaceDivider-content {
+      bottom: var(--minimized-title-size);
+    }
+  }
 
   &.flex .SpaceDivider-content {
     align-items: stretch;
     & > * {
       flex: 1 0 auto;
     }
+  }
+
+  .SpaceDivider-minimizedTitles {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: var(--minimized-title-size);
+
+    display: flex;
+    flex-direction: row;
+    overflow-y: hidden;
+    overflow-x: auto;
+    gap: 0.5em;
+    align-items: center;
+    padding: 0 0.5em;
   }
 }

@@ -21,6 +21,7 @@ import {
   Perspective,
   PerspectiveContext,
   PerspectiveManager,
+  ViewDescription,
   ViewState,
 } from '../../state/Perspectives';
 import { useDidValueChange } from '../../utils/core/useDidValueChange';
@@ -78,6 +79,9 @@ export const Editor: FC = () => {
         setPerspectivesByIri,
       })
   );
+  const [viewDescriptionsByIri, setViewDescriptionsByIri] = useImmer<
+    Record<string, ViewDescription>
+  >({});
 
   const { justMounted } = useIsMounted();
 
@@ -158,11 +162,22 @@ export const Editor: FC = () => {
                   viewIri,
                   viewType: viewMetadata.type,
                   perspectiveAspect: aspect as PerspectiveAspect,
+                  description: viewDescriptionsByIri[viewIri] || {
+                    title:
+                      VOCABULARY.labelsByIri[perspectiveIri] ||
+                      'Untitled Perspective',
+                    subtitle:
+                      VOCABULARY.labelsByIri[aspect] || 'Unknown Aspect',
+                  },
+                  setDescription: (newTitle: Partial<ViewDescription>) =>
+                    setViewDescriptionsByIri((draft) =>
+                      Object.assign(draft[viewIri], newTitle)
+                    ),
                 })
               )
           )
       ),
-    [perspectivesByIri]
+    [perspectivesByIri, setViewDescriptionsByIri, viewDescriptionsByIri]
   );
 
   return (

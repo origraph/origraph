@@ -18,6 +18,7 @@ import {
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
 import { isDarkMode } from '../../../utils/ui/isDarkMode';
 import { MenuItemProps } from '../../basic-ui/Menu/Menu';
+import { SpaceDividerContext } from '../../utils/SpaceDivider/SpaceDivider';
 import { TitleBar } from '../../utils/TitleBar/TitleBar';
 import '../views.css';
 import './TrigView.css';
@@ -39,12 +40,15 @@ export type TrigViewState = BaseViewState & {
 };
 
 export const TrigView: FC<TrigViewState> = ({
+  viewIri,
   perspectiveIri,
   perspectiveAspect,
   style,
+  setDescription,
 }) => {
   const perspective = usePerspective(perspectiveIri);
   const { jobManager } = useContext(PerspectiveContext);
+  const { tempShrinkStaticSizes } = useContext(SpaceDividerContext);
 
   const [localDisplayText, setLocalDisplayText] =
     useState<string>('Loading...');
@@ -54,7 +58,7 @@ export const TrigView: FC<TrigViewState> = ({
   const [language, setLanguage] = useState<MONACO_LANGUAGE>(
     MONACO_LANGUAGE.Text
   );
-  const [_isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
+  const [isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
 
   const metadataJob = useJob(perspective.metadataQuery?.jobIri);
   const resultsJob = useJob(perspective.resultsQuery?.jobIri);
@@ -66,7 +70,9 @@ export const TrigView: FC<TrigViewState> = ({
             setSavedDisplayText(`#TODO: this should actually be the TriG meta-sparql; need a separate view!
 ${await perspective.resultsQuery.getSparql()}`);
             setLanguage(MONACO_LANGUAGE.SPARQL);
-            setIsEditingEnabled(true);
+            // TODO: don't enable this until it actually works
+            // setIsEditingEnabled(true);
+            setIsEditingEnabled(false);
           } else if (metadataJob?.isRunning) {
             setSavedDisplayText('Querying...');
             setLanguage(MONACO_LANGUAGE.Text);
@@ -120,17 +126,17 @@ ${await perspective.resultsQuery.getSparql()}`);
       className="TrigView origraph-view"
       style={(style || {}) as CSSProperties}
     >
-      <TitleBar
-        title={perspectiveIri} // TODO: look up the label; don't use the iri
-        subtitle={perspectiveAspect}
-        menuItemProps={menuItemProps}
-      />
+      <TitleBar menuItemProps={menuItemProps} viewIri={viewIri} />
       <div className="TrigView-monaco-wrapper">
         <Editor
           theme={isDarkMode() ? 'vs-dark' : 'vs-light'}
+          height={tempShrinkStaticSizes ? '5em' : '100%'}
           language={language}
           value={savedDisplayText}
           onChange={(newValue) => setLocalDisplayText(newValue || '')}
+          options={{
+            readOnly: !isEditingEnabled,
+          }}
         />
       </div>
     </div>

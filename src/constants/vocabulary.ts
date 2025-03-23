@@ -50,23 +50,18 @@ export interface Vocabulary {
   prefixes: Record<string, string>;
   keyChainsByIri: Record<string, string[]>;
   constants: Record<string, string>;
+  labelsByIri: Record<string, string>;
 }
 
 export const VOCABULARY_VERSION_ORDER = [
   'https://origraph.net/vocabulary/v0.1.0',
 ];
 
-export const ALL_VOCABULARIES = {
+export const ALL_VOCABULARIES: Record<string, Vocabulary> = {
   'https://origraph.net/vocabulary/v0.1.0': {
     versionNumber: '0.1.0',
     versionIri: 'https://origraph.net/vocabulary/v0.1.0',
-    unprefixedIris: [
-      'https://origraph.net/vocabulary/v0.1.0',
-      '"Results"',
-      '"Query Definition"',
-      '"Overview"',
-      '"Current Selection"',
-    ],
+    unprefixedIris: ['https://origraph.net/vocabulary/v0.1.0'],
     irisByPrefix: {
       origraph: {
         ts: {
@@ -250,6 +245,14 @@ export const ALL_VOCABULARIES = {
         'https://origraph.net/vocabulary/v0.1.0/SelectionQuery',
       basePerspectiveIri: 'https://origraph.net/vocabulary/v0.1.0/Perspective',
       baseJobIri: 'https://origraph.net/vocabulary/v0.1.0/Job',
+    },
+    labelsByIri: {
+      'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage': 'Results',
+      'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery':
+        'Query Definition',
+      'https://origraph.net/vocabulary/v0.1.0/OverviewQuery': 'Overview',
+      'https://origraph.net/vocabulary/v0.1.0/SelectionQuery':
+        'Current Selection',
     },
   },
 };

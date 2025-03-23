@@ -37,19 +37,24 @@ export type SpaceDivision = {
 export const divideAvailableSpace = ({
   bounds,
   thresholds,
-  viewIriPriorityOrder,
+  viewIriPriorityOrder: unfilteredViewIriPriorityOrder,
+  explicitlyMinimizedViewIriOrder,
 }: {
   bounds: DOMRectReadOnly;
   thresholds: Record<Threshold, number>;
   // preferredViewOrientationById: Record<string, VIEW_ORIENTATION>;
   viewIriPriorityOrder: string[];
+  explicitlyMinimizedViewIriOrder: string[];
 }): SpaceDivision => {
+  const viewIriPriorityOrder = unfilteredViewIriPriorityOrder.filter(
+    (iri) => !explicitlyMinimizedViewIriOrder.includes(iri)
+  );
   if (viewIriPriorityOrder.length === 0) {
     return {
       layout: SPACE_LAYOUT.flex,
       orientation: SPACE_ORIENTATION.row,
       visibleViewIris: [],
-      hiddenViewIris: [],
+      hiddenViewIris: explicitlyMinimizedViewIriOrder,
       parentStyle: {
         display: 'flex',
       },
@@ -137,7 +142,7 @@ export const divideAvailableSpace = ({
       layout: SPACE_LAYOUT.flex,
       orientation: gridOrientation,
       visibleViewIris: visibleViewIris,
-      hiddenViewIris: hiddenViewIris,
+      hiddenViewIris: hiddenViewIris.concat(explicitlyMinimizedViewIriOrder),
       parentStyle: {
         display: 'flex',
         flexDirection:
@@ -189,7 +194,7 @@ export const divideAvailableSpace = ({
     layout: SPACE_LAYOUT.grid,
     orientation: gridOrientation,
     visibleViewIris: visibleViewIris,
-    hiddenViewIris: hiddenViewIris,
+    hiddenViewIris: hiddenViewIris.concat(explicitlyMinimizedViewIriOrder),
     parentStyle: {
       display: 'grid',
       gridTemplateColumns: `repeat(${nCols}, 1fr)`,

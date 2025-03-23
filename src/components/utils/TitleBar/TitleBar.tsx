@@ -1,32 +1,50 @@
 import classNames from 'classnames';
-import { FC, useMemo } from 'react';
+import { FC, useContext, useMemo } from 'react';
+import { DEFAULT_VIEW_DESCRIPTION } from '../../../constants/ui';
+import collapseImg from '../../../logos/ui/collapse.svg?raw';
+import expandImg from '../../../logos/ui/expand.svg?raw';
 import hamburgerImg from '../../../logos/ui/hamburger.svg?raw';
+import { useViewContext } from '../../../utils/ui/useViewContext';
 import { Button, ButtonProps } from '../../basic-ui/Button/Button';
 import { Menu, MenuItem, MenuItemProps } from '../../basic-ui/Menu/Menu';
+import { SpaceDividerContext } from '../SpaceDivider/SpaceDivider';
 import './TitleBar.css';
 
 type TitleBarProps = {
-  title: string;
-  subtitle?: string;
-  className?: string;
   'data-testid'?: string;
-  shortcuts?: (ButtonProps & { key: string })[];
-  menuItemProps: (MenuItemProps & { key: string })[];
-};
+  className?: string;
+  minimized?: boolean;
+  viewIri: string;
+} & (
+  | {
+      minimized?: never | false;
+      menuItemProps: (MenuItemProps & { key: string })[];
+      shortcuts?: (ButtonProps & { key: string })[];
+    }
+  | {
+      minimized: true;
+      menuItemProps?: never;
+      shortcuts?: never;
+    }
+);
 
 export const TitleBar: FC<TitleBarProps> = ({
-  title,
-  subtitle,
-  className,
   'data-testid': testid,
-  shortcuts,
+  className,
   menuItemProps,
+  minimized,
+  shortcuts,
+  viewIri,
 }) => {
+  const { title, subtitle } =
+    useViewContext(viewIri)?.description || DEFAULT_VIEW_DESCRIPTION;
+  const { minimizeView, restoreView } = useContext(SpaceDividerContext);
+
   const shortcutButtons = useMemo(
     () =>
       shortcuts?.map(({ key, ...buttonProps }) => (
         <Button key={key} collapse {...buttonProps} />
-      )),
+      )) || [],
     [shortcuts]
   );
 
@@ -34,13 +52,13 @@ export const TitleBar: FC<TitleBarProps> = ({
     () =>
       menuItemProps?.map(({ key, ...menuItemProps }) => (
         <MenuItem key={key} collapse {...menuItemProps} />
-      )),
+      )) || [],
     [menuItemProps]
   );
 
   return (
     <nav
-      className={classNames(['origraph-title-bar', className])}
+      className={classNames(['origraph-title-bar', className], { minimized })}
       data-testid={testid || null}
     >
       {
@@ -54,9 +72,30 @@ export const TitleBar: FC<TitleBarProps> = ({
       <div className="spacer" />
 
       {shortcutButtons}
-      <Menu label="View Menu" leftIcons={[{ srcSvg: hamburgerImg }]} collapse>
-        {menuItems}
-      </Menu>
+      {menuItems.length > 0 ? (
+        <Menu label="View Menu" leftIcons={[{ srcSvg: hamburgerImg }]} collapse>
+          {menuItems}
+        </Menu>
+      ) : null}
+      {minimized ? (
+        <Button
+          collapse
+          className="minimal"
+          leftIcons={[{ srcSvg: expandImg }]}
+          onClick={() => restoreView(viewIri)}
+        >
+          Restore
+        </Button>
+      ) : (
+        <Button
+          collapse
+          className="minimal"
+          leftIcons={[{ srcSvg: collapseImg }]}
+          onClick={() => minimizeView(viewIri)}
+        >
+          Minimize
+        </Button>
+      )}
       {
         // TODO: close button
       }

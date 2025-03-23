@@ -74,7 +74,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ])}
           className={classNames(
             'origraph-button',
-            { splitLeft, splitRight, singleIconButton },
+            {
+              splitLeft,
+              splitRight,
+              singleIconButton,
+            },
             props.className
           )}
           ref={ref || localRef}

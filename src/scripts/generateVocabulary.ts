@@ -8,6 +8,12 @@ import { sort } from 'semver';
 import { IrisByPrefix, Vocabulary, VOCABULARY } from '../constants/vocabulary';
 import { getVersionNumberFromOrigraphVocabIri } from '../utils/core/getVersionNumberFromOrigraphVocabIri';
 import { omit } from '../utils/core/omit';
+
+const origraph = VOCABULARY.irisByPrefix.origraph as IrisByPrefix & {
+  ts: IrisByPrefix;
+};
+const rdfs = VOCABULARY.irisByPrefix.rdfs as IrisByPrefix;
+
 (async () => {
   const VOCABULARY_DIR = 'public/vocabulary';
 
@@ -30,6 +36,7 @@ import { omit } from '../utils/core/omit';
         const groupMemberships: Record<string, Set<string>> = {};
         const enumsToTranslate = new Set<string>();
         const constants: Record<string, string> = {};
+        const labelsByIri: Record<string, string> = {};
 
         const parser = new n3.Parser({ format: 'application/trig' });
         const stream = fs.createReadStream(`${VOCABULARY_DIR}/${path}`);
@@ -79,14 +86,14 @@ instead of
             }
             (['subject', 'predicate', 'object'] as Array<keyof Quad>).forEach(
               (term) => {
-                allIris.add((quad[term] as Term).id);
+                const typedTerm = quad[term] as Term;
+                if (typedTerm.termType === 'NamedNode') {
+                  allIris.add((quad[term] as Term).id);
+                }
               }
             );
             // Collect any group members
-            if (
-              quad.predicate.id ===
-              VOCABULARY.irisByPrefix.origraph.memberOfGroup
-            ) {
+            if (quad.predicate.id === origraph.memberOfGroup) {
               if (!groupMemberships[quad.object.id]) {
                 groupMemberships[quad.object.id] = new Set();
               }
@@ -94,17 +101,18 @@ instead of
             }
             // Identify groups that should be exposed as Typescript enums
             if (
-              quad.predicate.id ===
-                VOCABULARY.irisByPrefix.origraph.ts.translateAs &&
-              quad.object.id === VOCABULARY.irisByPrefix.origraph.ts.Enum
+              quad.predicate.id === origraph.ts.translateAs &&
+              quad.object.id === origraph.ts.Enum
             ) {
               enumsToTranslate.add(quad.subject.id);
             }
             // Identify any constants
-            if (
-              quad.subject.id === VOCABULARY.irisByPrefix.origraph.Constants
-            ) {
+            if (quad.subject.id === origraph.Constants) {
               constants[quad.predicate.id] = quad.object.id;
+            }
+            // Collect any labels
+            if (quad.predicate.id === rdfs.label) {
+              labelsByIri[quad.subject.id] = quad.object.value;
             }
           }
           if (quad === null) {
@@ -212,6 +220,7 @@ instead of
               keyChainsByIri,
               constants,
               enums,
+              labelsByIri,
             };
             resolve(vocabulariesByIri[versionIri]);
           }
@@ -327,11 +336,12 @@ export interface Vocabulary {
   prefixes: Record<string, string>;
   keyChainsByIri: Record<string, string[]>;
   constants: Record<string, string>;
+  labelsByIri: Record<string, string>;
 }
 
 export const VOCABULARY_VERSION_ORDER = ${formatJsObj(sort(Object.keys(exportedVocabularies)))};
 
-export const ALL_VOCABULARIES = ${formatJsObj(exportedVocabularies)};
+export const ALL_VOCABULARIES: Record<string, Vocabulary> = ${formatJsObj(exportedVocabularies)};
 
 // TODO: this hard-coding is likely to change...
 export const VOCABULARY = ALL_VOCABULARIES['https://origraph.net/vocabulary/v0.1.0'];

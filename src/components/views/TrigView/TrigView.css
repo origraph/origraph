@@ -2,5 +2,6 @@
   position: relative;
   .TrigView-monaco-wrapper {
     flex: 1 0 auto;
+    min-height: 10em;
   }
 }

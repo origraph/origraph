@@ -46,6 +46,11 @@ type PerspectiveAspects = Partial<
   Record<PerspectiveAspect, PerspectiveAspectMetadata>
 >;
 
+export type ViewDescription = {
+  title: string;
+  subtitle: string;
+};
+
 export type BaseViewState = {
   perspectiveIri: string;
   viewIri: string;
@@ -53,6 +58,8 @@ export type BaseViewState = {
   perspectiveAspect: PerspectiveAspect;
   section?: SPACE_SECTION;
   style?: CSSStyleDeclaration /* Needed to forward styles from SpaceDivider; see also: https://github.com/facebook/react/issues/32531#issuecomment-2712091021 */;
+  description: ViewDescription;
+  setDescription: (newTitle: Partial<ViewDescription>) => void;
 };
 
 export type ViewState = TrigViewState; // & OtherViewState;

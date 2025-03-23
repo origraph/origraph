@@ -10,10 +10,13 @@ import {
   ReactElement,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
 } from 'react';
+import useDebouncedEffect from 'use-debounced-effect';
+import { noop } from '../../../constants/empty';
 import { BaseViewState } from '../../../state/Perspectives';
 import { omit } from '../../../utils/core/omit';
 import usePrevious from '../../../utils/core/usePrevious';
@@ -23,6 +26,7 @@ import {
   useSizeThresholds,
 } from '../../../utils/ui/useSizeThresholds';
 import { useViewBounds } from '../../../utils/ui/useViewBounds';
+import { TitleBar } from '../TitleBar/TitleBar';
 import {
   divideAvailableSpace,
   SPACE_LAYOUT,
@@ -43,6 +47,9 @@ export const SpaceDividerContext = createContext<{
     mainAxis: UI_SIZE_TYPE;
   };
   spaceDivision: SpaceDivision;
+  tempShrinkStaticSizes: boolean;
+  minimizeView: (viewIri: string) => void;
+  restoreView: (viewIri: string) => void;
 }>({
   spaceSize: {
     width: UI_SIZE_TYPE.Normal,
@@ -58,6 +65,9 @@ export const SpaceDividerContext = createContext<{
     stylesByViewIri: undefined,
     rectanglesByViewIri: undefined,
   },
+  tempShrinkStaticSizes: true,
+  minimizeView: noop,
+  restoreView: noop,
 });
 
 type SpaceDividerChild = ReactElement<HTMLElement & BaseViewState>;
@@ -74,6 +84,9 @@ export const SpaceDivider: FC<SpaceDividerProps> = (props) => {
   const [lastActivatedViewIriQueue, setLastActivatedViewIriQueue] = useState<
     string[]
   >([]);
+  const [explicitlyMinimizedViewIriOrder, setExplicitlyMinimizedViewIriOrder] =
+    useState<string[]>([]);
+  const [tempShrink, setTempShrink] = useState(true);
 
   const { childByViewIri, parentViewIriOrder, sectionByViewIri } =
     useMemo(() => {
@@ -117,12 +130,21 @@ export const SpaceDivider: FC<SpaceDividerProps> = (props) => {
   );
 
   const rawSpaceDivision = useMemo(() => {
-    return divideAvailableSpace({ bounds, thresholds, viewIriPriorityOrder });
-  }, [bounds, thresholds, viewIriPriorityOrder]);
+    return divideAvailableSpace({
+      bounds,
+      thresholds,
+      viewIriPriorityOrder,
+      explicitlyMinimizedViewIriOrder,
+    });
+  }, [
+    bounds,
+    explicitlyMinimizedViewIriOrder,
+    thresholds,
+    viewIriPriorityOrder,
+  ]);
 
   const previousSpaceDivision = usePrevious(rawSpaceDivision);
-
-  const spaceDivision = useMemo(
+  const { spaceDivision, spaceDivisionUpdated } = useMemo(
     () =>
       // To minimize thrashing, don't apply updated layouts unless the
       // viewport or visible views have actually changed
@@ -131,9 +153,35 @@ export const SpaceDivider: FC<SpaceDividerProps> = (props) => {
         new Set(rawSpaceDivision.visibleViewIris),
         new Set(previousSpaceDivision.visibleViewIris)
       )
-        ? previousSpaceDivision
-        : rawSpaceDivision,
+        ? {
+            spaceDivision: previousSpaceDivision,
+            spaceDivisionUpdated: false,
+          }
+        : {
+            spaceDivision: rawSpaceDivision,
+            spaceDivisionUpdated: true,
+          },
     [boundsChanged, previousSpaceDivision, rawSpaceDivision]
+  );
+
+  useEffect(() => {
+    // For views that apply inline sizes, tell them to temporarily shrink
+    // themselves after a layout change, so that CSS won't be influenced.
+    if (spaceDivisionUpdated) {
+      setTempShrink(true);
+    }
+  }, [spaceDivisionUpdated, setTempShrink]);
+
+  useDebouncedEffect(
+    () => {
+      // After the new layout has settled, tell statically-sized elements
+      // to update themselves based on the new layout
+      if (tempShrink) {
+        setTempShrink(false);
+      }
+    },
+    { timeout: 200 },
+    [tempShrink, setTempShrink]
   );
 
   const adaptForUiSize = useMemo(() => {
@@ -162,7 +210,7 @@ export const SpaceDivider: FC<SpaceDividerProps> = (props) => {
     [lastActivatedViewIriQueue, setLastActivatedViewIriQueue]
   );
 
-  const visibleElements = useMemo(
+  const visibleViews = useMemo(
     () =>
       spaceDivision.visibleViewIris.map((viewIri) => {
         const mergedStyles = {
@@ -174,7 +222,44 @@ export const SpaceDivider: FC<SpaceDividerProps> = (props) => {
           onfocus: () => logViewInteraction(viewIri),
         });
       }),
-    [spaceDivision.visibleViewIris, spaceDivision.stylesByViewIri]
+    [
+      spaceDivision.visibleViewIris,
+      spaceDivision.stylesByViewIri,
+      childByViewIri,
+      logViewInteraction,
+    ]
+  );
+
+  const hiddenViewTitleBars = useMemo(
+    () =>
+      spaceDivision.hiddenViewIris.map((viewIri) => {
+        return <TitleBar key={viewIri} viewIri={viewIri} minimized />;
+      }),
+    [spaceDivision.hiddenViewIris]
+  );
+
+  const minimizeView = useCallback(
+    (viewIri: string) => {
+      if (!explicitlyMinimizedViewIriOrder.includes(viewIri)) {
+        setExplicitlyMinimizedViewIriOrder([
+          ...explicitlyMinimizedViewIriOrder,
+          viewIri,
+        ]);
+      }
+    },
+    [explicitlyMinimizedViewIriOrder]
+  );
+
+  const restoreView = useCallback(
+    (viewIri: string) => {
+      logViewInteraction(viewIri);
+      if (explicitlyMinimizedViewIriOrder.includes(viewIri)) {
+        setExplicitlyMinimizedViewIriOrder(
+          explicitlyMinimizedViewIriOrder.filter((iri) => iri !== viewIri)
+        );
+      }
+    },
+    [explicitlyMinimizedViewIriOrder, logViewInteraction]
   );
 
   return (
@@ -182,6 +267,9 @@ export const SpaceDivider: FC<SpaceDividerProps> = (props) => {
       value={{
         spaceSize: adaptForUiSize,
         spaceDivision,
+        tempShrinkStaticSizes: tempShrink,
+        minimizeView,
+        restoreView,
       }}
     >
       <div
@@ -191,17 +279,25 @@ export const SpaceDivider: FC<SpaceDividerProps> = (props) => {
           spaceDivision.orientation,
           spaceDivision.layout,
           adaptForUiSize.mainAxis.toLowerCase(),
-          props.className
+          props.className,
+          { hasMinimizedViews: spaceDivision.hiddenViewIris.length > 0 }
         )}
         ref={ref}
       >
-        <div className="SpaceDivider-offscreen">
-          {spaceDivision.hiddenViewIris.map(
-            (viewIri) => childByViewIri[viewIri]
-          )}
-        </div>
+        {spaceDivision.hiddenViewIris.length > 0 ? (
+          <>
+            <div className="SpaceDivider-offscreen">
+              {spaceDivision.hiddenViewIris.map(
+                (viewIri) => childByViewIri[viewIri]
+              )}
+            </div>
+            <div className="SpaceDivider-minimizedTitles">
+              {hiddenViewTitleBars}
+            </div>
+          </>
+        ) : null}
         <div className="SpaceDivider-content" style={spaceDivision.parentStyle}>
-          {visibleElements}
+          {visibleViews}
           {spaceDivision.visibleViewIris.length === 0 ? (
             <div className="SpaceDivider-emptyState">{props.emptyState}</div>
           ) : null}
