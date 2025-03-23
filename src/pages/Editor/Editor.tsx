@@ -27,6 +27,7 @@ import {
 import { useDidValueChange } from '../../utils/core/useDidValueChange';
 import { useIsMounted } from '../../utils/core/useIsMounted';
 import { useSearchParams } from '../../utils/core/useSearchParams';
+import { getViewDescription } from '../../utils/ui/getViewDescription';
 import './Editor.css';
 
 const viewComponentByType: Record<ViewType, ViewComponent> = {
@@ -162,17 +163,20 @@ export const Editor: FC = () => {
                   viewIri,
                   viewType: viewMetadata.type,
                   perspectiveAspect: aspect as PerspectiveAspect,
-                  description: viewDescriptionsByIri[viewIri] || {
-                    title:
-                      VOCABULARY.labelsByIri[perspectiveIri] ||
-                      'Untitled Perspective',
-                    subtitle:
-                      VOCABULARY.labelsByIri[aspect] || 'Unknown Aspect',
-                  },
-                  setDescription: (newTitle: Partial<ViewDescription>) =>
-                    setViewDescriptionsByIri((draft) =>
-                      Object.assign(draft[viewIri], newTitle)
-                    ),
+                  description: getViewDescription({
+                    previousDescription: viewDescriptionsByIri[viewIri],
+                    perspectiveIri,
+                    aspectIri: aspect,
+                  }),
+                  setDescription: (newDescription: Partial<ViewDescription>) =>
+                    setViewDescriptionsByIri((draft) => {
+                      draft[viewIri] = getViewDescription({
+                        newDescription,
+                        previousDescription: viewDescriptionsByIri[viewIri],
+                        perspectiveIri,
+                        aspectIri: aspect,
+                      });
+                    }),
                 })
               )
           )

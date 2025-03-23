@@ -7,7 +7,11 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { PerspectiveAspect, ViewType } from '../../../constants/vocabulary';
+import {
+  PerspectiveAspect,
+  ViewType,
+  VOCABULARY,
+} from '../../../constants/vocabulary';
 import saveImg from '../../../logos/ui/save.svg?raw';
 import {
   BaseViewState,
@@ -16,6 +20,7 @@ import {
   usePerspective,
 } from '../../../state/Perspectives';
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
+import usePrevious from '../../../utils/core/usePrevious';
 import { isDarkMode } from '../../../utils/ui/isDarkMode';
 import { MenuItemProps } from '../../basic-ui/Menu/Menu';
 import { SpaceDividerContext } from '../../utils/SpaceDivider/SpaceDivider';
@@ -106,6 +111,15 @@ ${await perspective.resultsQuery.getSparql()}`);
     resultsJob?.isRunning,
     resultsJob,
   ]);
+
+  const previousLanguage = usePrevious(language);
+  useEffect(() => {
+    if (previousLanguage !== language) {
+      setDescription({
+        subtitle: `${VOCABULARY.labelsByIri[perspectiveAspect]} (${language})`,
+      });
+    }
+  }, [language, perspectiveAspect, previousLanguage, setDescription]);
 
   const menuItemProps: (MenuItemProps & { key: string })[] = useMemo(
     () => [
