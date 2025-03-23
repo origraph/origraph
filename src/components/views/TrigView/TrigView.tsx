@@ -144,7 +144,13 @@ ${await perspective.resultsQuery.getSparql()}`);
       <div className="TrigView-monaco-wrapper">
         <Editor
           theme={isDarkMode() ? 'vs-dark' : 'vs-light'}
+          /*
+          important: 5em sizes needs to be smaller than the min-height: 10em
+          defined in CSS to make sure that old Monaco sizes won't interfere with
+          SpaceDivider in unpredictable ways
+          */
           height={tempShrinkStaticSizes ? '5em' : '100%'}
+          width={tempShrinkStaticSizes ? '5em' : '100%'}
           language={language}
           value={savedDisplayText}
           onChange={(newValue) => setLocalDisplayText(newValue || '')}
