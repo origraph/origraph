@@ -180,7 +180,7 @@ export const SpaceDivider: FC<SpaceDividerProps> = (props) => {
         setTempShrink(false);
       }
     },
-    { timeout: 200 },
+    { timeout: 200, ignoreInitialCall: false },
     [tempShrink, setTempShrink]
   );
 

@@ -7,7 +7,7 @@ import { configDefaults, defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     globals: true,
-    css: true,
+    css: false,
     environment: 'jsdom',
     setupFiles: ['./vitest.setup.ts'],
     coverage: {
@@ -43,6 +43,7 @@ export default defineConfig({
     target: 'esnext',
     outDir: 'builds/website',
     emptyOutDir: true,
+    sourcemap: true,
   },
   assetsInclude: ['**/*.sparql'],
   publicDir: false,

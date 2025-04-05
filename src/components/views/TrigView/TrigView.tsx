@@ -28,6 +28,8 @@ import { TitleBar } from '../../utils/TitleBar/TitleBar';
 import '../views.css';
 import './TrigView.css';
 
+const TEMP_SHRINK_STATIC_SIZE = '10em';
+
 loader.config({
   // Monaco tries to load files from a CDN; this would break the
   // app for offline uses, so we serve its files ourselves
@@ -149,8 +151,8 @@ ${await perspective.resultsQuery.getSparql()}`);
           defined in CSS to make sure that old Monaco sizes won't interfere with
           SpaceDivider in unpredictable ways
           */
-          height={tempShrinkStaticSizes ? '5em' : '100%'}
-          width={tempShrinkStaticSizes ? '5em' : '100%'}
+          height={tempShrinkStaticSizes ? TEMP_SHRINK_STATIC_SIZE : '100%'}
+          width={tempShrinkStaticSizes ? TEMP_SHRINK_STATIC_SIZE : '100%'}
           language={language}
           value={savedDisplayText}
           onChange={(newValue) => setLocalDisplayText(newValue || '')}
