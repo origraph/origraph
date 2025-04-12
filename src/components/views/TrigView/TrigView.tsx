@@ -1,18 +1,10 @@
 import { Editor, loader } from '@monaco-editor/react';
-import {
-  CSSProperties,
-  FC,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import { CSSProperties, FC, useContext, useEffect, useState } from 'react';
 import {
   PerspectiveAspect,
   ViewType,
   VOCABULARY,
 } from '../../../constants/vocabulary';
-import saveImg from '../../../logos/ui/save.svg?raw';
 import {
   BaseViewState,
   PerspectiveContext,
@@ -22,7 +14,6 @@ import {
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
 import usePrevious from '../../../utils/core/usePrevious';
 import { isDarkMode } from '../../../utils/ui/isDarkMode';
-import { MenuItemProps } from '../../basic-ui/Menu/Menu';
 import { SpaceDividerContext } from '../../utils/SpaceDivider/SpaceDivider';
 import { TitleBar } from '../../utils/TitleBar/TitleBar';
 import '../views.css';
@@ -123,26 +114,12 @@ ${await perspective.resultsQuery.getSparql()}`);
     }
   }, [language, perspectiveAspect, previousLanguage, setDescription]);
 
-  const menuItemProps: (MenuItemProps & { key: string })[] = useMemo(
-    () => [
-      {
-        key: 'save',
-        collapse: false,
-        disabled: true,
-        className: 'minimal',
-        leftIcons: [{ srcSvg: saveImg }],
-        label: 'Save',
-      },
-    ],
-    []
-  );
-
   return (
     <div
       className="TrigView origraph-view"
       style={(style || {}) as CSSProperties}
     >
-      <TitleBar menuItemProps={menuItemProps} viewIri={viewIri} />
+      <TitleBar viewIri={viewIri} />
       <div className="TrigView-monaco-wrapper">
         <Editor
           theme={isDarkMode() ? 'vs-dark' : 'vs-light'}

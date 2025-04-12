@@ -4,6 +4,7 @@ import { DEFAULT_VIEW_DESCRIPTION } from '../../../constants/ui';
 import collapseImg from '../../../logos/ui/collapse.svg?raw';
 import expandImg from '../../../logos/ui/expand.svg?raw';
 import hamburgerImg from '../../../logos/ui/hamburger.svg?raw';
+import saveImg from '../../../logos/ui/save.svg?raw';
 import { useViewContext } from '../../../utils/ui/useViewContext';
 import { Button, ButtonProps } from '../../basic-ui/Button/Button';
 import { Menu, MenuItem, MenuItemProps } from '../../basic-ui/Menu/Menu';
@@ -15,15 +16,15 @@ type TitleBarProps = {
   className?: string;
   minimized?: boolean;
   viewIri: string;
+  menuItemProps?: (MenuItemProps & { key: string })[];
+  handleSaveEdits?: () => void;
 } & (
   | {
       minimized?: never | false;
-      menuItemProps: (MenuItemProps & { key: string })[];
       shortcuts?: (ButtonProps & { key: string })[];
     }
   | {
       minimized: true;
-      menuItemProps?: never;
       shortcuts?: never;
     }
 );
@@ -32,6 +33,7 @@ export const TitleBar: FC<TitleBarProps> = ({
   'data-testid': testid,
   className,
   menuItemProps,
+  handleSaveEdits,
   minimized,
   shortcuts,
   viewIri,
@@ -48,12 +50,31 @@ export const TitleBar: FC<TitleBarProps> = ({
     [shortcuts]
   );
 
+  const defaultMenuItemProps = useMemo(
+    () =>
+      handleSaveEdits
+        ? [
+            {
+              key: 'save',
+              collapse: false,
+              disabled: true,
+              className: 'minimal',
+              leftIcons: [{ srcSvg: saveImg }],
+              label: 'Save',
+            },
+          ]
+        : [],
+    [handleSaveEdits]
+  );
+
   const menuItems = useMemo(
     () =>
-      menuItemProps?.map(({ key, ...menuItemProps }) => (
-        <MenuItem key={key} collapse {...menuItemProps} />
-      )) || [],
-    [menuItemProps]
+      [...defaultMenuItemProps, ...(menuItemProps || [])].map(
+        ({ key, ...menuItemProps }) => (
+          <MenuItem key={key} collapse {...menuItemProps} />
+        )
+      ) || [],
+    [defaultMenuItemProps, menuItemProps]
   );
 
   return (

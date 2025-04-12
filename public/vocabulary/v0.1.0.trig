@@ -31,8 +31,8 @@ origraphVersion: {
   ui:ViewType origraph:inheritsFrom origraph:Group ;
     ts:translateAs ts:Enum .
   ui:TrigView origraph:memberOfGroup ui:ViewType .
+  ui:TreeTableView origraph:memberOfGroup ui:ViewType .
   # TODO: add more views here...
-  # ui:NeldView origraph:memberOfGroup ui:ViewType .
 
   ui:PerspectiveAspect origraph:inheritsFrom origraph:Group ;
     ts:translateAs ts:Enum .

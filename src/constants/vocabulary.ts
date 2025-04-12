@@ -72,6 +72,8 @@ export const ALL_VOCABULARIES: Record<string, Vocabulary> = {
         ui: {
           ViewType: 'https://origraph.net/vocabulary/v0.1.0/ui/ViewType',
           TrigView: 'https://origraph.net/vocabulary/v0.1.0/ui/TrigView',
+          TreeTableView:
+            'https://origraph.net/vocabulary/v0.1.0/ui/TreeTableView',
           PerspectiveAspect:
             'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveAspect',
           ResultPage: 'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage',
@@ -179,6 +181,11 @@ export const ALL_VOCABULARIES: Record<string, Vocabulary> = {
         'ui',
         'TrigView',
       ],
+      'https://origraph.net/vocabulary/v0.1.0/ui/TreeTableView': [
+        'origraph',
+        'ui',
+        'TreeTableView',
+      ],
       'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveAspect': [
         'origraph',
         'ui',
@@ -263,6 +270,7 @@ export const VOCABULARY =
 
 export enum ViewType {
   TrigView = 'https://origraph.net/vocabulary/v0.1.0/ui/TrigView',
+  TreeTableView = 'https://origraph.net/vocabulary/v0.1.0/ui/TreeTableView',
 }
 
 export enum PerspectiveAspect {

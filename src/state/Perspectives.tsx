@@ -3,6 +3,7 @@ import { createContext, useContext, useMemo } from 'react';
 import { Updater } from 'use-immer';
 import { v4 as uuid } from 'uuid';
 import { SPACE_SECTION } from '../components/utils/SpaceDivider/SpaceDivider';
+import { TreeTableViewState } from '../components/views/TreeTableView/TreeTableView';
 import { TrigViewState } from '../components/views/TrigView/TrigView';
 import { noop } from '../constants/empty';
 import { PerspectiveAspect, ViewType } from '../constants/vocabulary';
@@ -62,7 +63,7 @@ export type BaseViewState = {
   setDescription: (newTitle: Partial<ViewDescription>) => void;
 };
 
-export type ViewState = TrigViewState; // & OtherViewState;
+export type ViewState = TrigViewState | TreeTableViewState;
 
 export type Perspective = {
   perspectiveIri: string;

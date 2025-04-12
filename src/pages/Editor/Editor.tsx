@@ -10,8 +10,8 @@ import {
 } from 'react';
 import { useImmer } from 'use-immer';
 import { SpaceDivider } from '../../components/utils/SpaceDivider/SpaceDivider';
+import { TreeTableView } from '../../components/views/TreeTableView/TreeTableView';
 import { TrigView } from '../../components/views/TrigView/TrigView';
-import { ViewComponent } from '../../components/views/types';
 import {
   PerspectiveAspect,
   ViewType,
@@ -30,10 +30,6 @@ import { useSearchParams } from '../../utils/core/useSearchParams';
 import { getViewDescription } from '../../utils/ui/getViewDescription';
 import './Editor.css';
 
-const viewComponentByType: Record<ViewType, ViewComponent> = {
-  [ViewType.TrigView]: TrigView,
-};
-
 export const getEmptyEditorContext = () => ({
   togglePerspectiveIri: (_perspectiveIri: string, _add: boolean) => {},
   viewStates: [],
@@ -50,8 +46,12 @@ const EditorViews = () => {
 
   const views = useMemo(() => {
     const views = viewStates.map((viewState) => {
-      const ViewComponent = viewComponentByType[viewState.viewType];
-      return <ViewComponent key={viewState.viewIri} {...viewState} />;
+      switch (viewState.viewType) {
+        case ViewType.TrigView:
+          return <TrigView {...viewState} key={viewState.viewIri} />;
+        case ViewType.TreeTableView:
+          return <TreeTableView {...viewState} key={viewState.viewIri} />;
+      }
     });
     return views;
   }, [viewStates]);

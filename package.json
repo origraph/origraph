@@ -26,6 +26,7 @@
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
+    "@ariakit/react": "^0.4.16",
     "@chromatic-com/storybook": "^3.2.6",
     "@comunica/bindings-factory": "^3.3.0",
     "@eslint/eslintrc": "^3.3.1",
