@@ -1,3 +1,4 @@
+import { Button as AriakitButton } from '@ariakit/react';
 import classNames from 'classnames';
 import { forwardRef, ReactElement, useMemo, useRef } from 'react';
 import { omit } from '../../../utils/core/omit';
@@ -60,7 +61,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ((leftIconCount === 1 && rightIconCount === 0) ||
           (leftIconCount === 0 && rightIconCount === 1));
       const chunks = [
-        <button
+        <AriakitButton
           key="main"
           {...omit(props, [
             'className',
@@ -104,7 +105,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               className={classNames(iconProps.className)}
             />
           ))}
-        </button>,
+        </AriakitButton>,
       ];
       if (props.renderLeftMenu) {
         chunks.unshift(
