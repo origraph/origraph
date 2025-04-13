@@ -52,16 +52,19 @@ export const useDataForAspect = ({
     resultsPageJob,
   ]);
 
+  const [pendingSave, setPendingSave] = useState<boolean>(false);
   const [unsavedQuads, setUnsavedQuads] = useState<Quad[]>(savedQuads);
 
   const saveQuads = useCallback((_quads: Quad[]) => {
     // TODO: write to quadstore!
+    setPendingSave(true);
   }, []);
 
   const savedQuadsUpdated = useDidValueChange({ value: savedQuads });
   useEffect(() => {
     if (savedQuadsUpdated) {
       setUnsavedQuads(savedQuads);
+      setPendingSave(false);
     }
   }, [savedQuads, savedQuadsUpdated]);
 
@@ -72,5 +75,6 @@ export const useDataForAspect = ({
     unsavedQuads,
     saveQuads,
     isEditingEnabled,
+    pendingSave,
   };
 };

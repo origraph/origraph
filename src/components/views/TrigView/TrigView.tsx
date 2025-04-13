@@ -62,7 +62,13 @@ export const TrigView: FC<TrigViewState> = ({
     string | null
   >(null);
 
-  const { query, savedQuads, isEditingEnabled } = useDataForAspect({
+  const {
+    query,
+    savedQuads,
+    isEditingEnabled,
+    pendingSave,
+    saveQuads: _saveQuads,
+  } = useDataForAspect({
     perspectiveIri,
     perspectiveAspect,
   });
@@ -130,17 +136,14 @@ export const TrigView: FC<TrigViewState> = ({
   });
 
   useEffect(() => {
-    if (didFinalSavedDisplayTextChange) {
-      // TODO: be careful not to nuke this during a re-query after a debounced edit;
-      // will probably want a TitleBar indicator instead of trying to use the text
-      // to say things like Loading...
+    if (didFinalSavedDisplayTextChange && !pendingSave) {
       setLocalDisplayText(finalSavedDisplayText);
     }
-  }, [didFinalSavedDisplayTextChange, finalSavedDisplayText]);
+  }, [didFinalSavedDisplayTextChange, finalSavedDisplayText, pendingSave]);
 
   const handleTextEdit = useCallback(
     (newText: string) => {
-      // TODO: save the edit to quadstore instead of setLocalDisplayText
+      // TODO: call saveQuads() instead of setLocalDisplayText
       // Probably worth debouncing...
       setLocalDisplayText(newText);
     },
