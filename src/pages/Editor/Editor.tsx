@@ -141,7 +141,7 @@ export const Editor: FC = () => {
       const { openedPerspectiveIris } =
         perspectiveManager.updateOpenPerspectives(perspectiveIris);
       openedPerspectiveIris.forEach((perspectiveIri) => {
-        perspectiveManager.startMetadataQuery(perspectiveIri);
+        perspectiveManager.startQueryDefinition(perspectiveIri);
       });
     }
   }, [

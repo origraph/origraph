@@ -38,7 +38,7 @@ origraphVersion: {
     ts:translateAs ts:Enum .
   ui:ResultPage origraph:memberOfGroup ui:PerspectiveAspect ;
     rdfs:label "Results".
-  ui:PerspectiveQuery origraph:memberOfGroup ui:PerspectiveAspect ;
+  ui:QueryDefinition origraph:memberOfGroup ui:PerspectiveAspect ;
     rdfs:label "Query Definition".
 
   origraph:Constants

@@ -177,6 +177,7 @@ export class ComunicaInterface {
         reject = rej;
       });
       if (lastQuadChunk) {
+        let quadsDropped = 0;
         if (!noCache) {
           quadCache = [...quadCache, ...lastQuadChunk];
           if (
@@ -184,13 +185,15 @@ export class ComunicaInterface {
             maxCachedQuads > 0 &&
             quadCache.length > maxCachedQuads
           ) {
-            quadCache.splice(0, quadCache.length - maxCachedQuads);
+            quadsDropped = quadCache.length - maxCachedQuads;
+            quadCache.splice(0, quadsDropped);
           }
         }
         const input = yield {
           progress: 0.5,
           quadCache,
           lastQuadChunk,
+          quadsDropped,
         } as QueryIncrementalOutput;
         if (input?.forceStop) {
           return { quads: quadCache } as QueryFinalOutput;

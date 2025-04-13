@@ -77,8 +77,8 @@ export const ALL_VOCABULARIES: Record<string, Vocabulary> = {
           PerspectiveAspect:
             'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveAspect',
           ResultPage: 'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage',
-          PerspectiveQuery:
-            'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery',
+          QueryDefinition:
+            'https://origraph.net/vocabulary/v0.1.0/ui/QueryDefinition',
           overviewQueryIri:
             'https://origraph.net/vocabulary/v0.1.0/ui/overviewQueryIri',
           selectionQueryIri:
@@ -197,10 +197,10 @@ export const ALL_VOCABULARIES: Record<string, Vocabulary> = {
         'ResultPage',
       ],
       'http://www.w3.org/2000/01/rdf-schema#label': ['rdfs', 'label'],
-      'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery': [
+      'https://origraph.net/vocabulary/v0.1.0/ui/QueryDefinition': [
         'origraph',
         'ui',
-        'PerspectiveQuery',
+        'QueryDefinition',
       ],
       'https://origraph.net/vocabulary/v0.1.0/Constants': [
         'origraph',
@@ -255,7 +255,7 @@ export const ALL_VOCABULARIES: Record<string, Vocabulary> = {
     },
     labelsByIri: {
       'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage': 'Results',
-      'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery':
+      'https://origraph.net/vocabulary/v0.1.0/ui/QueryDefinition':
         'Query Definition',
       'https://origraph.net/vocabulary/v0.1.0/OverviewQuery': 'Overview',
       'https://origraph.net/vocabulary/v0.1.0/SelectionQuery':
@@ -275,5 +275,5 @@ export enum ViewType {
 
 export enum PerspectiveAspect {
   ResultPage = 'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage',
-  PerspectiveQuery = 'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery',
+  QueryDefinition = 'https://origraph.net/vocabulary/v0.1.0/ui/QueryDefinition',
 }

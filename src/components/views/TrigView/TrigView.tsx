@@ -1,5 +1,13 @@
 import { Editor, loader } from '@monaco-editor/react';
-import { CSSProperties, FC, useContext, useEffect, useState } from 'react';
+import {
+  CSSProperties,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 import {
   PerspectiveAspect,
   ViewType,
@@ -7,11 +15,12 @@ import {
 } from '../../../constants/vocabulary';
 import {
   BaseViewState,
-  PerspectiveContext,
-  useJob,
+  QueryPhase,
   usePerspective,
 } from '../../../state/Perspectives';
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
+import { useDataForAspect } from '../../../utils/core/useDataForAspect';
+import { useDidValueChange } from '../../../utils/core/useDidValueChange';
 import usePrevious from '../../../utils/core/usePrevious';
 import { isDarkMode } from '../../../utils/ui/isDarkMode';
 import { SpaceDividerContext } from '../../utils/SpaceDivider/SpaceDivider';
@@ -45,65 +54,98 @@ export const TrigView: FC<TrigViewState> = ({
   setDescription,
 }) => {
   const perspective = usePerspective(perspectiveIri);
-  const { jobManager } = useContext(PerspectiveContext);
   const { tempShrinkStaticSizes } = useContext(SpaceDividerContext);
 
   const [localDisplayText, setLocalDisplayText] =
     useState<string>('Loading...');
+  const [parsedSavedDisplayText, setParsedSavedDisplayText] = useState<
+    string | null
+  >(null);
 
-  const [savedDisplayText, setSavedDisplayText] =
-    useState<string>(localDisplayText);
-  const [language, setLanguage] = useState<MONACO_LANGUAGE>(
-    MONACO_LANGUAGE.Text
-  );
-  const [isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
-
-  const metadataJob = useJob(perspective.metadataQuery?.jobIri);
-  const resultsJob = useJob(perspective.resultsQuery?.jobIri);
-  useEffect(() => {
-    (async () => {
-      switch (perspectiveAspect) {
-        case PerspectiveAspect.PerspectiveQuery:
-          if (perspective.resultsQuery) {
-            setSavedDisplayText(`#TODO: this should actually be the TriG meta-sparql; need a separate view!
-${await perspective.resultsQuery.getSparql()}`);
-            setLanguage(MONACO_LANGUAGE.SPARQL);
-            // TODO: don't enable this until it actually works
-            // setIsEditingEnabled(true);
-            setIsEditingEnabled(false);
-          } else if (metadataJob?.isRunning) {
-            setSavedDisplayText('Querying...');
-            setLanguage(MONACO_LANGUAGE.Text);
-            setIsEditingEnabled(false);
-          } else {
-            setSavedDisplayText('Initializing...');
-            setLanguage(MONACO_LANGUAGE.Text);
-            setIsEditingEnabled(false);
-          }
-          break;
-        case PerspectiveAspect.ResultPage:
-        default:
-          if (perspective.resultsQuery) {
-            setSavedDisplayText(
-              await quadsToTrig(perspective.resultsQuery.currentQuads)
-            );
-            setLanguage(MONACO_LANGUAGE.TriG);
-            setIsEditingEnabled(resultsJob ? !resultsJob.isRunning : false);
-          } else {
-            setSavedDisplayText('Loading metadata...');
-            setLanguage(MONACO_LANGUAGE.Text);
-            setIsEditingEnabled(false);
-          }
-      }
-    })();
-  }, [
-    jobManager,
-    perspective.resultsQuery,
+  const { query, savedQuads, isEditingEnabled } = useDataForAspect({
+    perspectiveIri,
     perspectiveAspect,
-    metadataJob?.isRunning,
-    resultsJob?.isRunning,
-    resultsJob,
-  ]);
+  });
+
+  const { savedDisplayText, language, parsePromise } = useMemo(() => {
+    if (!query) {
+      return {
+        savedDisplayText: 'Loading...',
+        language: MONACO_LANGUAGE.Text,
+        parsePromise: null,
+      };
+    } else if (query.phase !== QueryPhase.COMPLETED) {
+      return {
+        savedDisplayText: query.phase,
+        language: MONACO_LANGUAGE.Text,
+        parsePromise: null,
+      };
+    } else if (savedQuads.length) {
+      setParsedSavedDisplayText(null);
+      if (perspectiveAspect === PerspectiveAspect.QueryDefinition) {
+        return {
+          savedDisplayText: 'Parsing...',
+          parsePromise:
+            perspective.resultsPage?.getSparql().then(
+              (
+                sparql
+              ) => `#TODO: we should derive this from meta-sparql savedQuads!
+            ${sparql}`
+            ) || null,
+          language: MONACO_LANGUAGE.SPARQL,
+        };
+      } else {
+        return {
+          savedDisplayText: 'Parsing...',
+          parsePromise: quadsToTrig(savedQuads),
+          language: MONACO_LANGUAGE.TriG,
+        };
+      }
+    } else {
+      return {
+        savedDisplayText: 'No results',
+        language: MONACO_LANGUAGE.Text,
+        parsePromise: null,
+      };
+    }
+  }, [perspective.resultsPage, perspectiveAspect, query, savedQuads]);
+
+  useEffect(() => {
+    if (parsedSavedDisplayText === null && parsePromise !== null) {
+      (async () => {
+        setParsedSavedDisplayText(await parsePromise);
+      })();
+    }
+  }, [parsePromise, parsedSavedDisplayText]);
+
+  const finalSavedDisplayText = useMemo(
+    () =>
+      parsedSavedDisplayText === null
+        ? savedDisplayText
+        : parsedSavedDisplayText,
+    [parsedSavedDisplayText, savedDisplayText]
+  );
+  const didFinalSavedDisplayTextChange = useDidValueChange({
+    value: finalSavedDisplayText,
+  });
+
+  useEffect(() => {
+    if (didFinalSavedDisplayTextChange) {
+      // TODO: be careful not to nuke this during a re-query after a debounced edit;
+      // will probably want a TitleBar indicator instead of trying to use the text
+      // to say things like Loading...
+      setLocalDisplayText(finalSavedDisplayText);
+    }
+  }, [didFinalSavedDisplayTextChange, finalSavedDisplayText]);
+
+  const handleTextEdit = useCallback(
+    (newText: string) => {
+      // TODO: save the edit to quadstore instead of setLocalDisplayText
+      // Probably worth debouncing...
+      setLocalDisplayText(newText);
+    },
+    [setLocalDisplayText]
+  );
 
   const previousLanguage = usePrevious(language);
   useEffect(() => {
@@ -131,8 +173,8 @@ ${await perspective.resultsQuery.getSparql()}`);
           height={tempShrinkStaticSizes ? TEMP_SHRINK_STATIC_SIZE : '100%'}
           width={tempShrinkStaticSizes ? TEMP_SHRINK_STATIC_SIZE : '100%'}
           language={language}
-          value={savedDisplayText}
-          onChange={(newValue) => setLocalDisplayText(newValue || '')}
+          value={localDisplayText}
+          onChange={(newValue) => handleTextEdit(newValue || '')}
           options={{
             readOnly: !isEditingEnabled,
           }}
