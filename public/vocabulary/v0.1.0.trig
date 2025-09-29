@@ -13,7 +13,7 @@ origraphVersion: {
   origraphGlobal:vocabularies origraphGlobal:installed_version origraphVersion: .
   # All projects should have descriptive triples like:
   # <my:project> a void:Dataset;
-  #   void:vocabulary origraph: .
+  #   void:vocabulary <https://origraph.net/vocabulary/v0.1.0> .
 
   # Core origraph concepts
   origraph:Node origraph:inheritsFrom origraph:Item .

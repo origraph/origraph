@@ -1,0 +1,62 @@
+@prefix origraph: <https://origraph.net/vocabulary/v0.1.0/> .
+@prefix origraphGlobal: <https://origraph.net/vocabulary/global/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix ts: <https://origraph.net/vocabulary/v0.1.0/typescript/> .
+@prefix ui: <https://origraph.net/vocabulary/v0.1.0/ui/> .
+@prefix void: <http://rdfs.org/ns/void#> .
+@prefix project: <https://origraph.net/consultingServiceSchedule> .
+@prefix : <https://origraph.net/consultingServiceSchedule/> .
+
+:metadata {
+  project: a void:Dataset;
+    void:vocabulary <https://origraph.net/vocabulary/v0.1.0> .
+}
+
+:model {  
+  # :service origraph:inheritsFrom origraph:Node .
+  # :report origraph:inheritsFrom origraph:Node .
+  # :expertiseArea origraph:inheritsFrom origraph:Group .
+  # :deliverable origraph:inheritsFrom origraph:Link .
+}
+
+project: {
+
+  :discoveryPlanningValidationEvaluation
+    rdfs:label "Discovery, Planning, Validation, and Evaluation" ;
+    rdfs:comment "This is a core Origraph expertise area that can both create significant cost savings over time, as well as ensure a higher-quality result that actually meets your needs; designing for incorrect tasks and/or poor data abstractions are often the most significant risk in visualization projects" .
+
+  :initialTaskDataNeedsAssessment
+    origraph:inheritsFrom :service ;
+    origraph:memberOfGroup :discoveryPlanningValidationEvaluation ;
+    :deliverable :report ;
+    rdfs:label "Initial Task & Data Needs Assessmen" ;
+    rdfs:comment "This phase involves a deep dive into your business objectives, data sources, and user needs. The outcome is a detailed report outlining the project scope." ;
+    :timeEstimate [
+      :minimum "P7D"^^xsd:duration ;
+      :maximum "P3M"^^xsd:duration ;
+      rdfs:comment "Heavily dependent on the client's ability to provide timely access to data and key stakeholders, and the number of users"
+    ] .
+  
+  :revisitedTaskDataNeedsAssessment
+    origraph:inheritsFrom :service ;
+    origraph:memberOfGroup :discoveryPlanningValidationEvaluation ;
+    :deliverable :report ;
+    rdfs:label "Task & Data Needs Re-Evaluation" ;
+    rdfs:comment "Revisiting business objectives, data sources, and user needs on a regular basis (typically quarterly) is strongly recommended. Beyond the broadly-scoped initial assessment, subsequent reports will include qualitative and quantitative metadata about the state of your data, and are likely to paint a much richer picture with more specific actionable insights, and uncover more blind spots." ;
+    :timeEstimate [
+      :minimum "P1D"^^xsd:duration ;
+      :maximum "P1M"^^xsd:duration
+    ] .
+  
+  :uxEvaluation
+    origraph:inheritsFrom :service ;
+    origraph:memberOfGroup :discoveryPlanningValidationEvaluation ;
+    :deliverable :report ;
+    rdfs:label "UX Evaluation" ;
+    rdfs:comment "We leverage established methodologies to validate the effectiveness of any mocked, prototyped, or deployed visualization solutions with an appropriate level of ecological validity, and identify opportunities for improvement. The resulting report typically analyzes specific questions w.r.t. usability, expressiveness, learnability, perceptual accuracy, etc." ;
+    :timeEstimate [
+      :minimum "P7D"^^xsd:duration ;
+      :maximum "P1M"^^xsd:duration
+    ] .
+}

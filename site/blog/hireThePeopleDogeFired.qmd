@@ -1,0 +1,188 @@
+---
+title: "Why you should hire the people that the king's stinking son fired"
+subtitle: "and Origraph's general attitude about boutique vs. big clients"
+title-block-banner: miracleMaxBanner.jpg
+author:
+  - name: Alex Bigelow
+    url: https://alex-r-bigelow.github.io
+categories:
+  - op-ed
+  - consulting
+bibliography: bibliography.bib
+draft: true
+---
+
+::: {.callout-warning .yellow .accent-strong .accent-links}
+
+This article assumes that you've already seen or read [The Princess Bride](https://www.themoviedb.org/movie/2493-the-princess-bride?language=en-US){.yellow}. Not only is it a necessary prerequisite for this article to make much sense, it's also worth noting that **it contains spoilers.**
+
+:::
+
+
+::: {.purple .accent-strong}
+
+Technically, I can neither claim to have been fired by our stinking self-styled king, nor his stinking son. I left academia a few years ago on my own.
+
+However, there **is** a significant population of recently-former academics out there at the moment, with whom I share a similar situation: the job market for data scientists was already pretty awful, driven in part by MBAs [who are drinking the new AI oil like it's Kool-Aid](/blog/aiKoolAid.qmd).
+
+And then DOGE happened: a scabby prince decided to fund a wanna-be king's election, in order to fire as many academics as he could (before falling out of favor and getting fired himself).
+
+The result?
+
+A ton of extremely talented [**data miracle workers**]{.pink}, who have spent their entire careers trying to make the world a better place (with little regard for things like money), have been pushed out of academia this year. Many of them have found themselves involuntarily self-employed.
+
+> **Inigo**: Are you the Miracle Max… who worked for the [people] all those years?
+> 
+> **Miracle Max**: The king's stinking son fired me. And thank you for bringing up such a painful subject. While you're at it, why don't you give me a nice paper cut, and pour lemon juice on it? We're closed!
+
+:::
+
+Miracle Max: Beat it, or I'll call the brute squad.
+
+Fezzik: I'm on the brute squad.
+
+Inigo: You are the brute squad.
+
+Inigo: We need a miracle. It's very important.
+
+Miracle Max: Look, I'm retired. And besides… why would you want someone the king's stinking son fired? I might kill whoever you wanted me to miracle.
+
+Inigo: He's already dead.
+
+Miracle Max: He is, huh? I'll take a look. Bring him in. I've seen worse.
+
+Inigo: Sir? We're in a terrible rush.
+
+Miracle Max: Don't rush me, sonny. You rush a miracle man, you get rotten miracles. You got money?
+
+Inigo: Sixty-five.
+
+Miracle Max: I never worked for so little… except once, and that was a very noble cause.
+
+Inigo: This is noble, sir. His wife is crippled. His children are on the brink of starvation.
+
+Miracle Max: Are you a rotten liar!
+
+Inigo: I need him to help avenge my father… murdered these twenty years.
+
+Miracle Max: Your first story was better. Where's that bellows? He probably owes you money, huh? Well, I'll ask him.
+
+Inigo: He's dead. He can't talk.
+
+Miracle Max: Look who knows so much, huh? It just so happens your friend is only mostly dead. There's a big difference between mostly dead and all dead. Please open his mouth. Now, mostly dead is slightly alive. Now, all dead… well, with all dead… there's usually only one thing that you can do.
+
+Inigo: What's that?
+
+Miracle Max: Go through his clothes and look for loose change. Hey! Hello in there! Hey! What's so important? What you got here that's worth living for?
+
+Westley: Tr-u-u-ue lo-o-o-ove.
+
+Inigo: True love. You heard him? You could not ask for a more noble cause than that.
+
+Miracle Max: Hey, sonny… true love is the greatest thing in the world… except for a nice M.L.T… mutton, lettuce, and tomato sandwich… when the mutton is nice and lean and the tomato is ripe. They're so perky. I love that. But that's not what he said. He distinctly said, "To bl-a-a-ave." And as we all know, to blave means to bluff, huh? So you were probably playing cards, and he cheated...
+
+Valerie: Liar! Liar! Liar!
+
+Miracle Max: Get back, witch!
+
+Valerie: I'm not a witch! I'm your wife! But after what you just said… I'm not even sure I want to be that anymore!
+
+Miracle Max: You never had it so good.
+
+Valerie: He said true love, Max.
+
+Miracle Max: Don't say another word, Valerie!
+
+Valerie: He's afraid. Ever since Prince Humperdinck fired him... his confidence is shattered.
+
+Miracle Max: Why'd you say that name? You promised me that you would never say that name!
+
+Valerie: What? Humperdinck?
+
+Miracle Max: I'm not listening!
+
+Valerie: A life expiring… and you don't have the decency to say why you won't help!
+
+Miracle Max: Nobody's hearing nothing!
+
+Valerie: Humperdinck!
+
+Inigo: This is Buttercup's true love. If you heal him, he will stop Humperdinck's wedding.
+
+Miracle Max: Shut up! Wait a minute. I make him better, Humperdinck suffers?
+
+Inigo: Humiliations galore!
+
+Miracle Max: (scats) That is a noble cause. Give me the sixty-five. I'm on the job.
+
+Inigo: That's a miracle pill?
+
+Valerie: The chocolate coating makes it go down easier… but you have to wait 15 minutes for full potency… and you shouldn't go swimming for at least, what?
+
+Miracle Max: An hour. A good hour.
+
+Valerie: Yeah, an hour.
+
+Inigo: Thank you for everything.
+
+Valerie: Bye-bye, boys.
+
+Miracle Max: Have fun storming the castle.
+
+Valerie: Think it'll work?
+
+Miracle Max: It would take a miracle.
+
+Max and Valerie: Bye!
+
+Inigo: Anything?
+
+Fezzik: Inigo, there's more than thirty.
+
+Inigo: What's the difference? We've got him. Help me here. We'll have to force-feed him.
+
+Fezzik: Has it been fifteen minutes?
+
+Inigo: We can't wait. The wedding's in half an hour. We must strike in the hustle and bustle beforehand. Tilt his head back. Open his mouth.
+
+Fezzik: How long do we have to wait… before if we know the miracle works?
+
+Inigo: Your guess is as good as mine.
+
+Westley: I'll beat you apart! I'll take you both together!
+
+Fezzik: I guess not very long.
+
+Westley: Why won't my arms move?
+
+Fezzik: You've been mostly dead all day.
+
+Inigo: We had Miracle Max make a pill to bring you back.
+
+
+
+
+## Working for the people all those years
+
+## The king's stinking son
+
+## We're closed
+
+## Beware the brute squad
+
+- Point-for-point, just walk through the Miracle Max scene
+  - Fine to say you're closed when you're not
+  - Beware the brute squad
+  - Working for the people
+  - The king's stinking son
+  - "I might kill whomever needs the miracle" ...
+  - Mostly dead is still alive
+  - You got money?
+  - $65/hour is ... honstly a good bar for a truly noble cause. But should be charging more than that
+  - Get access to their data and their people; don't trust them directly
+    - What data have they got, that's worth living for?
+  - A noble cause is subjective. MLT? Humperdink suffers?
+    - Even if it's something universally accepted noble... e.g. "true love" ... it's okay to not be bullied. Probably a warning sign, if someone's threatening you with their idea of "objective"
+  - A noble cause is a powerful motivator...
+  - A noble cause gets better results. Diversity, etc.
+  - Sometimes you have to rush a miracle. That doesn't mean it's invalid, but your dramatic "you killed my father" moment ... might have silly antics

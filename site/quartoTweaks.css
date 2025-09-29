@@ -23,6 +23,15 @@ span.origraph-ui-button-container {
   height: 1em;
 }
 
+/* layout hacks */
+.align-content-with-body-column {
+  display: grid;
+  grid-template-columns: subgrid;
+  & > * {
+    grid-column: body-content-start/body-content-end;
+  }
+}
+
 /* overrides for the navbar */
 :root {
   /*
@@ -55,6 +64,48 @@ span.origraph-ui-button-container {
     position: absolute;
     left: -10000px;
   }
+}
+
+/* small fixes needed for callouts */
+.callout-header {
+  align-items: center;
+}
+
+/* references to callouts, ignoring the style guide */
+.callout-reference {
+  &.accent a {
+    text-decoration: none;
+    color: var(--accent-color);
+  }
+}
+
+/* better hover box contrast, plus some fixes for callouts in hover boxes */
+.tippy-content:has(.callout) {
+  padding: 0;
+  .callout {
+    margin-top: 0;
+    .callout-title-container {
+      overflow-wrap: normal;
+    }
+    .callout-body {
+      min-width: 20em;
+    }
+  }
+}
+.tippy-box[data-theme~='quarto'] {
+  border: none;
+  box-shadow: 1em 1em 10em var(--hard-foreground-color);
+}
+#quarto-back-to-top {
+  box-shadow: 0.5em 0.5em 2em var(--soft-foreground-color);
+}
+
+/* Unsure if this is a quarto bug, or an artifact of something I've done, but
+   navigating to a specific #id on the page creates an invisible block (I think
+   to ensure the target is visible below the navbar), that blocks pointer events
+   if you then scroll back up */
+section:target::before {
+  pointer-events: none;
 }
 
 /* separator color overrides */
@@ -100,6 +151,89 @@ h2,
   border: var(--my-tab-line-thickness) solid var(--my-tab-active-color);
 }
 
+/* Color theme tweaks */
+.blockquote {
+  color: var(--accent-color);
+  border-left: 0.25rem solid var(--accent-color);
+}
 .accent {
   color: var(--accent-color);
+}
+.accent-links a {
+  color: var(--accent-color);
+}
+.accent-strong strong {
+  color: var(--accent-color-dark);
+}
+.accent-headers {
+  h1,
+  h2,
+  .h1,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6 {
+    color: var(--accent-color);
+  }
+  h2,
+  .h2 {
+    border-bottom: 1px solid var(--accent-color-light);
+  }
+  .anchorjs-link {
+    color: var(--accent-color);
+  }
+}
+.block-with-standard-background {
+  background: var(--background-color);
+}
+.inverted-block-with-accented-background {
+  --bs-heading-color: var(--accent-color-light);
+  background: var(--accent-color-dark);
+  color: var(--background-color);
+  h1,
+  h2,
+  .h1,
+  .h2 {
+    color: var(--accent-color-light);
+  }
+  h2,
+  .h2 {
+    border-bottom: 1px solid var(--accent-color);
+  }
+  .anchorjs-link {
+    color: var(--accent-color-light);
+  }
+  a {
+    color: var(--hard-background-color);
+  }
+  .tippy-box[data-theme~='quarto'] a {
+    color: var(--accent-color);
+  }
+  .accent {
+    color: var(--accent-color-light);
+  }
+  &.accent-links a {
+    color: var(--accent-color-light);
+  }
+  &.accent-strong strong {
+    color: var(--accent-color-light);
+  }
+}
+.block-with-standard-background,
+.inverted-block-with-accented-background {
+  &.column-screen-left {
+    padding: 6em;
+    margin: 3em 0em;
+    box-shadow: 1em 1em 3em var(--soft-foreground-color);
+  }
+  &.column-screen-right {
+    padding: 6em;
+    margin: 0em;
+    box-shadow: -1em 1em 3em var(--soft-foreground-color);
+  }
 }

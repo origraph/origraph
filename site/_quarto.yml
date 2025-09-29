@@ -13,23 +13,32 @@ website:
   navbar:
     logo: 'logos/origraph/Logo Light Background.png'
     left:
-      - text: About
+      # - href: blog/aboutUs.qmd
+      #   text: About Us
+      - text: Consulting
         menu:
-          - href: blog/about.qmd
-            text: About the App
-          - href: consulting.qmd
-            text: Consulting
-          - href: support.qmd
-            text: Support
-          - href: blog.qmd
-            text: Blog
+          - href: blog/consulting.qmd
+            text: Our Approach
+          - href: blog/consulting.qmd#discovery-planning-validation-and-evaluation
+            text: Discovery, Planning, Validation, and Evaluation
+          - href: blog/consulting.qmd#visual-prototyping-development
+            text: Visual Prototyping & Development
+          - href: blog/consulting.qmd#data-science-ai
+            text: Data Science & AI
+          - href: blog/consulting.qmd#system-integration-deployment
+            text: System Integration & Deployment
+          - href: blog/consulting.qmd#marketing-communication-and-training
+            text: Marketing, Communication, and Training
+      - href: blog.qmd
+        text: Blog
     right:
       - href: blog.xml
         text: '[![RSS Logo](/logos/social/rss.svg){.origraph-icon}[RSS Feed]{.navbar-button-label}]{.origraph-button .minimal}'
-      - href: https://patreon.com/Origraph
-        text: '[![Patreon Logo](/logos/social/patreonWhite.png){.origraph-icon}[Patreon]{.navbar-button-label}]{.origraph-button .minimal}'
-      - href: app.qmd
-        text: '[![Application icon](/logos/ui/application.svg){.origraph-icon} Launch App]{.origraph-button}'
+      # - href: https://patreon.com/Origraph
+      #   text: '[![Patreon Logo](/logos/social/patreonWhite.png){.origraph-icon}[Patreon]{.navbar-button-label}]{.origraph-button .minimal}'
+      # - href: app.qmd
+      #   text: '[![Application icon](/logos/ui/application.svg){.origraph-icon} Launch App]{.origraph-button}'
+  back-to-top-navigation: true
 
 format:
   html:

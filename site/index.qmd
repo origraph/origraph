@@ -2,7 +2,7 @@
 toc: false
 title-block-banner: true
 title: '![](/logos/origraph/Logo Light Background.svg){fig-alt="Origraph Logo" height="5em" .header-logo} Origraph'
-subtitle: UX Innovations for NoSQL Thinking
+subtitle: Creative data folding
 ---
 
 <style>
@@ -20,51 +20,17 @@ subtitle: UX Innovations for NoSQL Thinking
     background-repeat: no-repeat;
     z-index: -1000;
   }
-  .title {
-    position: relative;
-  }
   .quarto-title-banner {
     min-height: 15em;
     align-items: center;
-  }
-  .header-logo {
-    position: absolute;
-    left: calc(100% + 1em);
-    top: -1.25em;
-  }
-  #quarto-content {
-    min-height: calc(100vh - 61px - 15em)
-  }
-  .intro, .cta {
-    background-color: var(--my-extra-white);
-    padding: 6em;
-  }
-  .column-screen-left {
-    background-color: var(--cb-extra-dark-3-purple);
-    color: var(--my-white);
-    padding: 6em;
-    margin: 3em 0em;
-    h2, .h2 {
-      color: var(--cb-light-3-purple);
-      border-bottom-color: var(--cb-light-3-purple);
+    display: grid;
+    grid-template-columns: subgrid;
+    h1 {
+      color: var(--accent-color-extra-dark);
     }
-    .anchorjs-link {
-      color: var(--cb-3-purple);
-    }
-  }
-  .column-screen-right {
-    background-color: var(--cb-extra-light-6-yellow);
-    padding: 6em;
-    margin: 0em;
-    h2, .h2 {
-      color: var(--cb-extra-dark-6-yellow);
-      border-bottom-color: var(--cb-extra-dark-6-yellow);
-    }
-    .anchorjs-link {
-      color: var(--cb-6-yellow);
-    }
-    & > p {
-      max-width: 35em;
+    .subtitle {
+      margin-top: -2.5em;
+      margin-left: 6.5em;
     }
   }
   :root {
@@ -72,46 +38,31 @@ subtitle: UX Innovations for NoSQL Thinking
   }
 </style>
 
-::: {.intro}
+::: {.column-screen-right .align-content-with-body-column .inverted-block-with-accented-background .yellow .accent-strong}
 
-## [App under construction]{.orange .accent}
+## Got a gnarly spreadsheet?
 
-Origraph is not-yet-released visual data wrangling environment.
+Even without any training, people often do **more sophisticated** data things, than what the basic rows and columns of spreadsheets were designed to handle.
 
-A richer set of data LEGOs—beyond mere rows and columns—are coming, for Excel-level data workers in a post-AI world.
+Unfortunately, we still live in a software world in which—***for now***—playing with non-tabular data is the exclusive privilege of programmers and big corporations. At Origraph, we specialize in helping people find, use, or create software that organizes information in a way that's **compatible with your mental model**.
 
-Origraph represents a whole new way to visually [**edit**]{.purple .accent}, [**model**]{.teal .accent}, [**analyze**]{.green .accent}, [**visualize**]{.pink .accent}, and [**train / use AI**]{.yellow .accent} in ways that respect and augment human creativity, rather than attempting to replace it.
-
-<!-- [About the app](about.qmd){.origraph-button .pink style="display:inline-block"} -->
-
-You can find the precursor academic proof-of-concept—exploring visual [**modeling**]{.teal .accent} possibilities for network data—at [https://origraph.github.io](https://origraph.github.io).
+Whether it's an advanced visualization, a knowledge graph, a NoSQL database, or statistics & AI, check out our [![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Consulting Services](blog/consulting.qmd){.origraph-button .yellow style="display:inline-block"} for how to best empower the people who manage information in your organization, with the data that you already have, and how to plan for the **creative data thinking** that you will need in the post-AI world.
 
 :::
 
-<!--
+::: {.column-screen-left .align-content-with-body-column .inverted-block-with-accented-background .grey .accent-links .accent-strong}
 
-::: {.column-screen-left}
+# App under construction
+Origraph itself is not-yet-released visual data wrangling environment.
 
-## Humans still have (unsupported) data superpowers
+A richer set of data building blocks—beyond mere rows and columns—are coming, for Excel-level data workers in a post-AI world.
 
-At Origraph, we believe that natural human curiosity should be all that you need to ask deep, insightful questions about your data. [**Creativity is fundamental to good data science**]{.pink .accent}—including what information you choose to collect, how you organize and model it, and the kinds of questions that you dare to ask about it.
+Origraph represents a whole new way to visually [**edit**]{.purple}, [**model**]{.teal}, [**analyze**]{.green}, [**visualize**]{.pink}, and [**train / use AI**]{.yellow} in ways that respect and augment human creativity, rather than attempting to replace it.
 
-However, modern visual computing is less than a century old. We're still in the dark ages, w.r.t. all the ways that software can (or could) satisfy human curiosity, and how to facilitate thinking outside of the box. Despite universal understanding—zero explanation needed—of "advanced" data concepts like pins-and-red-string graphs in movies, the set theory that comes naturally to anyone looking at a Venn diagram, or the ability to craft sophisticated arguments about ontological problems like whether a hot dog is a sandwich; [**we're still missing the basic UX for working with non-tabular data**]{.orange .accent}.
+You can find a precursor academic proof-of-concept—exploring [**visual modeling**]{.teal} possibilities for network data—at [https://origraph.github.io](https://origraph.github.io){.teal}.
 
-Search engines, AI, and spreadsheets are ubiquitous. But if you want to ask more expressive questions than they can understand; if you want to color outside of the lines of tables; or go beyond guess-and-check prompt engineering; [**existing software still gatekeeps the fun side of data science**]{.yellow .accent} by demanding artificial requirements like programming experience and/or a PhD in data science to play with any other data shapes.
+### An expanded data toy box for the mind
+
+Search engines, AI, and spreadsheets are ubiquitous. But if you want to ask more expressive questions than those tools were designed for; if you want to color outside of the lines of tables; or go beyond guess-and-check prompt engineering; existing software still gatekeeps [**the fun side of data science**]{.orange .accent} by demanding artificial requirements like programming experience, a PhD in data science, and/or a budget for an entire software team, just to play with any non-tabular data shapes.
 
 :::
-
-::: {.column-screen-right}
-## Get ahead of the post-AI aftermath
-
-If you're smart enough to see past the hype—to the limits of what AI can or should do—you already understand that [**human creativity is the most important digital skill of the future**]{.teal .accent}.
-
-While your competitors are busy with the blunder of trying to outsource all the work of their most creative employees to expensive, hallucinating chatbots, we offer:
-
-[Consulting services](consulting.qmd){.origraph-button .yellow style="display:inline-block"}
-
-for how to best empower the human data workers in your organization with data that you already have, and how to plan for the creative data-based thinking that you will need in the future.
-:::
-
--->

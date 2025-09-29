@@ -1,0 +1,32 @@
+---
+title: Even if AI is the new oil, why are you drinking it like Kool-Aid?
+author:
+  - name: Alex Bigelow
+    url: https://alex-r-bigelow.github.io
+categories:
+  - op-ed
+image: oilKoolAid.png
+url: aiKoolAid
+bibliography: bibliography.bib
+draft: true
+---
+
+Finally ready for My Hot Take on AI<sup>TM</sup>, now that I've run across someone articulating something that's been bothering me for a while, but I've been lacking the words:
+
+{{< video https://youtu.be/82JpGhctWpU >}}
+
+There are plenty of evils associated with AI, from the theft of training data, to training data reinforcing terrible human biases, to the extra atmospheric carbon, to the social costs (and dangers) of devaluing human labor and outsourcing intellectual rigor. But there's another problem closer to my research:
+
+An AI is essentially an autonomous data abstraction.
+
+Which would be fine, if industry leaders weren't betting Too Big To Fail-levels of money on the idea that they'll be able to replace expensive human employees (I say this as a "Founder, CEO," aka "mostly-unemployed person who writes code for zero income, nervously watching my self-bootstrapped investment dwindle").
+
+It's not just that AI will never achieve human levels of creativity, it's that it's being used as a VERY rigid abstraction that actively interferes with—and explicitly dis-empowers—human creativity. Instead of tools to facilitate human thought, they're really being used in many business settings as replacements for human thought. There's an inherent tyranny / "evil of abstraction," whenever a specific way of thinking is prioritized above all others, and it comes with serious risks to business, science, and society when you have bots playing IRL versions of Papers, Please.
+
+The freedom to select, refine, and iterate between different abstractions is often what results in truly "great" science, design, art, and software—and we still lack good digital tools to support humans in that thought process, let alone trainable data about how that process works. If true AI creativity ever happens, it will only be because we first supported, prioritized, paid, and trusted humans to color outside the lines of the mandatory abstractions that their jobs usually depend upon.
+
+---
+
+Too big to fail money: "AI is the only tech" dogma is ... eerie
+
+- https://www.businessinsider.com/replit-ceo-apologizes-ai-coding-tool-delete-company-database-2025-7
