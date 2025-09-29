@@ -1,0 +1,302 @@
+---
+title: Consulting Services
+abstract: This is an overview of our general approach to consulting, the range of services that we provide, how we approach each piece of the data project puzzle, and a very rough sense for how long each piece can take.
+author:
+  - name: Alex Bigelow
+    url: https://alex-r-bigelow.github.io
+categories:
+  - about
+  - consulting
+bibliography: bibliography.bib
+csl: ieee.csl
+---
+
+# Our Consulting Approach
+
+The whole point of data analysis and business intelligence is to be aware of any dangers—and opportunities!—hidden in the details. Your organization is unique. So are your employees, your suppliers, your customers, and your processes—and especially your data.
+
+::: {.teal .accent-links .accent-headers .accent-strong}
+
+## We're prepared to go as deep as you'll let us
+
+[**We _want_ to see your gnarliest spreadsheet**]{.pink}. The most complex data is usually that way for very important reasons—or at least it can say a lot about where Excel may be failing you.
+
+We're also going to need to speak with your <s>supervisor</s> _direct reports_. We're all about physically going where the data matters, which includes [learning from **all** the people](#initial-task-data-needs-assessment-report){.orange}: from the bottom of your org chart to the top. We listen. We learn. We respect. We document. We get into the weeds of what data workers are currently doing and [**why it matters**]{.purple}, before inflicting any kind of new technology that could make things worse.
+
+Unlike many other consulting groups—who are usually looking to sell a specific technology or approach—[everything that we build](#schedule-of-services){.green} for you will be based on things that are actually happening in your organization, [**with none of the hype**]{.yellow}.
+
+:::
+
+::: {.column-screen-left .inverted-block-with-accented-background .yellow .accent-strong}
+
+## Our no-hype policy
+
+We can certainly discuss the latest industry trends, including AI, LLMs, big data, or data ware-/lake-houses. We can help explore what they might mean in the context of your organization, and how they might help!
+
+But we're committed to always pair buzzwords with a **healthy dose of transparency**. We will err on the side of caution, cite our sources, and probably give you more details and receipts than you asked for; we're former academics who take intellectual integrity, and rigorously supported claims, extremely seriously.
+
+And if we discover that *your* organization is up to no good, we'll look for the exit as soon as any contracts permit. We hope that you'd hold us to the same standard.
+
+Where third-party solutions, subcontractors, etc. are concerned, we include **appropriate warning labels** about any potential snake oil that we suspect, as well as any other technical, ethical, or practical hazards that may be hiding in any of the often-deliberately-vague things that the rest of the software industry seems to be trying to sell at the moment.
+
+[![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Schedule a free consultation](https://calendly.com/origraph-net/30min){.origraph-button .yellow .h3 style="display:inline-block"}
+
+:::
+
+# Schedule of Services
+
+Beyond expert guidance for your most pressing general-purpose data questions, we can also **create stuff** for you. Depending on your needs, the following is a rough schedule of the sort of deliverables that we provide:
+
+::: {.accent-links .accent-strong .teal}
+- [**Discovery, Planning, Validation, and Evaluation**](#discovery-planning-validation-and-evaluation)
+  - [Initial Task & Data Needs Assessment Report](#initial-task-data-needs-assessment-report)
+  - [Task & Data Needs Re-Evaluation](#task-data-needs-re-evaluation)
+  - [UX evaluation](#ux-evaluation)
+:::
+
+::: {.accent-links .accent-strong .pink}
+- [**Visual Prototyping & Development**](#visual-prototyping-development)
+  - [Non-functional Visual Mocks](#non-functional-visual-mocks)
+  - [Functional Static / Serverless Web Proof-of-Concept Experiments](#functional-static-serverless-web-proof-of-concept-experiments)
+  - [Standard Dashboard / Front-end Development](#standard-dashboard-front-end-development)
+  - [Alternative Plugin / Solution Development](#alternative-plugin-solution-development)
+  - [Advanced Visualization Capabilities](#advanced-visualization-capabilities)
+:::
+
+::: {.accent-links .accent-strong .green}
+- [**Data Science & AI**](#data-science-ai)
+  - [Data Wrangling](#data-wrangling)
+  - [Ontology / Knowledge Graph Development](#ontology-knowledge-graph-development)
+  - [Statistical Modeling](#statistical-modeling)
+  - [AI Integration](#ai-integration)
+:::
+
+::: {.accent-links .accent-strong .brown}
+- [**System Integration & Deployment**](#system-integration-deployment)
+  - [Server / Back-end Development](#server-back-end-development)
+  - [Database Setup](#database-setup)
+  - [Secure Authentication, Access Groups](#secure-authentication-access-groups)
+  - [Testing Frameworks, Coverage](#testing-frameworks-coverage)
+:::
+
+::: {.accent-links .accent-strong .purple}
+- [**Marketing, Communication, and Training**](#marketing-communication-and-training)
+  - [Visualization Eye Candy](#visualization-eye-candy)
+  - [Technology Overviews](#technology-overviews)
+  - [Training and Workshops](#training-and-workshops)
+:::
+
+::: {.callout-caution #cau-estimate collapse="true" .orange .accent-links}
+
+Please note that the times listed on this schedule are [**only estimates**]{.orange .accent}, subject to change without notice, and may vary significantly based on:
+
+- the accessibility of data and personnel,
+- the client's responsiveness,
+- the project's complexity,
+- the scale of the data,
+- the state of the art, and
+- whether you have a *really interesting* project that means [we need to budget time to advance the state of the art](https://xkcd.com/1425/)
+
+If you work with us, we will include more specific estimates and timelines in our contract, based on initial consultations. Although the overall cost should roughly correlate with the time required, [depending on the best billing approach](blog/hireThePeopleDogeFired.qmd) some of these services would likely involve subcontracting.
+
+This schedule is intended to be a general guide and is not legally binding.
+
+:::
+
+::: {.teal .accent-links .accent-headers .accent-strong}
+
+::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong }
+
+## Discovery, Planning, Validation, and Evaluation
+
+This is a core Origraph expertise area that can both save a lot of money over time, as well as ensure a higher-quality result that actually meets your needs. Designing for incorrect tasks and/or poor data schemas are often the most significant risk in data projects [@nested_model_2009; @dsm_2012]—taking the time to make sure that we're doing the right thing is always worth the investment.
+
+:::::
+
+### Initial Task & Data Needs Assessment Report
+
+This involves a deep dive into your objectives, data sources, and user needs. The outcome is a detailed report, with rigorous metadata about the state of your data, clarifying the scope of a project.
+
+In most cases, we'll include an augmented version of your company's organization chart: with detailed, rigorous, qualitative metadata about what information actually matters to what roles, where those needs overlap, and any relevant pain points w.r.t. working with data or software.
+
+If a deep-dive report, with all the receipts, is a poor fit for the audience, we also offer less-detailed [technology overviews](#technology-overviews).
+
+**Time Estimate**: 1 week to 3 months^[-@cau-estimate]{.accent .orange .callout-reference}^, heavily dependent on the client's ability to provide timely access to data and key stakeholders, and the scale of the company
+
+### Task & Data Needs Re-Evaluation
+
+Revisiting objectives, data sources, and user needs on a regular basis is strongly recommended. Beyond the broadly-scoped initial assessment, budgeting for regular reports over time will make it possible to accumulate quantitative data—in addition to the initial report's qualitative data—and will likely to paint a much richer picture with more specific actionable insights, and uncover more blind spots.
+
+**Time Estimate**: 1 day to 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^
+
+### UX evaluation
+
+We leverage established methodologies to validate the effectiveness of any mocked, prototyped, or deployed visualization solutions with an appropriate level of ecological validity, and identify opportunities for improvement. The resulting report typically analyzes specific questions w.r.t. usability, expressiveness, learnability, perceptual accuracy, etc.
+
+**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^
+
+:::
+
+::: {.pink .accent-links .accent-headers .accent-strong}
+
+::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong }
+
+## Visual Prototyping & Development
+
+Another core Origraph expertise area includes—and goes far beyond—standard reporting dashboards; we can create or connect you with the latest, best-in-world visualization research techniques and software.
+
+Although it costs a little extra time (both yours and ours) up front, we care deeply about experimenting and communicating to get the design right—quickly and cheaply—before committing to potentially-expensive long-term solutions.
+
+:::::
+
+### Non-functional Visual Mocks
+
+Static images, or minimally-clickable Figma wireframes, to illustrate the layout and design of possible solutions are about validating the correctness of functionality, walking through hypothetical analysis paths, and communicating likely points of difficulty before committing to a more specific development timeline.
+
+**Time Estimate**: 1 day to 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^
+
+### Functional Static / Serverless Web Proof-of-Concept Experiments
+
+A working technology probe will be built, often using a readily available data source like a Google Sheet and/or a small fixed dataset. This is similar to a non-functional mock, as it demonstrates core functionality, allows for early feedback, and some early UX evaluation.
+
+However, these kinds of experiments are mostly concerned with validating that data behavior and structure actually meet expectations in practice, before committing to a (usually much more expensive) full development cycle or specific infrastructure investments. Because **data rarely behaves how you expect it to**—that's the whole point of a visualization in the first place—multiple data-informed experiments are strongly encouraged before attempting a [full prototype](#standard-dashboard-front-end-development), even if you're very confident that you need a specific design.
+
+**Time Estimate**: 1 day to 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^
+
+### Standard Dashboard / Front-end Development
+
+This involves translating prior [requirements documents](#initial-task-data-needs-assessment-report), [mocks](#non-functional-visual-mocks), and [experiments](#functional-static-serverless-web-proof-of-concept-experiments) into fully-functional prototypes.
+
+**Time Estimate**: 1 to 3 months^[-@cau-estimate]{.accent .orange .callout-reference}^ for a deployable prototype; may include minimal (approximately $15/year) hosting fees
+
+It is important to note that, although a basic prototype can usually be set up fairly quickly—and the result is often hard to distinguish from a [quick experiment](#functional-static-serverless-web-proof-of-concept-experiments)—committing to a prototype that will be hardened into mature software can become an ongoing project that lasts years, and may require hiring additional staff.
+
+The moment that an experiment graduates to a prototype, investing in a plan for ongoing [UX evaluations](#ux-evaluation) and the development of [test infrastructure](#testing-frameworks-coverage) is strongly recommended.
+
+### Alternative Plugin / Solution Development
+
+Sometimes a web app isn’t the best solution. We can also provide context-specific solutions, such as software that runs within (or otherwise directly interacts with) Excel, Tableau, PowerBI, Figma, Adobe, etc.
+
+We're not just a front-end visualization house; if it's possible, we'll do our best to add functionality to the space where your data already lives—wherever that is. Standalone Desktop or Mobile apps are an option!
+
+**Time Estimate**: 1 month to 1 year^[-@cau-estimate]{.accent .orange .callout-reference}^ for a non-web prototype, especially when needing to hack new functionality into existing third-party software.
+
+### Advanced Visualization Capabilities
+
+This involves developing custom or complex charts, interactive elements, and graphics rendering capabilities that go beyond standard dashboard features.
+
+**Time Estimate**: 1 day to 1 month per feature^[-@cau-estimate]{.accent .orange .callout-reference}^, depending on the intricacy and rendering complexity of the visualizations required.
+
+:::
+
+::: {.green .accent-links .accent-headers .accent-strong}
+
+::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong }
+
+## Data Science & AI
+
+Visualization on its own is rarely enough; a third core Origraph expertise area is how to facilitate the often under-appreciated importance of human creativity in the data wrangling process.
+
+Additionally, as needed, we can develop ontologies, statistical models, and (if actually necessary and appropriate) generative AI and machine learning.
+
+:::::
+
+### Data Wrangling
+
+We will clean, transform, and restructure raw data to prepare it for analysis and modeling. This includes handling missing values, standardizing formats, and identifying errors.
+
+**Time Estimate**: 1 week to 3 months^[-@cau-estimate]{.accent .orange .callout-reference}^; can vary widely [@how_data_science_workers_2019], but investing time into **creative data wrangling** [@guidelines_2021] often represents the most impactful way to differentiate your data solution, and to make it possible to ask questions others don’t even consider.
+
+### Ontology / Knowledge Graph Development
+
+We can build a structured representation of your organization's products, people, suppliers, customers, locations, etc., and how they are connected. This allows for a more connected and intelligent way to query and analyze your data; it can make it much easier to integrate additional third-party data; and it makes it possible to ask creative new questions with your own terms.
+
+**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^
+
+### Statistical Modeling
+
+We can apply statistical techniques to identify trends, make predictions, and uncover hidden patterns within your data. This can include regression analysis, time series forecasting, and clustering.
+
+**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^
+
+### AI Integration
+
+We can help you integrate pre-trained AI models or develop custom models for tasks such as natural language processing (NLP), image recognition, or predictive analytics to enhance your data's value.
+
+**Time Estimate**: 1 month to 1 year^[-@cau-estimate]{.accent .orange .callout-reference}^
+
+:::
+
+::: {.brown .accent-links .accent-headers .accent-strong}
+
+::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong }
+
+## System Integration & Deployment
+
+Standard data consulting practice usually involves charging you exorbitantly, up front, for often-inappropriate "scalable" infrastructure, and later forcing the ultimate UX or visualization "solution" into that infrastructure.
+
+We do it the other way around—offline, front-end-only, single-user, simple tools are sometimes all that you need, and they're often much more secure than complex infrastructure. Even if you ultimately need something complex, it’s still much easier, cheaper, and faster to **get the interactive, visual design right**, before worrying about what "scale" means, or prematurely trying to optimize something that you don't even need.
+
+The following are still Origraph expertise areas, but not as deep as our Human-Computer Interaction, Visualization, or Data Science: we can cover the DevOps and infrastructure basics, and we know some fancy tricks (especially w.r.t. NoSQL, graph databases, and visualization-specific acceleration structures).
+
+But we also have a reliable network of subcontractors and experts who can help if it turns out that you need something more sophisticated than what we can handle.
+
+:::::
+
+### Server / Back-end Development
+
+This is a prerequisite if live access to multiple integrated datasets is necessary in the final solution.
+
+**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^, depending on the number and complexity of the data source integrations. Note that this may involve ongoing server fees; the necessary compute resources can be much more costly than simple web hosting.
+
+### Database Setup
+
+Once data structure and schema needs are clearly understood—ideally after enough experiments and prototypes have validated that those needs are correct—speed and scale are all about picking the right database infrastructure.
+
+**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^; the necessary storage can also represent ongoing costs (whereas our in-browser, smaller solutions begin by leveraging free technologies like PouchDB or Quadstore)
+
+### Secure Authentication, Access Groups
+
+We'll establish different user roles and permissions, ensuring that various teams or individuals only have access to the data and visualizations relevant to them.
+
+**Time Estimate**: 1 week to 3 months^[-@cau-estimate]{.accent .orange .callout-reference}^; if complex security rules are important, managing this can often involve cost over time
+
+### Testing Frameworks, Coverage
+
+Tested software can result in significant future cost savings and fewer bugs—but can be an expensive waste of time when a project is still at the [experiment level](#functional-static-serverless-web-proof-of-concept-experiments), and there's significant uncertainty around whether a piece of software is even an appropriate solution. Investing time to set up testing frameworks should usually happen when transitioning to [actual prototypes](#standard-dashboard-front-end-development).
+
+**Time Estimate**: 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^ for initial unit, integration testing setup. Once set up, a very high coverage threshold can significantly curtail bugs and necessary support costs, but also slow other development activities down
+
+:::
+
+::: {.purple .accent-links .accent-headers .accent-strong}
+
+::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong }
+
+## Marketing, Communication, and Training
+Demystifying terms like "AI" or "Data Warehousing" actually mean can be challenging; communicating the right level of information is part of the challenge. Whether it's training your workforce in a specific area of data science—with the quality of university course, and research-grade actionable details—or simply making flashy visuals for marketing purposes, we can help.
+
+Although we have a strong [no-hype policy](#our-no-hype-policy) when it comes to people who need to *understand* their data, we also recognize that some stakeholders need precisely what data analysts would dismiss as *marketing*. We will certainly resist deceptive or ethically-questionable marketing objectives, but when the meaning of a dataset is much less important to communicate than its aesthetics: that's still an important task that we can design for!
+
+:::::
+
+### Visualization Eye Candy
+Visualization is usually a tool for exploration or presentation, but it also often finds itself used for marketing purposes, sometimes completely obscuring any real data or its meaning. Nothing communicates "science" or "innovation" quite like an animated, interactive visual that **nobody has seen before**, whether or not they need to understand it.
+
+We can create unique, sophisticated visuals and interactive graphics that are sure to stand out in a social media feed—and still carefully balance the need to communicate actual data, versus the need to simply drive engagement or memorability.
+
+**Time Estimate**: 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^
+
+### Technology Overviews
+Similar in spirit to [Data & Task Needs Assessments](#initial-task-data-needs-assessment-report)—but for a very different audience—we can help you create presentations and write reports for investors, donors, or managers who explicitly *don't want* the details, but still have a need to know about the role that a new, unfamiliar technology will play in an organization or an industry.
+
+**Time Estimate**: 1 day to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^, depending on the research, diagrams, slides, videos, websites, or interactive visuals that you need
+
+### Training and Workshops
+
+Our expert-led workshops are designed to empower your team with cutting-edge tools and techniques in data science, visualization, and AI. From healthcare to environmental activism; from manufacturing to the performing arts: our customized workshops can be tailored to any specific audience, helping you learn how to extract meaningful insights from complex datasets.
+
+Learn how to harness the full potential of machine learning models, predictive analytics, and data-driven storytelling to drive innovation and improve decision-making. With Origraph's Data Science & Visualization Workshops, you'll gain a deeper understanding of your organization's data needs and develop a culture of data-driven excellence.
+
+**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^ to adapt our curriculum to your industry; depending on the level of detail needed, we can give workshops that last from a few hours to a full week.
+:::

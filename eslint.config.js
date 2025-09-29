@@ -1,21 +1,23 @@
 import { FlatCompat } from '@eslint/eslintrc';
 import pluginJs from '@eslint/js';
+import eslintPluginPrettier from 'eslint-config-prettier/flat';
 import pluginReact from 'eslint-plugin-react';
+import { defineConfig, globalIgnores } from 'eslint/config';
 import tseslint from 'typescript-eslint';
 
 const compat = new FlatCompat();
 
 /** @type {import('eslint').Linter.Config[]} */
-export default [
+export default defineConfig([
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    ignores: ['builds/*'],
   },
+  globalIgnores(['builds/*', 'site/*', 'public/*']),
   pluginJs.configs.recommended,
   ...tseslint.configs.recommended,
   pluginReact.configs.flat.recommended,
   ...compat.extends('plugin:storybook/recommended'),
-  ...compat.extends('plugin:prettier/recommended'),
+  eslintPluginPrettier,
   ...compat.extends('plugin:react-hooks/recommended'),
   {
     rules: {
@@ -37,4 +39,4 @@ export default [
       },
     },
   },
-];
+]);

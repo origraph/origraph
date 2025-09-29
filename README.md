@@ -12,6 +12,10 @@ UX innovations for NoSQL thinking
 git clone https://github.com/origraph/origraph.git
 cd origraph
 npm install
+
+# TODO: make this to a setup script?
+cd site
+quarto add --no-prompt clearmatics/qreacto
 ```
 
 ## Website

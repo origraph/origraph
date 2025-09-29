@@ -3,7 +3,7 @@ title: About the App
 author:
   - name: Alex Bigelow
     url: https://alex-r-bigelow.github.io
-date: 6 March 2025
+date: 10 September 2025
 categories:
   - op-ed
   - vision
@@ -12,11 +12,28 @@ bibliography: bibliography.bib
 draft: true
 ---
 
-Origraph is a work-in-progress data editor, that we hope to release under an open source license in the coming months.
 
-Want better, free data LEGOs sooner?
+:::{.column-screen .inverted-block-with-accented-background .grey}
 
-[![Patreon Logo](../logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
+:::::{.column-body}
+
+## App under construction
+
+Origraph is not-yet-released visual data wrangling environment, that we hope to release under an open source license in the coming year.
+
+Origraph represents a whole new way to visually [**edit**]{.purple .accent}, [**model**]{.teal .accent}, [**analyze**]{.green .accent}, [**visualize**]{.pink .accent}, and [**train / use AI**]{.yellow .accent} in ways that respect and augment human creativity, rather than attempting to replace it.
+
+<!-- [About the app](about.qmd){.origraph-button .pink style="display:inline-block"} -->
+
+You can find the precursor academic proof-of-concept—exploring visual [**modeling**]{.teal .accent} possibilities for network data—at [https://origraph.github.io](https://origraph.github.io).
+
+Want a richer set of data building blocks sooner?
+
+### [![Patreon Logo](/logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
+
+:::::
+
+:::
 
 # There are more ways to organize data than rows and columns
 
@@ -172,12 +189,20 @@ todo
 ## The slow way there, because capitalism
 todo
 
-[Consulting services](consulting.qmd){.origraph-button .yellow style="display:inline-block"}
+[![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Consulting services](../consulting.html){.origraph-button .yellow style="display:inline-block"}
+
+{{< origraph-ui-button contents="My Block Button 1" jsArgs="className: ['pink', 'minimal'], leftIcons:[{ src: '/logos/ui/headset.svg' }]" >}}
+
+{{< origraph-ui-button contents="My Block Button 2" placeholderIcon="/logos/ui/headset.svg" >}}
+
+This is {{< origraph-ui-button contents="my end of line button" >}}
+
+This is {{< origraph-ui-button contents="my inline button" >}} in the middle of a paragraph; who knows if it will render sensibly?
 
 ## The faster way
 todo
 
-[![Patreon Logo](./logos/social/patreonWhite.png){height=1em .origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
+[![Patreon Logo](/logos/social/patreonWhite.png){.origraph-icon} Support us on Patreon!](https://patreon.com/Origraph){.origraph-button .pink style="display:inline-block"}
 
 ## Delusions of grandeur: after launch
 todo

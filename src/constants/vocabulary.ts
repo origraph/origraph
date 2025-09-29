@@ -50,23 +50,18 @@ export interface Vocabulary {
   prefixes: Record<string, string>;
   keyChainsByIri: Record<string, string[]>;
   constants: Record<string, string>;
+  labelsByIri: Record<string, string>;
 }
 
 export const VOCABULARY_VERSION_ORDER = [
   'https://origraph.net/vocabulary/v0.1.0',
 ];
 
-export const ALL_VOCABULARIES = {
+export const ALL_VOCABULARIES: Record<string, Vocabulary> = {
   'https://origraph.net/vocabulary/v0.1.0': {
     versionNumber: '0.1.0',
     versionIri: 'https://origraph.net/vocabulary/v0.1.0',
-    unprefixedIris: [
-      'https://origraph.net/vocabulary/v0.1.0',
-      '"Results"',
-      '"Query Definition"',
-      '"Overview"',
-      '"Current Selection"',
-    ],
+    unprefixedIris: ['https://origraph.net/vocabulary/v0.1.0'],
     irisByPrefix: {
       origraph: {
         ts: {
@@ -77,11 +72,13 @@ export const ALL_VOCABULARIES = {
         ui: {
           ViewType: 'https://origraph.net/vocabulary/v0.1.0/ui/ViewType',
           TrigView: 'https://origraph.net/vocabulary/v0.1.0/ui/TrigView',
+          TreeTableView:
+            'https://origraph.net/vocabulary/v0.1.0/ui/TreeTableView',
           PerspectiveAspect:
             'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveAspect',
           ResultPage: 'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage',
-          PerspectiveQuery:
-            'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery',
+          QueryDefinition:
+            'https://origraph.net/vocabulary/v0.1.0/ui/QueryDefinition',
           overviewQueryIri:
             'https://origraph.net/vocabulary/v0.1.0/ui/overviewQueryIri',
           selectionQueryIri:
@@ -184,6 +181,11 @@ export const ALL_VOCABULARIES = {
         'ui',
         'TrigView',
       ],
+      'https://origraph.net/vocabulary/v0.1.0/ui/TreeTableView': [
+        'origraph',
+        'ui',
+        'TreeTableView',
+      ],
       'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveAspect': [
         'origraph',
         'ui',
@@ -195,10 +197,10 @@ export const ALL_VOCABULARIES = {
         'ResultPage',
       ],
       'http://www.w3.org/2000/01/rdf-schema#label': ['rdfs', 'label'],
-      'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery': [
+      'https://origraph.net/vocabulary/v0.1.0/ui/QueryDefinition': [
         'origraph',
         'ui',
-        'PerspectiveQuery',
+        'QueryDefinition',
       ],
       'https://origraph.net/vocabulary/v0.1.0/Constants': [
         'origraph',
@@ -251,6 +253,14 @@ export const ALL_VOCABULARIES = {
       basePerspectiveIri: 'https://origraph.net/vocabulary/v0.1.0/Perspective',
       baseJobIri: 'https://origraph.net/vocabulary/v0.1.0/Job',
     },
+    labelsByIri: {
+      'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage': 'Results',
+      'https://origraph.net/vocabulary/v0.1.0/ui/QueryDefinition':
+        'Query Definition',
+      'https://origraph.net/vocabulary/v0.1.0/OverviewQuery': 'Overview',
+      'https://origraph.net/vocabulary/v0.1.0/SelectionQuery':
+        'Current Selection',
+    },
   },
 };
 
@@ -260,9 +270,10 @@ export const VOCABULARY =
 
 export enum ViewType {
   TrigView = 'https://origraph.net/vocabulary/v0.1.0/ui/TrigView',
+  TreeTableView = 'https://origraph.net/vocabulary/v0.1.0/ui/TreeTableView',
 }
 
 export enum PerspectiveAspect {
   ResultPage = 'https://origraph.net/vocabulary/v0.1.0/ui/ResultPage',
-  PerspectiveQuery = 'https://origraph.net/vocabulary/v0.1.0/ui/PerspectiveQuery',
+  QueryDefinition = 'https://origraph.net/vocabulary/v0.1.0/ui/QueryDefinition',
 }

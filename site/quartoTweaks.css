@@ -1,18 +1,111 @@
-/* Slightly darker navbar background than the default set by _brand.yml > primary */
+/* overrides to make origraph ui stuff play nicely with quarto */
+
+:root {
+  /* Quarto doesn't support light-dark() very well yet; just use the light colors for now */
+  color-scheme: light !important;
+  --hard-background-color: var(--my-extra-white) !important;
+  --background-color: var(--my-white) !important;
+  --mid-soft-background-color: var(--my-mid-soft-white) !important;
+  --soft-background-color: var(--my-soft-white) !important;
+  --soft-foreground-color: var(--my-soft-black) !important;
+  --mid-soft-foreground-color: var(--my-mid-soft-black) !important;
+  --foreground-color: var(--my-black) !important;
+  --hard-foreground-color: var(--my-extra-black) !important;
+}
+
+span.origraph-ui-button-container {
+  display: inline-block;
+}
+.origraph-button {
+  width: fit-content;
+}
+.origraph-icon {
+  height: 1em;
+}
+
+/* layout hacks */
+.align-content-with-body-column {
+  display: grid;
+  grid-template-columns: subgrid;
+  & > * {
+    grid-column: body-content-start/body-content-end;
+  }
+}
+
+/* overrides for the navbar */
+:root {
+  /*
+    Unsure if this is exposed anywhere, so hard-coding it here; this is the
+    screen size below which bootstrap uses a media query to collapse the
+    navbar into a menu
+  */
+  --bootstrap-navbar-cutoff: 992px;
+}
+
 .navbar {
+  /* Slightly darker navbar background than the default set by _brand.yml > primary */
   background-color: var(--cb-dark-1-teal);
   .origraph-button {
     color: var(--my-white);
   }
+  .navbar-nav {
+    /*
+    TODO: AFAIK, these overrides are not yet supported by _brand.yml, but
+    if they are, these should move
+    */
+    --bs-nav-link-color: var(--my-white);
+    --bs-nav-link-hover-color: var(--my-extra-white);
+    --bs-nav-link-disabled-color: var(--my-soft-white);
+  }
+}
+@media (min-width: 992px) {
+  .navbar .origraph-button .navbar-button-label {
+    /* Just show icons on small screens, but keep labels accessible to screen readers */
+    position: absolute;
+    left: -10000px;
+  }
 }
 
-.social-logo-wrapper {
-  padding-top: 0.3rem;
+/* small fixes needed for callouts */
+.callout-header {
+  align-items: center;
 }
-.social-logo-wrapper {
-  display: flex;
-  align-items: baseline;
-  gap: 0.35em;
+
+/* references to callouts, ignoring the style guide */
+.callout-reference {
+  &.accent a {
+    text-decoration: none;
+    color: var(--accent-color);
+  }
+}
+
+/* better hover box contrast, plus some fixes for callouts in hover boxes */
+.tippy-content:has(.callout) {
+  padding: 0;
+  .callout {
+    margin-top: 0;
+    .callout-title-container {
+      overflow-wrap: normal;
+    }
+    .callout-body {
+      min-width: 20em;
+    }
+  }
+}
+.tippy-box[data-theme~='quarto'] {
+  border: none;
+  box-shadow: 1em 1em 10em var(--hard-foreground-color);
+}
+#quarto-back-to-top {
+  box-shadow: 0.5em 0.5em 2em var(--soft-foreground-color);
+}
+
+/* Unsure if this is a quarto bug, or an artifact of something I've done, but
+   navigating to a specific #id on the page creates an invisible block (I think
+   to ensure the target is visible below the navbar), that blocks pointer events
+   if you then scroll back up */
+section:target::before {
+  pointer-events: none;
 }
 
 /* separator color overrides */
@@ -58,6 +151,89 @@ h2,
   border: var(--my-tab-line-thickness) solid var(--my-tab-active-color);
 }
 
+/* Color theme tweaks */
+.blockquote {
+  color: var(--accent-color);
+  border-left: 0.25rem solid var(--accent-color);
+}
 .accent {
   color: var(--accent-color);
+}
+.accent-links a {
+  color: var(--accent-color);
+}
+.accent-strong strong {
+  color: var(--accent-color-dark);
+}
+.accent-headers {
+  h1,
+  h2,
+  .h1,
+  .h2,
+  h3,
+  .h3,
+  h4,
+  .h4,
+  h5,
+  .h5,
+  h6,
+  .h6 {
+    color: var(--accent-color);
+  }
+  h2,
+  .h2 {
+    border-bottom: 1px solid var(--accent-color-light);
+  }
+  .anchorjs-link {
+    color: var(--accent-color);
+  }
+}
+.block-with-standard-background {
+  background: var(--background-color);
+}
+.inverted-block-with-accented-background {
+  --bs-heading-color: var(--accent-color-light);
+  background: var(--accent-color-dark);
+  color: var(--background-color);
+  h1,
+  h2,
+  .h1,
+  .h2 {
+    color: var(--accent-color-light);
+  }
+  h2,
+  .h2 {
+    border-bottom: 1px solid var(--accent-color);
+  }
+  .anchorjs-link {
+    color: var(--accent-color-light);
+  }
+  a {
+    color: var(--hard-background-color);
+  }
+  .tippy-box[data-theme~='quarto'] a {
+    color: var(--accent-color);
+  }
+  .accent {
+    color: var(--accent-color-light);
+  }
+  &.accent-links a {
+    color: var(--accent-color-light);
+  }
+  &.accent-strong strong {
+    color: var(--accent-color-light);
+  }
+}
+.block-with-standard-background,
+.inverted-block-with-accented-background {
+  &.column-screen-left {
+    padding: 6em;
+    margin: 3em 0em;
+    box-shadow: 1em 1em 3em var(--soft-foreground-color);
+  }
+  &.column-screen-right {
+    padding: 6em;
+    margin: 0em;
+    box-shadow: -1em 1em 3em var(--soft-foreground-color);
+  }
 }

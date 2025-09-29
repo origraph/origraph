@@ -1,5 +1,6 @@
+import { Button as AriakitButton } from '@ariakit/react';
 import classNames from 'classnames';
-import React, { forwardRef, ReactElement, useMemo, useRef } from 'react';
+import { forwardRef, ReactElement, useMemo, useRef } from 'react';
 import { omit } from '../../../utils/core/omit';
 import { Icon, IconProps } from '../Icon/Icon';
 import { MenuProps } from '../Menu/Menu';
@@ -60,7 +61,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         ((leftIconCount === 1 && rightIconCount === 0) ||
           (leftIconCount === 0 && rightIconCount === 1));
       const chunks = [
-        <button
+        <AriakitButton
           key="main"
           {...omit(props, [
             'className',
@@ -74,7 +75,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           ])}
           className={classNames(
             'origraph-button',
-            { splitLeft, splitRight, singleIconButton },
+            {
+              splitLeft,
+              splitRight,
+              singleIconButton,
+            },
             props.className
           )}
           ref={ref || localRef}
@@ -100,7 +105,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
               className={classNames(iconProps.className)}
             />
           ))}
-        </button>,
+        </AriakitButton>,
       ];
       if (props.renderLeftMenu) {
         chunks.unshift(

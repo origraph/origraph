@@ -3,6 +3,8 @@
     "jock.svg",
     "esbenp.prettier-vscode",
     "stardog-union.stardog-rdf-grammars",
-    "quarto.quarto"
+    "github.vscode-github-actions",
+    "quarto.quarto",
+    "dbaeumer.vscode-eslint"
   ]
 }

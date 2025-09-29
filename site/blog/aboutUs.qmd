@@ -1,0 +1,16 @@
+---
+title: About Us
+author:
+  - name: Alex Bigelow
+    url: https://alex-r-bigelow.github.io
+categories:
+  - about
+bibliography: bibliography.bib
+draft: true
+---
+
+## Our Team
+todo
+
+## Our Partners
+todo

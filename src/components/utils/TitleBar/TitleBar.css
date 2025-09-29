@@ -1,0 +1,45 @@
+.origraph-title-bar {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5em;
+  align-items: center;
+  padding: 0.5em;
+
+  .title {
+    display: flex;
+    flex-direction: column;
+
+    h4,
+    h5 {
+      margin: 0;
+      white-space: nowrap;
+      max-width: 80%;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    h5 {
+      font-weight: 300;
+    }
+  }
+
+  &.minimized {
+    border: 1px solid var(--separator-color);
+    border-radius: 1.5em;
+    padding-left: 1em;
+    .title {
+      h4,
+      h5 {
+        max-width: 100px;
+      }
+    }
+  }
+
+  & > :not(.spacer):not(.title) {
+    flex: 0 1 auto;
+  }
+
+  .spacer,
+  .title {
+    flex: 1 1 auto;
+  }
+}

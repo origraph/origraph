@@ -5,7 +5,7 @@ import { Quadstore } from 'quadstore';
 import { Engine } from 'quadstore-comunica';
 import { readableFromWeb } from 'readable-from-web';
 import { EXTERNAL_VOCABULARY } from '../constants/iris';
-import { VOCABULARY } from '../constants/vocabulary';
+import { IrisByPrefix, VOCABULARY } from '../constants/vocabulary';
 import { getVocabulariesQuery } from '../queries/getVocabularies/getVocabularies';
 import { AsyncLock } from '../utils/core/asyncLock';
 import { getVersionNumberFromOrigraphVocabIri } from '../utils/core/getVersionNumberFromOrigraphVocabIri';
@@ -16,6 +16,8 @@ import {
   QueryIncrementalOutput,
   QueryState,
 } from './Perspectives';
+
+const origraphGlobal = VOCABULARY.irisByPrefix.origraphGlobal as IrisByPrefix;
 
 enum LockStates {
   UNINITIALIZED = 'UNINITIALIZED',
@@ -97,10 +99,8 @@ export class ComunicaInterface {
             ...(this.projectsByVocabulary[vocabulary] || []),
           ]);
         } else if (
-          quad.subject.value ===
-            VOCABULARY.irisByPrefix.origraphGlobal.vocabularies &&
-          quad.predicate.value ===
-            VOCABULARY.irisByPrefix.origraphGlobal.installed_version
+          quad.subject.value === origraphGlobal.vocabularies &&
+          quad.predicate.value === origraphGlobal.installed_version
         ) {
           this.installedVocabularies.add(quad.object.value);
         }
@@ -177,6 +177,7 @@ export class ComunicaInterface {
         reject = rej;
       });
       if (lastQuadChunk) {
+        let quadsDropped = 0;
         if (!noCache) {
           quadCache = [...quadCache, ...lastQuadChunk];
           if (
@@ -184,13 +185,15 @@ export class ComunicaInterface {
             maxCachedQuads > 0 &&
             quadCache.length > maxCachedQuads
           ) {
-            quadCache.splice(0, quadCache.length - maxCachedQuads);
+            quadsDropped = quadCache.length - maxCachedQuads;
+            quadCache.splice(0, quadsDropped);
           }
         }
         const input = yield {
           progress: 0.5,
           quadCache,
           lastQuadChunk,
+          quadsDropped,
         } as QueryIncrementalOutput;
         if (input?.forceStop) {
           return { quads: quadCache } as QueryFinalOutput;

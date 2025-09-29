@@ -1,19 +1,34 @@
 import { Editor, loader } from '@monaco-editor/react';
-import { FC, useContext, useEffect, useMemo, useState } from 'react';
-import saveImg from '../../../assets/save.svg?raw';
-import { PerspectiveAspect, ViewType } from '../../../constants/vocabulary';
+import {
+  CSSProperties,
+  FC,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
+import {
+  PerspectiveAspect,
+  ViewType,
+  VOCABULARY,
+} from '../../../constants/vocabulary';
 import {
   BaseViewState,
-  PerspectiveContext,
-  useJob,
+  QueryPhase,
   usePerspective,
 } from '../../../state/Perspectives';
 import { quadsToTrig } from '../../../utils/core/quadsToTrig';
+import { useDataForAspect } from '../../../utils/core/useDataForAspect';
+import { useDidValueChange } from '../../../utils/core/useDidValueChange';
+import usePrevious from '../../../utils/core/usePrevious';
 import { isDarkMode } from '../../../utils/ui/isDarkMode';
-import { MenuItemProps } from '../../basic-ui/Menu/Menu';
-import { TitleBar } from '../../basic-ui/TitleBar/TitleBar';
+import { SpaceDividerContext } from '../../utils/SpaceDivider/SpaceDivider';
+import { TitleBar } from '../../utils/TitleBar/TitleBar';
 import '../views.css';
 import './TrigView.css';
+
+const TEMP_SHRINK_STATIC_SIZE = '10em';
 
 loader.config({
   // Monaco tries to load files from a CDN; this would break the
@@ -32,98 +47,140 @@ export type TrigViewState = BaseViewState & {
 };
 
 export const TrigView: FC<TrigViewState> = ({
+  viewIri,
   perspectiveIri,
   perspectiveAspect,
+  style,
+  setDescription,
 }) => {
   const perspective = usePerspective(perspectiveIri);
-  const { jobManager } = useContext(PerspectiveContext);
+  const { tempShrinkStaticSizes } = useContext(SpaceDividerContext);
 
-  const [localDisplayText, _setLocalDisplayText] =
+  const [localDisplayText, setLocalDisplayText] =
     useState<string>('Loading...');
+  const [parsedSavedDisplayText, setParsedSavedDisplayText] = useState<
+    string | null
+  >(null);
 
-  const [savedDisplayText, setSavedDisplayText] =
-    useState<string>(localDisplayText);
-  const [language, setLanguage] = useState<MONACO_LANGUAGE>(
-    MONACO_LANGUAGE.Text
-  );
-  const [_isEditingEnabled, setIsEditingEnabled] = useState<boolean>(false);
-
-  const metadataJob = useJob(perspective.metadataQuery?.jobIri);
-  const resultsJob = useJob(perspective.resultsQuery?.jobIri);
-  useEffect(() => {
-    (async () => {
-      switch (perspectiveAspect) {
-        case PerspectiveAspect.PerspectiveQuery:
-          if (perspective.resultsQuery) {
-            setSavedDisplayText(`#TODO: this should actually be the TriG meta-sparql; need a separate view!
-${await perspective.resultsQuery.getSparql()}`);
-            setLanguage(MONACO_LANGUAGE.SPARQL);
-            setIsEditingEnabled(true);
-          } else if (metadataJob?.isRunning) {
-            setSavedDisplayText('Querying...');
-            setLanguage(MONACO_LANGUAGE.Text);
-            setIsEditingEnabled(false);
-          } else {
-            setSavedDisplayText('Initializing...');
-            setLanguage(MONACO_LANGUAGE.Text);
-            setIsEditingEnabled(false);
-          }
-          break;
-        case PerspectiveAspect.ResultPage:
-        default:
-          if (perspective.resultsQuery) {
-            setSavedDisplayText(
-              await quadsToTrig(perspective.resultsQuery.currentQuads)
-            );
-            setLanguage(MONACO_LANGUAGE.TriG);
-            setIsEditingEnabled(resultsJob ? !resultsJob.isRunning : false);
-          } else {
-            setSavedDisplayText('Loading metadata...');
-            setLanguage(MONACO_LANGUAGE.Text);
-            setIsEditingEnabled(false);
-          }
-      }
-    })();
-  }, [
-    jobManager,
-    perspective.resultsQuery,
+  const {
+    query,
+    savedQuads,
+    isEditingEnabled,
+    pendingSave,
+    saveQuads: _saveQuads,
+  } = useDataForAspect({
+    perspectiveIri,
     perspectiveAspect,
-    metadataJob?.isRunning,
-    resultsJob?.isRunning,
-    resultsJob,
-  ]);
+  });
 
-  const menuItemProps: (MenuItemProps & { key: string })[] = useMemo(
-    () => [
-      {
-        key: 'save',
-        collapse: false,
-        leftIcons: [{ srcSvg: saveImg }],
-        label: 'Save',
-      },
-    ],
-    []
-  );
-
-  const [handleUpdate, _setHandleUpdate] = useState<(update: string) => void>(
-    () => (update: string) => {
-      console.log(`monaco update: ${update}`);
+  const { savedDisplayText, language, parsePromise } = useMemo(() => {
+    if (!query) {
+      return {
+        savedDisplayText: 'Loading...',
+        language: MONACO_LANGUAGE.Text,
+        parsePromise: null,
+      };
+    } else if (query.phase !== QueryPhase.COMPLETED) {
+      return {
+        savedDisplayText: query.phase,
+        language: MONACO_LANGUAGE.Text,
+        parsePromise: null,
+      };
+    } else if (savedQuads.length) {
+      setParsedSavedDisplayText(null);
+      if (perspectiveAspect === PerspectiveAspect.QueryDefinition) {
+        return {
+          savedDisplayText: 'Parsing...',
+          parsePromise:
+            perspective.resultsPage?.getSparql().then(
+              (
+                sparql
+              ) => `#TODO: we should derive this from meta-sparql savedQuads!
+            ${sparql}`
+            ) || null,
+          language: MONACO_LANGUAGE.SPARQL,
+        };
+      } else {
+        return {
+          savedDisplayText: 'Parsing...',
+          parsePromise: quadsToTrig(savedQuads),
+          language: MONACO_LANGUAGE.TriG,
+        };
+      }
+    } else {
+      return {
+        savedDisplayText: 'No results',
+        language: MONACO_LANGUAGE.Text,
+        parsePromise: null,
+      };
     }
+  }, [perspective.resultsPage, perspectiveAspect, query, savedQuads]);
+
+  useEffect(() => {
+    if (parsedSavedDisplayText === null && parsePromise !== null) {
+      (async () => {
+        setParsedSavedDisplayText(await parsePromise);
+      })();
+    }
+  }, [parsePromise, parsedSavedDisplayText]);
+
+  const finalSavedDisplayText = useMemo(
+    () =>
+      parsedSavedDisplayText === null
+        ? savedDisplayText
+        : parsedSavedDisplayText,
+    [parsedSavedDisplayText, savedDisplayText]
   );
+  const didFinalSavedDisplayTextChange = useDidValueChange({
+    value: finalSavedDisplayText,
+  });
+
+  useEffect(() => {
+    if (didFinalSavedDisplayTextChange && !pendingSave) {
+      setLocalDisplayText(finalSavedDisplayText);
+    }
+  }, [didFinalSavedDisplayTextChange, finalSavedDisplayText, pendingSave]);
+
+  const handleTextEdit = useCallback(
+    (newText: string) => {
+      // TODO: call saveQuads() instead of setLocalDisplayText
+      // Probably worth debouncing...
+      setLocalDisplayText(newText);
+    },
+    [setLocalDisplayText]
+  );
+
+  const previousLanguage = usePrevious(language);
+  useEffect(() => {
+    if (previousLanguage !== language) {
+      setDescription({
+        subtitle: `${VOCABULARY.labelsByIri[perspectiveAspect]} (${language})`,
+      });
+    }
+  }, [language, perspectiveAspect, previousLanguage, setDescription]);
 
   return (
-    <div className="TrigView origraph-view">
-      <TitleBar
-        title={perspectiveIri} // TODO: look up the label; don't use the iri
-        subtitle={perspectiveAspect}
-        menuItemProps={menuItemProps}
-      />
+    <div
+      className="TrigView origraph-view"
+      style={(style || {}) as CSSProperties}
+    >
+      <TitleBar viewIri={viewIri} />
       <div className="TrigView-monaco-wrapper">
         <Editor
           theme={isDarkMode() ? 'vs-dark' : 'vs-light'}
+          /*
+          important: 5em sizes needs to be smaller than the min-height: 10em
+          defined in CSS to make sure that old Monaco sizes won't interfere with
+          SpaceDivider in unpredictable ways
+          */
+          height={tempShrinkStaticSizes ? TEMP_SHRINK_STATIC_SIZE : '100%'}
+          width={tempShrinkStaticSizes ? TEMP_SHRINK_STATIC_SIZE : '100%'}
           language={language}
-          value={savedDisplayText}
-          onChange={(newValue) => handleUpdate?.(newValue || '')}
+          value={localDisplayText}
+          onChange={(newValue) => handleTextEdit(newValue || '')}
+          options={{
+            readOnly: !isEditingEnabled,
+          }}
         />
       </div>
     </div>
