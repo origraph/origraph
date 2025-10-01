@@ -42,11 +42,11 @@ subtitle: Creative data folding
 
 ## Got a gnarly spreadsheet?
 
-Even without any training, people often do **more sophisticated** data things, than what the basic rows and columns of spreadsheets were designed to handle.
+People think outside spreadsheet boxes all the time: complexity is usually a sign of a **sophisticated data perspective**, not user error.
 
 Unfortunately, we still live in a software world in which—***for now***—playing with non-tabular data is the exclusive privilege of programmers and big corporations. At Origraph, we specialize in helping people find, use, or create software that organizes information in a way that's **compatible with your mental model**.
 
-Whether it's an advanced visualization, a knowledge graph, a NoSQL database, or statistics & AI, check out our [![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Consulting Services](blog/consulting.qmd){.origraph-button .yellow style="display:inline-block"} for how to best empower the people who manage information in your organization, with the data that you already have, and how to plan for the **creative data thinking** that you will need in the post-AI world.
+Check out our [![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Consulting Services](blog/consulting.qmd){.origraph-button .yellow style="display:inline-block"} for how to best empower the people who manage information in your organization, and how to plan for the **creative data thinking** that you will need in the post-AI world.
 
 :::
 
@@ -57,12 +57,12 @@ Origraph itself is not-yet-released visual data wrangling environment.
 
 A richer set of data building blocks—beyond mere rows and columns—are coming, for Excel-level data workers in a post-AI world.
 
-Origraph represents a whole new way to visually [**edit**]{.purple}, [**model**]{.teal}, [**analyze**]{.green}, [**visualize**]{.pink}, and [**train / use AI**]{.yellow} in ways that respect and augment human creativity, rather than attempting to replace it.
+Origraph represents a whole new way to visually [**edit**]{.purple}, [**model**]{.teal}, [**analyze**]{.green}, [**visualize**]{.orange}, and [**train / use AI**]{.yellow} in ways that respect and augment human creativity, rather than attempting to replace it.
 
 You can find a precursor academic proof-of-concept—exploring [**visual modeling**]{.teal} possibilities for network data—at [https://origraph.github.io](https://origraph.github.io){.teal}.
 
 ### An expanded data toy box for the mind
 
-Search engines, AI, and spreadsheets are ubiquitous. But if you want to ask more expressive questions than those tools were designed for; if you want to color outside of the lines of tables; or go beyond guess-and-check prompt engineering; existing software still gatekeeps [**the fun side of data science**]{.orange .accent} by demanding artificial requirements like programming experience, a PhD in data science, and/or a budget for an entire software team, just to play with any non-tabular data shapes.
+Search engines, AI, and spreadsheets are ubiquitous. But if you want to ask more expressive questions than those tools were designed for; if you want to color outside of the lines of tables; or go beyond guess-and-check prompt engineering; existing software still gatekeeps [**the fun side of data science**]{.pink} by demanding artificial requirements like programming experience, a PhD in data science, and/or a budget for an entire software team, just to play with any non-tabular data shapes.
 
 :::

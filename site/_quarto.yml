@@ -19,16 +19,14 @@ website:
         menu:
           - href: blog/consulting.qmd
             text: Our Approach
-          - href: blog/consulting.qmd#discovery-planning-validation-and-evaluation
-            text: Discovery, Planning, Validation, and Evaluation
+          - href: blog/consulting.qmd#reports-metadata-about-your-data
+            text: Reports & Metadata About Your Data
           - href: blog/consulting.qmd#visual-prototyping-development
             text: Visual Prototyping & Development
           - href: blog/consulting.qmd#data-science-ai
             text: Data Science & AI
           - href: blog/consulting.qmd#system-integration-deployment
             text: System Integration & Deployment
-          - href: blog/consulting.qmd#marketing-communication-and-training
-            text: Marketing, Communication, and Training
       - href: blog.qmd
         text: Blog
     right:

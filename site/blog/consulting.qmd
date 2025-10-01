@@ -1,6 +1,5 @@
 ---
 title: Consulting Services
-abstract: This is an overview of our general approach to consulting, the range of services that we provide, how we approach each piece of the data project puzzle, and a very rough sense for how long each piece can take.
 author:
   - name: Alex Bigelow
     url: https://alex-r-bigelow.github.io
@@ -9,137 +8,267 @@ categories:
   - consulting
 bibliography: bibliography.bib
 csl: ieee.csl
+
 ---
 
-# Our Consulting Approach
+<style>
+#consult-button {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+  text-align: right;
+  padding: 1em;
+  box-shadow: 1em 1em 3em var(--soft-foreground-color);
+  p, .origraph-button {
+    margin: 0;
+  }
+}
+main {
+  padding-bottom: 6em;
+}
+#schedule-of-deliverables {
+  .callout, #something-else {
+    margin: 0.5em 0;
+  }
+}
+</style>
 
-The whole point of data analysis and business intelligence is to be aware of any dangers—and opportunities!—hidden in the details. Your organization is unique. So are your employees, your suppliers, your customers, and your processes—and especially your data.
+::: {#consult-button .yellow .inverted-block-with-accented-background}
 
-::: {.teal .accent-links .accent-headers .accent-strong}
-
-## We're prepared to go as deep as you'll let us
-
-[**We _want_ to see your gnarliest spreadsheet**]{.pink}. The most complex data is usually that way for very important reasons—or at least it can say a lot about where Excel may be failing you.
-
-We're also going to need to speak with your <s>supervisor</s> _direct reports_. We're all about physically going where the data matters, which includes [learning from **all** the people](#initial-task-data-needs-assessment-report){.orange}: from the bottom of your org chart to the top. We listen. We learn. We respect. We document. We get into the weeds of what data workers are currently doing and [**why it matters**]{.purple}, before inflicting any kind of new technology that could make things worse.
-
-Unlike many other consulting groups—who are usually looking to sell a specific technology or approach—[everything that we build](#schedule-of-services){.green} for you will be based on things that are actually happening in your organization, [**with none of the hype**]{.yellow}.
-
-:::
-
-::: {.column-screen-left .inverted-block-with-accented-background .yellow .accent-strong}
-
-## Our no-hype policy
-
-We can certainly discuss the latest industry trends, including AI, LLMs, big data, or data ware-/lake-houses. We can help explore what they might mean in the context of your organization, and how they might help!
-
-But we're committed to always pair buzzwords with a **healthy dose of transparency**. We will err on the side of caution, cite our sources, and probably give you more details and receipts than you asked for; we're former academics who take intellectual integrity, and rigorously supported claims, extremely seriously.
-
-And if we discover that *your* organization is up to no good, we'll look for the exit as soon as any contracts permit. We hope that you'd hold us to the same standard.
-
-Where third-party solutions, subcontractors, etc. are concerned, we include **appropriate warning labels** about any potential snake oil that we suspect, as well as any other technical, ethical, or practical hazards that may be hiding in any of the often-deliberately-vague things that the rest of the software industry seems to be trying to sell at the moment.
-
-[![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Schedule a free consultation](https://calendly.com/origraph-net/30min){.origraph-button .yellow .h3 style="display:inline-block"}
+[![Consulting icon](/logos/ui/headset.svg){.origraph-icon} Schedule a free consultation](https://calendly.com/origraph-net/30min){.origraph-button .yellow .h5 style="display:inline-block"}
 
 :::
 
-# Schedule of Services
+# Our Approach
 
-Beyond expert guidance for your most pressing general-purpose data questions, we can also **create stuff** for you. Depending on your needs, the following is a rough schedule of the sort of deliverables that we provide:
-
-::: {.accent-links .accent-strong .teal}
-- [**Discovery, Planning, Validation, and Evaluation**](#discovery-planning-validation-and-evaluation)
-  - [Initial Task & Data Needs Assessment Report](#initial-task-data-needs-assessment-report)
-  - [Task & Data Needs Re-Evaluation](#task-data-needs-re-evaluation)
-  - [UX evaluation](#ux-evaluation)
-:::
+We do much more than consult about or create technology. The most important step to get any technology right is to first focus on the people in your organization, and your overall mission.
 
 ::: {.accent-links .accent-strong .pink}
-- [**Visual Prototyping & Development**](#visual-prototyping-development)
-  - [Non-functional Visual Mocks](#non-functional-visual-mocks)
-  - [Functional Static / Serverless Web Proof-of-Concept Experiments](#functional-static-serverless-web-proof-of-concept-experiments)
-  - [Standard Dashboard / Front-end Development](#standard-dashboard-front-end-development)
-  - [Alternative Plugin / Solution Development](#alternative-plugin-solution-development)
-  - [Advanced Visualization Capabilities](#advanced-visualization-capabilities)
+
+## We **_want_** to see your gnarliest spreadsheet
+
+The most complex data is usually that way for very important reasons—and it can say a lot about where Excel is failing to keep up with your creativity. As far as we're concerned, **ugly data is a feature, not a bug**.
+
+If you hide it, we can't help.
+
 :::
 
-::: {.accent-links .accent-strong .green}
-- [**Data Science & AI**](#data-science-ai)
-  - [Data Wrangling](#data-wrangling)
-  - [Ontology / Knowledge Graph Development](#ontology-knowledge-graph-development)
-  - [Statistical Modeling](#statistical-modeling)
-  - [AI Integration](#ai-integration)
-:::
+::: {.accent-links .accent-strong .teal}
 
-::: {.accent-links .accent-strong .brown}
-- [**System Integration & Deployment**](#system-integration-deployment)
-  - [Server / Back-end Development](#server-back-end-development)
-  - [Database Setup](#database-setup)
-  - [Secure Authentication, Access Groups](#secure-authentication-access-groups)
-  - [Testing Frameworks, Coverage](#testing-frameworks-coverage)
+## We go **deep**
+
+We're all about physically going **where** the data matters. Whether it's:
+
+- a set of Google Sheets shared by wine distributors on three continents,
+- a safety warning on an iPad at the bottom of a copper mine, or
+- your grandma's recipe book that needs a personal touch, before it even makes sense as your restaurant's bill of materials
+
+... **context is everything** when it comes to digital displays of information that actually do their job, and don't cause harm. We'll book the redeye flight. We'll take the MSHA certification course. We'll *relish* the stories told in the retirement home—and give them the respect that they deserve.
+
 :::
 
 ::: {.accent-links .accent-strong .purple}
-- [**Marketing, Communication, and Training**](#marketing-communication-and-training)
-  - [Visualization Eye Candy](#visualization-eye-candy)
-  - [Technology Overviews](#technology-overviews)
-  - [Training and Workshops](#training-and-workshops)
+
+## **People** before technology
+
+We're going to need to talk to your ~~supervisor~~ direct reports.
+
+Data is just as much about **who** is looking at it, as it is about what the numbers are showing. We want to learn from all the people: from the bottom of your org chart to the top. We **listen**. We **learn**. We **respect**. We **document**.
+
+We get into the weeds of what data workers are currently doing and why it matters, before inflicting any kind of new technology that could make things worse. We're happy to talk to management if you need us to! But unless they're **the people actually crunching the numbers**, it's often best if we refrain from wasting their time.
+
 :::
 
-::: {.callout-caution #cau-estimate collapse="true" .orange .accent-links}
+::: {.accent-links .accent-strong .accent-headers .orange}
 
-Please note that the times listed on this schedule are [**only estimates**]{.orange .accent}, subject to change without notice, and may vary significantly based on:
+## What we don't do
 
-- the accessibility of data and personnel,
-- the client's responsiveness,
-- the project's complexity,
-- the scale of the data,
-- the state of the art, and
-- whether you have a *really interesting* project that means [we need to budget time to advance the state of the art](https://xkcd.com/1425/)
+Premature commitments to the **how** of digital infrastructure are a surefire way to waste money, waste time, and erode trust. Instead, we prioritize rapid iteration, mocks, and experiments to **validate whether the design and data are right, *BEFORE*** you have to shell out for an expensive database license, cloud infrastructure, or some kind of GPU monstrosity.
 
-If you work with us, we will include more specific estimates and timelines in our contract, based on initial consultations. Although the overall cost should roughly correlate with the time required, [depending on the best billing approach](blog/hireThePeopleDogeFired.qmd) some of these services would likely involve subcontracting.
+"Scalability" is almost a swear word at Origraph: situations that truly call for heavy computing machinery are much more rare than other consultants would have you believe. We don't have an agenda to sell a specific technology^[Except for our own work-in-progress app. But it's a very lightweight thing by design—and we *hope* we'll have the budget from things like consulting in order to make it free and open source for everyone. So, although we have a strategic business agenda of our own, it isn't the sort of thing that will create vendor lock-in or balloon into any kind of artificial infrastructure cost.]. Everything that we build for you will be based on things that are actually happening in your organization, **with none of the hype**.
 
-This schedule is intended to be a general guide and is not legally binding.
+:::
+
+::: {.column-screen-left .inverted-block-with-accented-background .orange .accent-strong}
+
+## Our no-hype policy
+
+We always pair buzzwords—whether it's AI, LLMs, Big Data, Warehousing, Lakehouses, etc.—with a **healthy dose of transparency**. We're happy to help navigate what the latest marketing terms mean, as well as what a new technology might be able to do for your organization.
+
+But we're former academics who take intellectual integrity extremely seriously. Where third-party solutions, subcontractors, etc. are concerned, we include **appropriate warning labels** about any potential snake oil that we suspect, as well as any other technical, ethical, or practical hazards that may be hiding in any of the often-deliberately-vague things that the rest of the software industry seems to be trying to sell at the moment.
+
+:::
+
+# Schedule of Deliverables
+
+Beyond expert guidance for your most pressing general-purpose data questions, we can also **create stuff** for you. Depending on your needs, we can provide:
+
+::: {.callout-note .accent-callout .accent-links .accent-strong .teal collapse="true" icon="false" title="[**Reports & Metadata About Your Data**](#reports-metadata-about-your-data)"}
+
+- [Grounded Data & Task Needs Assessments](#grounded-data-task-needs-assessments)
+- [Requirements Documents](#requirements-documents)
+- [State of Your Data Reports](#state-of-your-data-reports)
+- [UX evaluations](#ux-evaluations)
+
+:::
+
+::: {.callout-note .accent-callout .accent-links .accent-strong .pink collapse="true" icon="false" title="[**Visual Prototyping & Development**](#visual-prototyping-development)"}
+
+- [Visual Mocks](#visual-mocks)
+- [Proof-of-Concept Experiments](#proof-of-concept-experiments)
+- [Prototypes](#prototypes)
+- [Advanced Visualization Capabilities](#advanced-visualization-capabilities)
+- [Stand-out Visuals & Interactive Graphics](#stand-out-visuals-interactive-graphics)
+
+:::
+
+::: {.callout-note .accent-callout .accent-links .accent-strong .green collapse="true" icon="false" title="[**Data Science & AI**](#data-science-ai)"}
+
+- [Data Wrangling](#data-wrangling)
+- [Ontology / Knowledge Graph Development](#ontology-knowledge-graph-development)
+- [Statistical Modeling](#statistical-modeling)
+- [AI Integration](#ai-integration)
+- [Speaking, Workshops, and Training](#speaking-workshops-and-training)
+
+:::
+
+::: {.callout-note .accent-callout .accent-links .accent-strong .brown collapse="true" icon="false" title="[**System Integration & Deployment**](#system-integration-deployment)"}
+
+- [Server / Back-end Development](#server-back-end-development)
+- [Database Setup](#database-setup)
+- [Secure Authentication, Access Groups](#secure-authentication-access-groups)
+- [Testing Frameworks, Coverage](#testing-frameworks-coverage)
+
+:::
+
+::: {#something-else .purple .accent-links .accent-headers .accent-strong}
+
+<details>
+
+<summary>
+
+**What if I need something else?**
+
+</summary>
+
+We have an extensive network of subcontractors, academic experts, and other data miracle workers.
+
+If it turns out that you need real-time ray-tracing, a supercomputer, a bioinformatics expert, custom hardware, red-team security, a formal taxonomy, or a custom-trained AI model, we probably know the person (or know someone who knows the person) who wrote one of the core papers that everybody cites.
+
+If it isn't in our wheelhouse, we'll say so. Whether or not it means business for us, we'll ensure that you get connected to the best that the industry has to offer.
+
+</details>
 
 :::
 
 ::: {.teal .accent-links .accent-headers .accent-strong}
 
-::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong }
+::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong}
 
-## Discovery, Planning, Validation, and Evaluation
+## Reports & Metadata About Your Data
 
 This is a core Origraph expertise area that can both save a lot of money over time, as well as ensure a higher-quality result that actually meets your needs. Designing for incorrect tasks and/or poor data schemas are often the most significant risk in data projects [@nested_model_2009; @dsm_2012]—taking the time to make sure that we're doing the right thing is always worth the investment.
 
 :::::
 
-### Initial Task & Data Needs Assessment Report
+### Grounded Data & Task Needs Assessments
 
-This involves a deep dive into your objectives, data sources, and user needs. The outcome is a detailed report, with rigorous metadata about the state of your data, clarifying the scope of a project.
+**Prerequisites**: An [initial, free consultation](https://calendly.com/origraph-net/30min)
 
-In most cases, we'll include an augmented version of your company's organization chart: with detailed, rigorous, qualitative metadata about what information actually matters to what roles, where those needs overlap, and any relevant pain points w.r.t. working with data or software.
+This starts from our first conversation, and grows with every interaction. Right from the start, we construct a knowledge base to ensure that we're consistently delivering **relevant**, **high-quality** results. This helps us—and can help you!—to better understand and track your organization's objectives, data sources, and user requirements.
 
-If a deep-dive report, with all the receipts, is a poor fit for the audience, we also offer less-detailed [technology overviews](#technology-overviews).
+<details>
 
-**Time Estimate**: 1 week to 3 months^[-@cau-estimate]{.accent .orange .callout-reference}^, heavily dependent on the client's ability to provide timely access to data and key stakeholders, and the scale of the company
+<summary>
 
-### Task & Data Needs Re-Evaluation
+**Why do metadata about requirements matter?**
 
-Revisiting objectives, data sources, and user needs on a regular basis is strongly recommended. Beyond the broadly-scoped initial assessment, budgeting for regular reports over time will make it possible to accumulate quantitative data—in addition to the initial report's qualitative data—and will likely to paint a much richer picture with more specific actionable insights, and uncover more blind spots.
+</summary>
 
-**Time Estimate**: 1 day to 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^
+If you're from the product management world, you're probably familiar with the difference between a traditional Product Requirements Document, versus a data-driven one. Vibes and inference *might* be sufficient for a simple app. But the **expensive risk** of a project doing the wrong thing gets much, much worse in the presence of any of the following risk factor multipliers:
 
-### UX evaluation
+- the product itself is visualizing or analyzing data
+  - compounded by any uncertainty with respect to data location or task clarity [@dsm_2012]
+  - compounded by the impossibility to validate [@nested_model_2009] that a design is correct without fail-fast tests
+- the product needs to support shared tasks between diverse stakeholders
+  - compounded by the size of the organization
+  - compounded by the extent to which teams are physically or structurally isolated from each other
+- the product exists in a workflow with multiple modalities [@hanpuku_2016]
+- the product needs to work with (and/or has to duplicate the functionality of) an existing third-party solution in the market
+- the product needs to support *creating* things—and human creativity—as opposed to simply *consuming* information
+- the product is advancing the state of the art
 
-We leverage established methodologies to validate the effectiveness of any mocked, prototyped, or deployed visualization solutions with an appropriate level of ecological validity, and identify opportunities for improvement. The resulting report typically analyzes specific questions w.r.t. usability, expressiveness, learnability, perceptual accuracy, etc.
+We have extensive experience with all of the above, across a range of creative disciplines, sciences, and industries! **Rigorous questions** and **rigorous answers** are the secret sauce to making sure that you're building the right thing, in the face of all those risks.
 
-**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^
+To ensure that we're asking rigorous *questions*—and catching all the blind spots—we take **lots** of notes. We regularly analyze our notes, and develop codes and themes with research-grade techniques: our methodology for data consulting typically blends elements of Grounded Theory and Design Thinking, with some of our own guidelines [@guidelines_2021] mixed in for the special problems—and opportunities!—that arise when data structures and human creativity collide.
+
+As a project progresses, we'll start to pursue rigorous *answers* to questions about expressiveness, creativity support, flexibility, guidance, efficiency, usability, learnability, and integration [@vis_authoring_evaluation_2018], adding to a growing dataset that will inform both [requirements documents](#requirements-documents), as well as [data-driven reports](#state-of-your-data-reports) for you and the people you report to.
+
+Ultimately, we build—and give you full access to—an evolving knowledge base of notes, digital artifacts, codes, themes, usability test results, and (at a certain level of saturation) a query-able knowledge graph.
+
+</details>
+
+### Requirements Documents
+
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
+
+We transform Needs Assessment data into cohesive, actionable Product Requirements Documents. We ensure that every design decision is grounded in evidence, and create specific plans to clarify and test any uncertain requirements.
+
+<details>
+
+<summary>
+
+**Customization options**
+
+</summary>
+
+Our service includes targeted reports tailored for your key stakeholders:
+- a Market Requirements report to align your sales and marketing teams,
+- a Business Requirements summary for executive review,
+- detailed UX Requirements for design teams, and
+- precise Software Development Requirements for engineering.
+
+To the extent that they're willing, we'll actively solicit feedback from each of these stakeholder groups, to ensure that their concerns are addressed.
+
+If you're a small (or solo) business without that much human infrastructure, these reports still matter—some form of this document should exist, before we sign a long-term contract. We can tailor Requirements Documents to a level of detail that you need.
+
+If you're a Product Manager yourself, we're not here to replace you: you probably already have good requirements documents, that we can augment with state-of-the-art UX and visualization research, as well as the rigorous Needs Assessment data that we'll be continuously collecting.
+
+</details>
+
+### State of Your Data Reports
+
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
+
+[Requirements documents](#requirements-documents) are mostly about *future* projects and features—but we also can provide **regular reports** about ongoing human, data, and technical considerations over time.
+
+<details>
+
+<summary>
+
+**Combining Organization Charts and Architecture Diagrams**
+
+</summary>
+
+These reports will include a breakdown of all data and database infrastructure costs, from ongoing subscription fees to cloud usage, paired with a clear, high-level data architecture diagram.
+
+But it's more than just architecture: it'll also include an augmented *human* organizational chart that details role-specific data needs, clearly identifying who needs what data to perform their job. These reports will identify **shared data requirements**, that are an excellent opportunity to identify targeted potential areas for cross-team collaboration—that participants will actually care about—that can eliminate redundant work and amplify productivity.
+
+</details>
+
+### UX evaluations
+
+**Prerequities**: a [mock](#non-functional-visual-mocks), an [experiment](#proof-of-concept-experiments), or a [prototype](#front-end-prototypes-dashboards)
+
+We leverage established methodologies to validate the effectiveness of potential data solutions with an appropriate level of ecological validity, and identify validity, and opportunities for improvement. The resulting report typically analyzes specific questions w.r.t. usability, expressiveness, learnability, perceptual accuracy, etc.
 
 :::
 
 ::: {.pink .accent-links .accent-headers .accent-strong}
 
-::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong }
+::::: {.column-screen-left .inverted-block-with-accented-background }
 
 ## Visual Prototyping & Development
 
@@ -149,43 +278,69 @@ Although it costs a little extra time (both yours and ours) up front, we care de
 
 :::::
 
-### Non-functional Visual Mocks
+### Visual Mocks
 
-Static images, or minimally-clickable Figma wireframes, to illustrate the layout and design of possible solutions are about validating the correctness of functionality, walking through hypothetical analysis paths, and communicating likely points of difficulty before committing to a more specific development timeline.
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
 
-**Time Estimate**: 1 day to 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^
+Static images, or minimally-clickable wireframes are a first step to illustrate the layout and design of possible solutions. They validate the correctness of functionality, walk through hypothetical analysis paths, and communicate likely points of difficulty before committing to a more specific development timeline.
 
-### Functional Static / Serverless Web Proof-of-Concept Experiments
+### Proof-of-Concept Experiments
 
-A working technology probe will be built, often using a readily available data source like a Google Sheet and/or a small fixed dataset. This is similar to a non-functional mock, as it demonstrates core functionality, allows for early feedback, and some early UX evaluation.
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
 
-However, these kinds of experiments are mostly concerned with validating that data behavior and structure actually meet expectations in practice, before committing to a (usually much more expensive) full development cycle or specific infrastructure investments. Because **data rarely behaves how you expect it to**—that's the whole point of a visualization in the first place—multiple data-informed experiments are strongly encouraged before attempting a [full prototype](#standard-dashboard-front-end-development), even if you're very confident that you need a specific design.
+A working technology probe will be built, using a small sample of your data. This is similar to a [mock](#visual-mocks), as it demonstrates core functionality, allows for early feedback, and some early UX evaluation—but it also validates the extent to which data structures and behavior are appropriate, realistic, and consistent with expectations.
 
-**Time Estimate**: 1 day to 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^
+<details>
 
-### Standard Dashboard / Front-end Development
+<summary>
 
-This involves translating prior [requirements documents](#initial-task-data-needs-assessment-report), [mocks](#non-functional-visual-mocks), and [experiments](#functional-static-serverless-web-proof-of-concept-experiments) into fully-functional prototypes.
+**What's the difference between a POC Experiment and a Prototype?**
 
-**Time Estimate**: 1 to 3 months^[-@cau-estimate]{.accent .orange .callout-reference}^ for a deployable prototype; may include minimal (approximately $15/year) hosting fees
+</summary>
 
-It is important to note that, although a basic prototype can usually be set up fairly quickly—and the result is often hard to distinguish from a [quick experiment](#functional-static-serverless-web-proof-of-concept-experiments)—committing to a prototype that will be hardened into mature software can become an ongoing project that lasts years, and may require hiring additional staff.
+These kinds of experiments are mostly concerned with validating that data behavior and structure actually meet expectations in practice, before committing to a (usually much more expensive) full development cycle or specific infrastructure investments.
 
-The moment that an experiment graduates to a prototype, investing in a plan for ongoing [UX evaluations](#ux-evaluation) and the development of [test infrastructure](#testing-frameworks-coverage) is strongly recommended.
+Because **data rarely behaves how you expect it to**—that's the whole point of a visualization in the first place—we strongly encourage multiple experiments before attempting a [full prototype](#standard-dashboard-front-end-development), even if you're very confident that you need a specific design.
 
-### Alternative Plugin / Solution Development
+A quick interactive experiment that we run for you may—on the surface—be hard to distinguish from a prototype. It might already start to address some basic needs! Indeed, many prototypes begin life as one of these experiments.
 
-Sometimes a web app isn’t the best solution. We can also provide context-specific solutions, such as software that runs within (or otherwise directly interacts with) Excel, Tableau, PowerBI, Figma, Adobe, etc.
+But the moment that an experiment graduates to a prototype that we're committing to, we strongly recommend investing in a plan for ongoing [UX evaluations](#ux-evaluation) and the development of [test infrastructure](#testing-frameworks-coverage), in addition to any larger infrastructure, subcontractors, or additional staff that may be necessary.
 
-We're not just a front-end visualization house; if it's possible, we'll do our best to add functionality to the space where your data already lives—wherever that is. Standalone Desktop or Mobile apps are an option!
+</details>
 
-**Time Estimate**: 1 month to 1 year^[-@cau-estimate]{.accent .orange .callout-reference}^ for a non-web prototype, especially when needing to hack new functionality into existing third-party software.
+### Prototypes
+
+**Prerequisites**: a [requirements document](#requirements-documents) and a [targeted project contract](#targeted-project-contract)
+
+This involves translating prior [requirements documents](#initial-task-data-needs-assessment-report), [mocks](#non-functional-visual-mocks), and [experiments](#functional-static-serverless-web-proof-of-concept-experiments) into a fully-functional application. This is *usually* a web application, but we also recognize that sometimes a web app isn’t the best solution for your ideal workflow.
+
+<details>
+
+<summary>
+
+**We can put data science & visualization tools anywhere**
+
+</summary>
+
+We're not just a front-end visualization house; we have a deep respect—and curiosity—about what your ideal workflow looks like, even if it's in an unfamiliar technology stack.
+
+We'll do our best to add functionality to the space where your data already lives—wherever that is. If you're a supercomputer wizard who would prefer an ASCII visualization dashboard right in your terminal; if you're a graphic designer who wants to *draw* infographics without leaving Figma; or if you're an Excel pro who doesn't want to have to play the usual CSV import/export game; we can put our stuff where it will be most convenient!
+
+We're happy for an excuse to learn something new. And some of our favorite projects have involved more traditional desktop applications, mobile apps, and plugins to already-existing programs.
+
+</details>
 
 ### Advanced Visualization Capabilities
 
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
+
 This involves developing custom or complex charts, interactive elements, and graphics rendering capabilities that go beyond standard dashboard features.
 
-**Time Estimate**: 1 day to 1 month per feature^[-@cau-estimate]{.accent .orange .callout-reference}^, depending on the intricacy and rendering complexity of the visualizations required.
+### Stand-out Visuals & Interactive Graphics
+
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
+
+We can create unique, sophisticated visuals and interactive graphics that are sure to stand out in a social media feed. Nothing communicates "science" or "innovation" quite like an animated, interactive visual that **nobody has seen before**. If a [mock](#visual-mocks), [experiment](#proof-of-concept-experiments), or [prototype](#prototypes) has marketing potential, we're happy to help do the work to adapt it to that task!
 
 :::
 
@@ -203,27 +358,35 @@ Additionally, as needed, we can develop ontologies, statistical models, and (if 
 
 ### Data Wrangling
 
-We will clean, transform, and restructure raw data to prepare it for analysis and modeling. This includes handling missing values, standardizing formats, and identifying errors.
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
 
-**Time Estimate**: 1 week to 3 months^[-@cau-estimate]{.accent .orange .callout-reference}^; can vary widely [@how_data_science_workers_2019], but investing time into **creative data wrangling** [@guidelines_2021] often represents the most impactful way to differentiate your data solution, and to make it possible to ask questions others don’t even consider.
+We will clean, transform, and restructure raw data to prepare it for analysis and modeling. This includes handling missing values, standardizing formats, and identifying errors. Investing time into **creative data wrangling** [@guidelines_2021] often represents the most impactful way to differentiate your data solution, and to make it possible to ask insightful questions that others won't even consider.
 
 ### Ontology / Knowledge Graph Development
 
-We can build a structured representation of your organization's products, people, suppliers, customers, locations, etc., and how they are connected. This allows for a more connected and intelligent way to query and analyze your data; it can make it much easier to integrate additional third-party data; and it makes it possible to ask creative new questions with your own terms.
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
 
-**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^
+We can build a structured representation of your organization's products, people, suppliers, customers, locations, etc., and how they are connected. This allows for a more connected and intelligent way to query and analyze your data; it can make it much easier to integrate additional third-party data; and it makes it possible to ask creative new questions with your own terms.
 
 ### Statistical Modeling
 
-We can apply statistical techniques to identify trends, make predictions, and uncover hidden patterns within your data. This can include regression analysis, time series forecasting, and clustering.
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
 
-**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^
+We can apply statistical techniques to identify trends, make predictions, and uncover hidden patterns within your data. This can include regression analysis, time series forecasting, and clustering.
 
 ### AI Integration
 
+**Prerequisites**: a [needs assessment](#grounded-data-task-needs-assessments) and a [basic contract](#basic-contract)
+
 We can help you integrate pre-trained AI models or develop custom models for tasks such as natural language processing (NLP), image recognition, or predictive analytics to enhance your data's value.
 
-**Time Estimate**: 1 month to 1 year^[-@cau-estimate]{.accent .orange .callout-reference}^
+### Speaking, Workshops, and Training
+
+**Prerequisites**: An [initial, free consultation](https://calendly.com/origraph-net/30min) and a speaking fee or contract
+
+Our expert-led workshops are designed to empower your team with cutting-edge tools and techniques in data science, visualization, and AI—and the **vital role of human creativity** when it comes to working with data and technology. From healthcare to environmental activism; from manufacturing to the performing arts: our customized workshops can be tailored to any specific audience, helping you learn how to ask creative questions about complex datasets.
+
+We're available to help with anything from a short seminar or talk; to half- or full-day workshops; as well as in-depth, full-week trainings.
 
 :::
 
@@ -233,70 +396,65 @@ We can help you integrate pre-trained AI models or develop custom models for tas
 
 ## System Integration & Deployment
 
-Standard data consulting practice usually involves charging you exorbitantly, up front, for often-inappropriate "scalable" infrastructure, and later forcing the ultimate UX or visualization "solution" into that infrastructure.
+Although we're a bit averse to the ***word*** "scalability"—and how it can prematurely derail a project or make it wildly, unnecessarily expensive—we're not strangers to ***what it takes*** to make technology performant.
 
-We do it the other way around—offline, front-end-only, single-user, simple tools are sometimes all that you need, and they're often much more secure than complex infrastructure. Even if you ultimately need something complex, it’s still much easier, cheaper, and faster to **get the interactive, visual design right**, before worrying about what "scale" means, or prematurely trying to optimize something that you don't even need.
-
-The following are still Origraph expertise areas, but not as deep as our Human-Computer Interaction, Visualization, or Data Science: we can cover the DevOps and infrastructure basics, and we know some fancy tricks (especially w.r.t. NoSQL, graph databases, and visualization-specific acceleration structures).
-
-But we also have a reliable network of subcontractors and experts who can help if it turns out that you need something more sophisticated than what we can handle.
+Once an interactive, visual design is validated for correctness, we can cover the DevOps and infrastructure fundamentals. We have some fancy tricks up our sleeves, especially when it comes to NoSQL and graph databases, as well as visualization-specific acceleration structures and rendering algorithms.
 
 :::::
 
 ### Server / Back-end Development
 
-This is a prerequisite if live access to multiple integrated datasets is necessary in the final solution.
+**Prerequisites**: an [experiment](#proof-of-concept-experiments) or [prototype](#prototypes)
 
-**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^, depending on the number and complexity of the data source integrations. Note that this may involve ongoing server fees; the necessary compute resources can be much more costly than simple web hosting.
+This is usually necessary if live access to multiple, integrated datasets are part of your requirements—or if multiple people need to collaborate or access the same information. Note that this may involve ongoing server fees, beyond our simple web-hosting default approach.
 
 ### Database Setup
 
-Once data structure and schema needs are clearly understood—ideally after enough experiments and prototypes have validated that those needs are correct—speed and scale are all about picking the right database infrastructure.
+**Prerequisites**: an [experiment](#proof-of-concept-experiments) or [prototype](#prototypes)(#basic-contract)
 
-**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^; the necessary storage can also represent ongoing costs (whereas our in-browser, smaller solutions begin by leveraging free technologies like PouchDB or Quadstore)
+Once data structure and schema needs are clearly understood—ideally after enough experiments and prototypes have validated that those needs are correct—speed and scale are all about picking the right database infrastructure and indexing techniques. Note that, if it isn't running on your own hardware, the necessary storage can represent ongoing costs.
 
 ### Secure Authentication, Access Groups
 
-We'll establish different user roles and permissions, ensuring that various teams or individuals only have access to the data and visualizations relevant to them.
+**Prerequisites**: an [experiment](#proof-of-concept-experiments) or [prototype](#prototypes)
 
-**Time Estimate**: 1 week to 3 months^[-@cau-estimate]{.accent .orange .callout-reference}^; if complex security rules are important, managing this can often involve cost over time
+We'll help establish different user roles and permissions, ensuring that various teams or individuals only have access to the data and visualizations relevant to them.
 
 ### Testing Frameworks, Coverage
 
-Tested software can result in significant future cost savings and fewer bugs—but can be an expensive waste of time when a project is still at the [experiment level](#functional-static-serverless-web-proof-of-concept-experiments), and there's significant uncertainty around whether a piece of software is even an appropriate solution. Investing time to set up testing frameworks should usually happen when transitioning to [actual prototypes](#standard-dashboard-front-end-development).
+**Prerequisites**: a [requirements document](#requirements-documents) and a [targeted project contract](#targeted-project-contract)
 
-**Time Estimate**: 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^ for initial unit, integration testing setup. Once set up, a very high coverage threshold can significantly curtail bugs and necessary support costs, but also slow other development activities down
+Tested software can result in significant future cost savings and fewer bugs. But it can be an expensive waste of time when a project is still at the [experiment level](#proof-of-concept-experiments), and when there's significant uncertainty around whether a piece of software is even an appropriate solution. Investing time to set up testing frameworks should usually happen when transitioning to [prototypes](#prototypes).
 
 :::
 
-::: {.purple .accent-links .accent-headers .accent-strong}
+::: {.grey .column-screen-left .inverted-block-with-accented-background .accent-strong }
 
-::::: {.column-screen-left .inverted-block-with-accented-background .accent-strong }
+# Typical Contracting Timeline
 
-## Marketing, Communication, and Training
-Demystifying terms like "AI" or "Data Warehousing" actually mean can be challenging; communicating the right level of information is part of the challenge. Whether it's training your workforce in a specific area of data science—with the quality of university course, and research-grade actionable details—or simply making flashy visuals for marketing purposes, we can help.
+Most of our data projects are broken up into four distinct phases, that are often best covered by their own contracting windows:
 
-Although we have a strong [no-hype policy](#our-no-hype-policy) when it comes to people who need to *understand* their data, we also recognize that some stakeholders need precisely what data analysts would dismiss as *marketing*. We will certainly resist deceptive or ethically-questionable marketing objectives, but when the meaning of a dataset is much less important to communicate than its aesthetics: that's still an important task that we can design for!
+### 1. Initial, free consultation
+[Book a time today!](https://calendly.com/origraph-net/30min)
 
-:::::
+### 2. Basic contract
 
-### Visualization Eye Candy
-Visualization is usually a tool for exploration or presentation, but it also often finds itself used for marketing purposes, sometimes completely obscuring any real data or its meaning. Nothing communicates "science" or "innovation" quite like an animated, interactive visual that **nobody has seen before**, whether or not they need to understand it.
+After signing a basic contract, and any NDAs that you require, we'll get started with [needs assessments](#grounded-data-task-needs-assessments), including any necessary interviews, [mocks](#visual-mocks), and [experiments](#proof-of-concept-experiments).
 
-We can create unique, sophisticated visuals and interactive graphics that are sure to stand out in a social media feed—and still carefully balance the need to communicate actual data, versus the need to simply drive engagement or memorability.
+The goal of this phase is to arrive at:
 
-**Time Estimate**: 1 week^[-@cau-estimate]{.accent .orange .callout-reference}^
+- [Requirements documents](#requirements-documents) for any custom projects that you may need,
+- Referrals to other experts in our network, who may be a better fit, and/or
+- Setting you up with existing software that's already a good fit for your needs
 
-### Technology Overviews
-Similar in spirit to [Data & Task Needs Assessments](#initial-task-data-needs-assessment-report)—but for a very different audience—we can help you create presentations and write reports for investors, donors, or managers who explicitly *don't want* the details, but still have a need to know about the role that a new, unfamiliar technology will play in an organization or an industry.
+### 3. Targeted project contract
 
-**Time Estimate**: 1 day to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^, depending on the research, diagrams, slides, videos, websites, or interactive visuals that you need
+This covers the development and validation of a [prototype](#prototypes): by the end, you should have a basic tool that will address a core set of criteria, and a clear path toward maturing it into a long-term solution.
 
-### Training and Workshops
+Depending on the best fit, we can help continue to develop it with an [extended contract](#extended-project-contract), or the software and documentation should be at a point of sufficient quality to hand it off to a dedicated in-house or external development team.
 
-Our expert-led workshops are designed to empower your team with cutting-edge tools and techniques in data science, visualization, and AI. From healthcare to environmental activism; from manufacturing to the performing arts: our customized workshops can be tailored to any specific audience, helping you learn how to extract meaningful insights from complex datasets.
+### 4. Extended project contract
 
-Learn how to harness the full potential of machine learning models, predictive analytics, and data-driven storytelling to drive innovation and improve decision-making. With Origraph's Data Science & Visualization Workshops, you'll gain a deeper understanding of your organization's data needs and develop a culture of data-driven excellence.
+This ongoing agreement will be about maturing a prototype into a long-term solution, adding additional features, performing deeper evaluations, integrating it more closely with other software in your ecosystem, and optimizing performance.
 
-**Time Estimate**: 1 week to 1 month^[-@cau-estimate]{.accent .orange .callout-reference}^ to adapt our curriculum to your industry; depending on the level of detail needed, we can give workshops that last from a few hours to a full week.
 :::
