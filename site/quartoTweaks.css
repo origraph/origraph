@@ -165,6 +165,12 @@ h2,
 .accent-strong strong {
   color: var(--accent-color-dark);
 }
+.accent-callout.callout.callout-style-default {
+  border-left-color: var(--accent-color-dark);
+  & > .callout-header {
+    background-color: var(--accent-color-extra-light);
+  }
+}
 .accent-headers {
   h1,
   h2,

@@ -22,9 +22,9 @@
 
 project: {
 
-  :discoveryPlanningValidationEvaluation
-    rdfs:label "Discovery, Planning, Validation, and Evaluation" ;
-    rdfs:comment "This is a core Origraph expertise area that can both create significant cost savings over time, as well as ensure a higher-quality result that actually meets your needs; designing for incorrect tasks and/or poor data abstractions are often the most significant risk in visualization projects" .
+  :metadataCategory
+    rdfs:label "Reports & Metadata About Your Data" ;
+    rdfs:comment "This is a core Origraph expertise area that can both save a lot of money over time, as well as ensure a higher-quality result that actually meets your needs. Designing for incorrect tasks and/or poor data schemas are often the most significant risk in data projects [@nested_model_2009; @dsm_2012]—taking the time to make sure that we're doing the right thing is always worth the investment." .
 
   :initialTaskDataNeedsAssessment
     origraph:inheritsFrom :service ;
